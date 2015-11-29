@@ -1,0 +1,74 @@
+<?page title="Auto Generated index.zul"?>
+
+<window border="none" width="100%" height="100%" apply="com.tareas.controlador.MenuPrincipal_Controlador">
+
+<borderlayout>
+
+<north style="background:#2AFF00;">
+		<div align="center">
+		
+			<include src="htmls/index.html"></include>	
+			<menubar id="barraMenu">
+
+			</menubar>
+			<button label="Cerrar Sesion" id="button_cerrarsesion" style="float: left ; background-color:#A9f5A9 ; border: #000 1px solid;height:40px;width: 126px;"/>	
+	 		<label id="label_usuario" style="color:#000000;"  value="nombre usuario"  />
+	
+		</div>
+		</north>
+
+
+
+<west autoscroll="true" minsize="0" title="Opciones" maxsize="140" width="140px" splittable="true" collapsible="true" border="normal"  >
+	
+	<grid>	
+	<rows id="menues">
+	<row><button label="PERSONAS"  image="imagenes/peronsas.png" style="margin-left:0%; width: 126px; height:60px; background-color:#A9f5A9; border: #000 1px solid;"  id="buttonpersonas" tooltip="personas" /></row>
+	<row><button label="TAREAS" image="imagenes/tareas.png" style="margin-left:0%; width: 126px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttontareas" tooltip="tareas"/></row>
+	<row><button label="PERMISOS" image="imagenes/permisos.png" style="margin-left:0%; width: 126px; height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonpermisos" tooltip="permisos"/></row>
+	<row><button label="CONSULTAS" image="imagenes/consultas.png" style="margin-left:0%; width: 126px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonconsultas" tooltip="consultas"/></row>
+	<row><button label="REPORTE" image="imagenes/reportes.png" style="margin-left:0%; width: 126px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonreportes" tooltip="reportes"/></row>
+	<row><button label="CONFIGURACIONES" image="imagenes/configuraciones.png" style="margin-left:0%; width: 126px; height:60px;background-color:#A9f5A9; border: #000 1px solid;" id="buttonconfiguraciones" tooltip="configuraciones"/></row>
+	
+	</rows>
+	
+	
+	</grid>
+
+
+</west>
+
+<center id="centro" autoscroll="true">
+	<label value="">
+	</label>
+</center>
+
+<south>
+</south>
+</borderlayout>
+	<popup id="personas" width="300px">
+		<html><![CDATA[Menu de opciones para Crear, Editar, Eliminar y Realizar Busquedas de Usuarios.
+		]]></html>
+	</popup>
+		<popup id="tareas" width="300px">
+		<html><![CDATA[Menu de opciones para Crear, Editar, Eliminar y Realizar Busquedas de tareas.
+		]]></html>
+	</popup>
+	
+	<popup id="permisos" width="300px">
+		<html><![CDATA[Menu de opciones para asignar permisos a cada rol.
+		]]></html>
+	</popup>
+		<popup id="consultas" width="300px">
+		<html><![CDATA[Menu de opciones para acceder a las consultas del sistema.
+		]]></html>
+	</popup>
+	<popup id="reportes" width="300px">
+		<html><![CDATA[Menu de opciones para acceder a los reportes del sistema.
+		]]></html>
+	</popup>
+	<popup id="configuraciones" width="300px">
+		<html><![CDATA[Menu que contara con tipo de usuarios, tipo de tareas ,departamento,equipo de trabajo y que pueda  Editar, Eliminar y Realizar Busquedas de grupos.
+		]]></html>
+	</popup>
+</window>
