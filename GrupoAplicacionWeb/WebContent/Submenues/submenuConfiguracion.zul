@@ -1,0 +1,23 @@
+<?page title="Seleccione una opcion" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Seleccione una opcion" width="21%" height="50%" border="normal" closable="true" id="winConfiguraciones" apply="com.tareas.submenu.submenuConfiguraciones">
+
+
+
+<grid>
+			<rows>
+				<row>
+					<button label="Tipo Tareas" image="imagenes/buscar.png"  width="80px" id="buttontipotareas"  />
+				</row>
+			
+				<row>					
+					<button label="Tipo Usuarios" image="imagenes/buscar.png" width="80px" id="buttontipoUsuarios" />
+					<button label="Tipo Departamento" image="imagenes/buscar.png" width="80px" id="buttontipoDepart" />
+				</row>
+				<row>					
+					<button label="Volver" image="imagenes/Volver.png" width="80px" onClick="winConfiguraciones.detach()"/>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,21 @@
+<?page title="Tipo Departamento" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Seleccione una opcion" width="21%" height="50%" border="normal" closable="true" id="wintipodepart" apply="">
+
+
+<grid>
+			<rows>
+	
+				<row>
+					<button label="Nuevo" image="imagenes/nuevo.png"  width="80px"  id="buttonnuevotipodepart"/>
+					<button label="Busquedas" image="imagenes/buscar.png" width="80px" id="buttonbusquedatipodepart"/>
+				</row>
+			
+				<row>					
+					<button label="Edicion" image="imagenes/editar.png" width="80px"  id="buttonedicionttipodepart"/>
+					<button label="Volver" image="imagenes/Volver.png" width="80px" onClick="wintipodepart.detach()"/>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

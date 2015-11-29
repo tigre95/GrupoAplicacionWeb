@@ -35,7 +35,7 @@ public class MenuPrincipal_Controlador extends GenericForwardComposer<Component>
 			}
 			
 			public void onClick$buttonpermisos(){
-				Window win=(Window) Executions.createComponents("", null, null );
+				Window win=(Window) Executions.createComponents("Submenues/submenuPermisos.zul", null, null );
 				win.setAttribute("centro", centro);
 				win.setTitle("Opciones");
 				win.doModal();		
@@ -57,7 +57,7 @@ public class MenuPrincipal_Controlador extends GenericForwardComposer<Component>
 			
 			
 			public void onClick$buttonconfiguraciones(){
-				Window win=(Window) Executions.createComponents("", null, null );
+				Window win=(Window) Executions.createComponents("Submenues/submenuConfiguracion.zul", null, null );
 				win.setAttribute("centro", centro);
 				win.setTitle("Opciones");
 				win.doModal();		
