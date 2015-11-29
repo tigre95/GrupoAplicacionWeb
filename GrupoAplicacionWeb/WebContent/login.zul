@@ -1,7 +1,7 @@
 <?page title="Inicio de sesion" contentType="text/html;charset=UTF-8"?>
 <zk>
 
-<window title="Inicio de sesion"  border="normal" left="36%" top="47%" width="40%" height="27%" mode="overlapped" apply="">
+<window title="Inicio de sesion"  border="normal" left="36%" top="47%" width="40%" height="27%" mode="overlapped" apply="com.tareas.controlador.LoginControlador">
 	<borderlayout>
 	<west width="50%"> 
 		<div>
