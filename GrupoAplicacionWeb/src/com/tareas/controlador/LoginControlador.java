@@ -41,7 +41,7 @@ public class LoginControlador extends GenericForwardComposer
 		if(usuario != null){
 			Session session = Sessions.getCurrent();
 			session.setAttribute("usuario", usuario);
-			Executions.sendRedirect("/index.zul");			
+			Executions.sendRedirect("/PaginaPrincipal.zul");			
 		}else{
 			mensaje="Usuario y/o clave incorrecta";
 		}

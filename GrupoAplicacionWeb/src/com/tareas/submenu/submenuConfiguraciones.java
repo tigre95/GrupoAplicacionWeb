@@ -27,7 +27,7 @@ public class submenuConfiguraciones extends GenericForwardComposer<Component>{
    	 if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   	   	Window win=(Window) Executions.createComponents("Submenues/submenuNivelTareas.zul", null, null  );
+   	   	Window win=(Window) Executions.createComponents("", null, null  );
    	 win.setAttribute("centro", centro);
 		win.setTitle("Opciones");
 		win.doModal();
@@ -38,7 +38,7 @@ public class submenuConfiguraciones extends GenericForwardComposer<Component>{
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   		Window win=(Window) Executions.createComponents("Submenues/submenuTipoUsuarios.zul", null, null  );		
+   		Window win=(Window) Executions.createComponents("", null, null  );		
    	 win.setAttribute("centro", centro);
 		win.setTitle("Opciones");
 		win.doModal();
@@ -48,7 +48,7 @@ public class submenuConfiguraciones extends GenericForwardComposer<Component>{
 	  	if(centro.getFirstChild()!=null){
 	  	 centro.removeChild(centro.getFirstChild());
 	  	 }
-	   		Window win=(Window) Executions.createComponents("Submenues/submenuTipoDepartamento.zul", null, null  );
+	   		Window win=(Window) Executions.createComponents("", null, null  );
 	   		win.setAttribute("centro", centro);
 			win.setTitle("Opciones");
 			win.doModal();

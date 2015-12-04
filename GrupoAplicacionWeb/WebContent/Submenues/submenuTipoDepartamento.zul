@@ -1,6 +1,6 @@
 <?page title="Tipo Departamento" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Seleccione una opcion" width="21%" height="50%" border="normal" closable="true" id="wintipodepart" apply="">
+<window title="Seleccione una opcion" width="21%" height="50%" border="normal" closable="true" id="wintipodepart" apply="com.tareas.submenu.sunmenuTipoDepartamento">
 
 
 <grid>

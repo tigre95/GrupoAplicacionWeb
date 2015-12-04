@@ -1,0 +1,26 @@
+<?page title="Seleccione una opcion" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Seleccione una opcion" width="21%" height="50%" border="normal" closable="true" id="winReportes" apply="com.tareas.submenu.submenuReportes">
+
+
+
+<grid>
+			<rows>
+	
+				<row>
+					<button label="Reporte estado de tareas" image="imagenes/buscar.png"  width="80px" id="buttonRE"  />
+					<button label="Reporte Tareas Asignadas" image="imagenes/buscar.png" width="80px" id="buttonRtareasA"  />
+				</row>
+			
+				<row>					
+					<button label="Reporte Tareas Realizadas" image="imagenes/buscar.png" width="80px" id="buttonRtareasR" />
+					<button label="Reporte Tareas Nivel Importancia" image="imagenes/buscar.png" width="80px" id="buttonRtareasN" />
+				</row>
+				<row>					
+					<button label="Reporte Grupos" image="imagenes/buscar.png" width="80px"  id="buttonRtareasG"/>
+					<button label="Volver" image="imagenes/Volver.png" width="80px" onClick="winReportes.detach()"/>
+	</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

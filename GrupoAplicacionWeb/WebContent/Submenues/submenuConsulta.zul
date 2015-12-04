@@ -1,0 +1,26 @@
+<?page title="Seleccione una opcion" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Seleccione una opcion" width="21%" height="50%" border="normal" closable="true" id="winconsultas" apply="com.tareas.submenu.submenuConsultas">
+
+
+
+<grid>
+			<rows>
+	
+				<row>
+					<button label="Consultas General" image="imagenes/buscar.png"  width="80px" id="buttonRepGeneral"  />
+					<button label="Consutas Tareas Asignadas" image="imagenes/buscar.png" width="80px" id="buttontareasA"  />
+				</row>
+			
+				<row>					
+					<button label="DConsutas Tareas Realizadas" image="imagenes/buscar.png" width="80px" id="buttontareasR" />
+					<button label="Consutas Tareas Nivel Importancia" image="imagenes/buscar.png" width="80px" id="buttontareasN" />
+				</row>
+				<row>					
+					<button label="Consutas Grupos" image="imagenes/buscar.png" width="80px"  id="buttontareasG"/>
+					<button label="Volver" image="imagenes/Volver.png" width="80px" onClick="winconsultas.detach()"/>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>
