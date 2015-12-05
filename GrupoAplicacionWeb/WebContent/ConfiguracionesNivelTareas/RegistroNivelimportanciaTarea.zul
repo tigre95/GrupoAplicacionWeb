@@ -1,0 +1,25 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="RegistroUsuarios" border="normal" id="winNuevoNivelTarea" closable="true" apply="com.tareas.controlador.NivelTareaControlador">
+<grid>
+			<columns>
+				<column label="Etiqueta" />
+				<column label="Dato" />
+			</columns>
+			<rows>
+				<row>
+
+					<label value="Descripción:" />
+					<textbox id="textbox_descripcion"
+						constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<button label="Registrar" id="button_Registrar" />
+					<button label="Cancelar" id="button_Cancelar"  onClick="winNuevoNivelTarea.detach()"/>
+				</row>
+
+			</rows>
+		</grid>
+</window>
+</zk>
