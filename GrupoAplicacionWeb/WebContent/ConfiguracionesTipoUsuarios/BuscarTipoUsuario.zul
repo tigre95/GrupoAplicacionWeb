@@ -1,0 +1,37 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winNuevoTipoUsuario3" title="Buscar TipoUsuarios" border="normal" closable="true" apply="com.tareas.controlador.buscarTipoUsuario">
+	
+	<toolbar>
+
+</toolbar>
+	
+	<groupbox closable="true">
+		<caption label="Busqueda"></caption>
+		<label>TipoUsuario: </label><textbox id="textboxBuscar"></textbox>
+		
+		<space/>
+		<button image="" id="buttonBuscar" label="Buscar">
+		</button>
+		<space/>
+		<button  image="" id="buttonBusca" label="Listar Todo">
+		</button>
+		<space/>
+	</groupbox>
+	<listbox id="listboxTipoUsuarios" mold="paging" pageSize="5" width="100%" emptyMessage="No existen datos" >
+		<listhead sizable="true" menupopup="auto">
+			<listheader label="Descripcion" sort="auto(descripcion)"/>
+			
+			</listhead>
+		
+			<template name="model"> 
+			<listitem value="${each}">
+				<listcell label="${each.descripcion}" />
+				
+			</listitem>
+		</template>
+		
+	</listbox>
+  	
+</window>
+</zk>

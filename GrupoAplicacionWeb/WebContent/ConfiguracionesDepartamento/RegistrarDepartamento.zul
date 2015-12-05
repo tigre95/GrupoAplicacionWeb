@@ -1,0 +1,26 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Registros de Nuevo Departamento" border="normal" id="winNuevdepartamento" closable="true" apply="com.tareas.controlador.DepartamentoControlador">
+<grid>
+			<columns>
+				<column label="Etiqueta" />
+				<column label="Dato" />
+			</columns>
+			<rows>
+			
+				<row>
+
+					<label value="Descripción:" />
+					<textbox id="textbox_descripcion"
+						constraint="no empty">
+					</textbox>
+				</row>
+				<row>
+					<button label="Registrar" id="button_Registrar" />
+					<button label="Cancelar" id="button_Cancelar"  onClick="winNuevdepartamento.detach()"/>
+				</row>
+
+			</rows>
+		</grid>
+</window>
+</zk>

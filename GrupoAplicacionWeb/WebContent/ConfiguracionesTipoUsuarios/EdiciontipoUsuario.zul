@@ -1,0 +1,43 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="TipoUsuarios" border="normal" id="winNuevoTipoUsuario2" closable="true" apply="com.tareas.controlador.EditarTipoUsuario">
+	
+	<toolbar>
+<toolbarbutton image="/imagenes/nuevo.png" id="toolbarButtonNuevo" tooltip="nuevo"/>
+<toolbarbutton image="/imagenes/editar.png" id="toolbarButtonEditar" tooltip="editar"/>
+<toolbarbutton image="/imagenes/editar.png" id="toolbarButtonEliminacion" tooltip="eliminar"/>
+
+</toolbar>
+	
+	<groupbox closable="true">
+		<caption label="Busqueda"></caption>
+		<label>Tipo Usuarios: </label><textbox id="textboxBuscar"></textbox>
+		
+		<space/>
+		<button image="/Imagenes/searchs.png" id="buttonBuscar" label="Buscar">
+		</button>
+		<space/>
+		<button  image="/Imagenes/icon_listat.png" id="buttonBusca" label="Listar Todo">
+		</button>
+		<space/>
+	</groupbox>
+	<listbox id="listboxTipoUsuarios" mold="paging" pageSize="5" width="100%" emptyMessage="No existen datos" >
+		<listhead sizable="true" menupopup="auto">
+			<listheader label="Descripcion" sort="auto(descripcion)"/>
+			</listhead>
+		
+			<template name="model"> 
+			<listitem value="${each}">
+				<listcell label="${each.descripcion}" />
+				
+			</listitem>
+		</template>
+		
+	</listbox>
+  	
+  	<popup id="nuevo" width="160px"><html><![CDATA[Agregar Nuevo tipo usuario.]]></html></popup>
+  	<popup id="editar" width="115px"><html><![CDATA[Editar tipo usuario.]]></html></popup>
+  	<popup id="eliminar" width="125px"><html><![CDATA[Eliminar tipo usuario.]]></html></popup>
+  	
+</window>
+</zk>
