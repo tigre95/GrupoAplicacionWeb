@@ -28,7 +28,7 @@ public class MenuPrincipal_Controlador extends GenericForwardComposer<Component>
 				
 				
 			public void onClick$buttonconsultas(){
-				Window win=(Window) Executions.createComponents("", null, null );
+				Window win=(Window) Executions.createComponents("Submenues/submenuConsulta.zul", null, null );
 				win.setAttribute("centro", centro);
 				win.setTitle("Opciones");
 				win.doModal();		
@@ -42,14 +42,14 @@ public class MenuPrincipal_Controlador extends GenericForwardComposer<Component>
 			}
 
 			public void onClick$buttonpersonas(){
-				Window win=(Window) Executions.createComponents("", null, null );
+				Window win=(Window) Executions.createComponents("Submenues/submenuPersonas.zul", null, null );
 				win.setAttribute("centro", centro);
 				win.setTitle("Opciones");
 				win.doModal();		
 			}
 			
 			public void onClick$buttontareas(){
-				Window win=(Window) Executions.createComponents("", null, null );
+				Window win=(Window) Executions.createComponents("Submenues/submenuTareas.zul", null, null );
 				win.setAttribute("centro", centro);
 				win.setTitle("Opciones");
 				win.doModal();		
@@ -63,7 +63,7 @@ public class MenuPrincipal_Controlador extends GenericForwardComposer<Component>
 				win.doModal();		
 			}
 			public void onClick$buttonreportes(){
-				Window win=(Window) Executions.createComponents("", null, null );
+				Window win=(Window) Executions.createComponents("Submenues/submenuReporte.zul", null, null );
 				win.setAttribute("centro", centro);
 				win.setTitle("Opciones");
 				win.doModal();		

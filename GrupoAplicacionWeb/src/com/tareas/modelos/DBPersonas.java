@@ -1,18 +1,15 @@
 package com.tareas.modelos;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
-import com.controlador.entidades.tiposusuarios;
+import com.controlador.entidades.personas;
 
-public class DBTiposUsuarios {
+public class DBPersonas {
 
-	public tiposusuarios mostrartipousuarios(int id_tipo){			
-		tiposusuarios tipousuario= null;
+	public personas mostrarpersonas(int id_persona){			
+		personas persona= null;
 		DBManager dbm= new DBManager();
 		Connection con = dbm.getConection();
 		if(con==null){
@@ -22,8 +19,8 @@ public class DBTiposUsuarios {
 		java.sql.Statement sentencia;
 		ResultSet resultados= null;
 				//EncriptarPassword(pass);
-		String query="select * from tiposusuarios where estado = 'A' and"
-		+ " id_tipousuario =" + id_tipo + ";";		
+		String query="select * from personas where estado = 'A' and"
+		+ " id_persona =" + id_persona + ";";		
 		System.out.println(query);		
 		try {
 			sentencia= con.createStatement();
@@ -34,22 +31,27 @@ public class DBTiposUsuarios {
 		}
 		try {
 			while(resultados.next()){
-				tiposusuarios tipousuario2 = new tiposusuarios();
-				tipousuario2.setId_tipousuario(resultados.getInt(1));
-				tipousuario2.setDescripcion(resultados.getString(2));
-				tipousuario2.setEstado(resultados.getString(3));
-				tipousuario = tipousuario2;
+				personas persona2 = new personas();
+				persona2.setId_persona(resultados.getInt(1));
+				persona2.setNombres(resultados.getString(2));
+				persona2.setId_departamento(resultados.getInt(3));
+				persona2.setApellidos(resultados.getString(4));
+				persona2.setCedula(resultados.getString(5));
+				persona2.setDireccion(resultados.getString(6));
+				persona2.setEmail(resultados.getString(7));
+				persona2.setEstado(resultados.getString(8));
+				persona = persona2;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
-		}		
-		return tipousuario;
+		}	
+		return persona;
 	}
-	public DBTiposUsuarios() {
+	
+	public DBPersonas() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
 }
