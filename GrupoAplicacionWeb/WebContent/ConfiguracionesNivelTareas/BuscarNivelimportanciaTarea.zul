@@ -8,7 +8,7 @@
 	
 	<groupbox closable="true">
 		<caption label="Busqueda"></caption>
-		<label>TipoUsuario: </label><textbox id="textboxBuscar"></textbox>
+		<label>Nivel Tarea: </label><textbox id="textboxBuscar"></textbox>
 		
 		<space/>
 		<button image="" id="buttonBuscar" label="Buscar">

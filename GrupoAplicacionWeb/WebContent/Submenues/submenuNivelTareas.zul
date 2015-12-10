@@ -1,19 +1,19 @@
 <?page title="Tipo Tareas" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Seleccione una opcion" width="21%" height="50%" border="normal" closable="true" id="wintipotareas" apply="com.tareas.submenu.submenutipotareas">
+<window title="Seleccione una opcion" width="25%" height="60%" border="normal" closable="true" id="wintipotareas" apply="com.tareas.submenu.submenutipotareas">
 
 
 <grid>
 			<rows>
 	
 				<row>
-					<button label="Nuevo" image="imagenes/nuevo.png"  width="80px"  id="buttonnuevotipotareas"/>
-					<button label="Busquedas" image="imagenes/buscar.png" width="80px" id="buttonbusquedatipotareas"/>
+					<button label="Nuevo" image="imagenes/nuevo.png"  width="140px"  id="buttonnuevotipotareas"/>
+					<button label="Busquedas" image="imagenes/buscar.png" width="140px" id="buttonbusquedatipotareas"/>
 				</row>
 			
 				<row>					
-					<button label="Edicion" image="imagenes/editar.png" width="80px"  id="buttonediciontipotareas"/>
-					<button label="Volver" image="imagenes/Volver.png" width="80px" onClick="wintipotareas.detach()"/>
+					<button label="Edicion" image="imagenes/editar.png" width="140px"  id="buttonediciontipotareas"/>
+					<button label="Volver" image="imagenes/Volver.png" width="140px" onClick="wintipotareas.detach()"/>
 				</row>
 			</rows>
 		</grid>

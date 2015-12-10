@@ -29,7 +29,7 @@ public class submenutipotareas extends GenericForwardComposer<Component>{
   	 centro.removeChild(centro.getFirstChild());
   	 }
    	   	Window win=(Window) Executions.createComponents("ConfiguracionesNivelTareas/RegistroNivelimportanciaTarea.zul", centro, null );
-  		win.setTitle("Nuevo Productos");
+  		win.setTitle("Nuevo Nivel tareas");
   		win.setAttribute("op", "1");
   		wintipotareas.detach();
    }             
@@ -39,7 +39,7 @@ public class submenutipotareas extends GenericForwardComposer<Component>{
   	 centro.removeChild(centro.getFirstChild());
   	 }
   		Window win=(Window) Executions.createComponents("ConfiguracionesNivelTareas/BuscarNivelimportanciaTarea.zul", centro, null );
-  		win.setTitle("Busqueda Productos"); 
+  		win.setTitle("Busqueda Nivel tareas"); 
   		wintipotareas.detach();
    }  
 	
@@ -48,7 +48,7 @@ public class submenutipotareas extends GenericForwardComposer<Component>{
   	 centro.removeChild(centro.getFirstChild());
   	 }
    		Window win=(Window) Executions.createComponents("ConfiguracionesNivelTareas/EditarNivelimportanciaTarea.zul", centro, null );  		
-  		win.setTitle("Listar Productos");
+  		win.setTitle("Editar Nivel tareas");
   		wintipotareas.detach();
    }
 }
