@@ -3,9 +3,9 @@
 <window title="Departamento" border="normal" id="win_listadepartamento" closable="true" apply="com.tareas.controlador.EditarDepartamento">
 	
 	<toolbar>
-<toolbarbutton image="/Imagenes/add.png" id="toolbarButtonNuevo" tooltip="nuevo"/>
-<toolbarbutton image="/Imagenes/edit.png" id="toolbarButtonEditar" tooltip="editar"/>
-<toolbarbutton image="/Imagenes/delete.png" id="toolbarButtonEliminacion" tooltip="eliminar"/>
+<toolbarbutton image="/imagenes/nuevo.png" id="toolbarButtonNuevo" tooltip="nuevo"/>
+<toolbarbutton image="/imagenes/editar.png" id="toolbarButtonEditar" tooltip="editar"/>
+<toolbarbutton image="/imagenes/eliminar.png" id="toolbarButtonEliminacion" tooltip="eliminar"/>
 
 </toolbar>
 	

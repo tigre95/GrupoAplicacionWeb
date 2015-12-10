@@ -5,7 +5,7 @@
 	<toolbar>
 <toolbarbutton image="/imagenes/nuevo.png" id="toolbarButtonNuevo" tooltip="nuevo"/>
 <toolbarbutton image="/imagenes/editar.png" id="toolbarButtonEditar" tooltip="editar"/>
-<toolbarbutton image="/imagenes/editar.png" id="toolbarButtonEliminacion" tooltip="eliminar"/>
+<toolbarbutton image="/imagenes/eliminar.png" id="toolbarButtonEliminacion" tooltip="eliminar"/>
 
 </toolbar>
 	

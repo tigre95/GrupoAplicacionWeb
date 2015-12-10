@@ -39,8 +39,8 @@ public class sunmenuTipoDepartamento extends GenericForwardComposer<Component>{
    	 if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   	   	Window win=(Window) Executions.createComponents("", centro, null );
-  		win.setTitle("Nuevo Productos");
+   	   	Window win=(Window) Executions.createComponents("ConfiguracionesDepartamento/RegistrarDepartamento.zul", centro, null );
+  		win.setTitle("Nuevo Tipo Departamento");
   		win.setAttribute("op", "1");
   		wintipodepart.detach();
    }             
@@ -49,8 +49,8 @@ public class sunmenuTipoDepartamento extends GenericForwardComposer<Component>{
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-  		Window win=(Window) Executions.createComponents("", centro, null );
-  		win.setTitle("Busqueda Productos"); 
+  		Window win=(Window) Executions.createComponents("ConfiguracionesDepartamento/BuscarDEpartamento.zul", centro, null );
+  		win.setTitle("Busqueda  Tipo Departamento"); 
   		wintipodepart.detach();
    }  
 	
@@ -58,8 +58,8 @@ public class sunmenuTipoDepartamento extends GenericForwardComposer<Component>{
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   		Window win=(Window) Executions.createComponents("", centro, null );  		
-  		win.setTitle("Listar Productos");
+   		Window win=(Window) Executions.createComponents("ConfiguracionesDepartamento/edicionDepartamento.zul", centro, null );  		
+  		win.setTitle("Listar  Tipo Departamento");
   		wintipodepart.detach();
    }
 }

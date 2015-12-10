@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window id="winNuevoTipoUsuario3" title="Buscar TipoUsuarios" border="normal" closable="true" apply="com.tareas.controlador.buscarTipoUsuario">
+<window id="winNuevoTipoUsuario8" title="Buscar TipoUsuarios" border="normal" closable="true" apply="com.tareas.controlador.buscarTipoUsuario">
 	
 	<toolbar>
 

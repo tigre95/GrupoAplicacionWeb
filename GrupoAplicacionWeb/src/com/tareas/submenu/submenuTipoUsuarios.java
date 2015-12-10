@@ -17,27 +17,31 @@ public class submenuTipoUsuarios extends GenericForwardComposer<Component>{
 
     @Override
 	public void doAfterCompose(Component comp) throws Exception {
-		// TODO Auto-generated method stub
+    	// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
 		 centro = (Center)wintipoUsu.getAttribute("centro");
-			}
+		 
+	
+	}
 
 	public void onClick$buttonnuevotipoUsu(){
    	 if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   	   	Window win=(Window) Executions.createComponents("", centro, null );
-  		win.setTitle("Nuevo Productos");
+   	   	Window win=(Window) Executions.createComponents("ConfiguracionesTipoUsuarios/RegistroTipoUsuario.zul", centro, null );
+  		win.setTitle("Nuevo tipo Usuario");
   		win.setAttribute("op", "1");
   		wintipoUsu.detach();
+  		wintipoUsu.onClose();
+  		
    }             
                 
    public void onClick$buttonbusquedatipoUsu(){
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-  		Window win=(Window) Executions.createComponents("", centro, null );
-  		win.setTitle("Busqueda Productos"); 
+  		Window win=(Window) Executions.createComponents("ConfiguracionesTipoUsuarios/BuscarTipoUsuario.zul", centro, null );
+  		win.setTitle("Busqueda tipo Usuario"); 
   		wintipoUsu.detach();
    }  
 	
@@ -45,9 +49,11 @@ public class submenuTipoUsuarios extends GenericForwardComposer<Component>{
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   		Window win=(Window) Executions.createComponents("", centro, null );  		
-  		win.setTitle("Listar Productos");
+   		Window win=(Window) Executions.createComponents("ConfiguracionesTipoUsuarios/EdiciontipoUsuario.zul", centro, null );  		
+  		win.setTitle("Listar tipo Usuario");
   		wintipoUsu.detach();
    }
 }
+
+
 

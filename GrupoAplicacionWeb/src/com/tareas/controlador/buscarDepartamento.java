@@ -11,6 +11,11 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 
+import com.controlador.entidades.Departamento;
+import com.controlador.entidades.NivelTareas;
+import com.tareas.modelos.DBdepartamento;
+import com.tareas.modelos.DBnivelTarea;
+
 public class buscarDepartamento extends GenericForwardComposer<Component>{
 	@Wire
 	Listbox listboxdept;
@@ -22,8 +27,28 @@ public class buscarDepartamento extends GenericForwardComposer<Component>{
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
+		actualizarLista("");
 		
 		
 	}
+	public void onClick$buttonBuscar(){
+		actualizarLista(textboxBuscar.getValue());
+}
+
+public void onClick$buttonBusca(){
+	actualizarLista("");
+	textboxBuscar.setValue("");
+}
+
+
+public void actualizarLista(String criterio1){
+	DBdepartamento dbcategorias = new DBdepartamento();
+	ArrayList<Departamento> lista = dbcategorias.buscardepartamento(criterio1);
+	ListModelList<Departamento> modeloDeDatos= new ListModelList<Departamento>(lista);
+	listboxdept.setModel(modeloDeDatos);
+	
+	
+}
+
 
 }

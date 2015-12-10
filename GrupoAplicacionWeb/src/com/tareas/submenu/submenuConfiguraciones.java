@@ -39,20 +39,22 @@ public class submenuConfiguraciones extends GenericForwardComposer<Component>{
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   		Window win=(Window) Executions.createComponents("", null, null  );		
+   		Window win=(Window) Executions.createComponents("Submenues/submenuTipoUsuarios.zul", null, null  );		
    	 win.setAttribute("centro", centro);
 		win.setTitle("Opciones");
 		win.doModal();
+		winConfiguraciones.detach();
    }
    
    public void onClick$buttontipoDepart(){
 	  	if(centro.getFirstChild()!=null){
 	  	 centro.removeChild(centro.getFirstChild());
 	  	 }
-	   		Window win=(Window) Executions.createComponents("", null, null  );
+	   		Window win=(Window) Executions.createComponents("Submenues/submenuTipoDepartamento.zul", null, null  );
 	   		win.setAttribute("centro", centro);
 			win.setTitle("Opciones");
 			win.doModal();
+			winConfiguraciones.detach();
 	   }
    
    
