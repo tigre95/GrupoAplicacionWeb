@@ -11,6 +11,14 @@ import org.zkoss.zul.Center;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Window;
 
+import com.controlador.entidades.permisos;
+import com.controlador.entidades.personas;
+import com.controlador.entidades.tiposusuarios;
+import com.controlador.entidades.usuarios;
+import com.tareas.modelos.DBPermisos;
+import com.tareas.modelos.DBPersonas;
+import com.tareas.modelos.DBTiposUsuarios;
+
 public class MenuPrincipal_Controlador extends GenericForwardComposer<Component> {
 
 	//enlazar los componentes de la interfaz
@@ -19,7 +27,79 @@ public class MenuPrincipal_Controlador extends GenericForwardComposer<Component>
 		Button buttonpersonas, buttontareas, buttonpermisos, buttonconsultas, buttonreportes, buttonconfiguraciones;
 		Center centro;
 	
+		//declarar variables
+		usuarios usuario=null;
+		tiposusuarios tipousuario = null;
+		personas persona = null;
+		permisos permiso_personas = null;
+		permisos permiso_tareas = null;
+		permisos permiso_departamentos = null;
+		permisos permiso_permisos = null;
+		permisos permiso_consultas = null;
+		permisos permiso_reportes = null;
+		permisos permiso_configuraciones = null;
+		
+		DBTiposUsuarios dbtiposusuarios = new DBTiposUsuarios();
+		DBPersonas dbpersonas = new DBPersonas();
+		DBPermisos dbpermisos = new DBPermisos();
+		
+		int roles;
+		String tipo= "Usuario: ";
+		public void doAfterCompose(Component comp) throws Exception {
+			// TODO Auto-generated method stub
+			super.doAfterCompose(comp);
+		Session session = Sessions.getCurrent();
+		usuario = (usuarios) session.getAttribute("usuario");
+		if(usuario!=null){
+			tipousuario = dbtiposusuarios.mostrartipousuarios(usuario.getId_tipousuario());
+			persona = dbpersonas.mostrarpersonas(usuario.getId_persona());
+			permiso_personas = dbpermisos.mostrarpermisos(usuario.getId_tipousuario(), "personas");
+			permiso_tareas = dbpermisos.mostrarpermisos(usuario.getId_tipousuario(), "tareas");
+			permiso_departamentos = dbpermisos.mostrarpermisos(usuario.getId_tipousuario(), "departamentos");
+			permiso_permisos = dbpermisos.mostrarpermisos(usuario.getId_tipousuario(), "permisos");
+			permiso_consultas = dbpermisos.mostrarpermisos(usuario.getId_tipousuario(), "consultas");
+			permiso_reportes = dbpermisos.mostrarpermisos(usuario.getId_tipousuario(), "reportes");
+			permiso_configuraciones = dbpermisos.mostrarpermisos(usuario.getId_tipousuario(), "configuracion");
+			String nombrec= tipo+tipousuario.getDescripcion()+": " + persona.getNombres() +" "+ persona.getApellidos();
+			label_usuario.setValue(nombrec);
+			if(permiso_personas.getCrear()==0 && permiso_personas.getBuscar()==0 && permiso_personas.getEditar()==0 && permiso_personas.getEliminar()==0){
+					buttonpersonas.setVisible(false);
+			}else{
+				buttonpersonas.setVisible(true);
+			}
+			if(permiso_tareas.getCrear()==0 && permiso_tareas.getBuscar()==0 && permiso_tareas.getEditar()==0 && permiso_tareas.getEliminar()==0){
+				buttontareas.setVisible(false);
+			}else{
+				buttontareas.setVisible(true);
+			}
+			if(permiso_permisos.getCrear()==0 && permiso_permisos.getBuscar()==0 && permiso_permisos.getEditar()==0 && permiso_permisos.getEliminar()==0){
+				buttonpermisos.setVisible(false);
+			}else{
+				buttonpermisos.setVisible(true);
+			}
+			if(permiso_consultas.getCrear()==0 && permiso_consultas.getBuscar()==0 && permiso_consultas.getEditar()==0 && permiso_consultas.getEliminar()==0){
+				buttonconsultas.setVisible(false);
+			}else{
+				buttonconsultas.setVisible(true);
+			}
+			if(permiso_reportes.getCrear()==0 && permiso_reportes.getBuscar()==0 && permiso_reportes.getEditar()==0 && permiso_reportes.getEliminar()==0){
+				buttonreportes.setVisible(false);
+			}else{
+				buttonreportes.setVisible(true);
+			}
+			if(permiso_configuraciones.getCrear()==0 && permiso_configuraciones.getBuscar()==0 && permiso_configuraciones.getEditar()==0 && permiso_configuraciones.getEliminar()==0){
+				buttonconfiguraciones.setVisible(false);
+			}else{
+				buttonconfiguraciones.setVisible(true);
+			}
+		}else{	
+			Executions.sendRedirect("login.zul");
+		}
+		
 
+		//creamos menu en base al tipo de usuario y el permiso que le demos
+		//crearMenu();
+		}
 		public void onClick$button_cerrarsesion(){
 			Session session = Sessions.getCurrent();
 			session.invalidate();
