@@ -38,8 +38,9 @@ public class submenuTareas extends GenericForwardComposer<Component>{
 	   	 if(centro.getFirstChild()!=null){
 	  	 centro.removeChild(centro.getFirstChild());
 	  	 }
-	   	   	Window win=(Window) Executions.createComponents("", centro, null );
+	   	   	Window win=(Window) Executions.createComponents("/Submenues/submenuNivelTareas.zul", centro, null );
 	  		win.setTitle("Nueva Tarea");
+	  		win.doModal();
 	  		wintareas.detach();
 	   }             
 	                

@@ -11,6 +11,9 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 
+import com.controlador.entidades.NivelTareas;
+import com.tareas.modelos.DBnivelTarea;
+
 
 public class buscarNivelTarea extends GenericForwardComposer<Component>{
 	@Wire
@@ -23,6 +26,29 @@ public class buscarNivelTarea extends GenericForwardComposer<Component>{
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
+		actualizarLista("");
 		
 	}
+	public void onClick$buttonBuscar(){
+		actualizarLista(textboxBuscar.getValue());
 }
+
+public void onClick$buttonBusca(){
+	actualizarLista("");
+	textboxBuscar.setValue("");
+}
+
+
+public void actualizarLista(String criterio1){
+	DBnivelTarea dbcategorias = new DBnivelTarea();
+	ArrayList<NivelTareas> lista = dbcategorias.buscarNivelTarea(criterio1);
+	ListModelList<NivelTareas> modeloDeDatos= new ListModelList<NivelTareas>(lista);
+	listboxNivelTarea.setModel(modeloDeDatos);
+	
+	
+}
+
+
+}
+
+

@@ -27,10 +27,11 @@ public class submenuConfiguraciones extends GenericForwardComposer<Component>{
    	 if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   	   	Window win=(Window) Executions.createComponents("", null, null  );
+   	   	Window win=(Window) Executions.createComponents("Submenues/submenuNivelTareas.zul", null, null  );
    	 win.setAttribute("centro", centro);
 		win.setTitle("Opciones");
 		win.doModal();
+		winConfiguraciones.detach();
 		
    }             
                 

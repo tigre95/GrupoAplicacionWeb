@@ -140,7 +140,8 @@ public class MenuPrincipal_Controlador extends GenericForwardComposer<Component>
 				Window win=(Window) Executions.createComponents("Submenues/submenuConfiguracion.zul", null, null );
 				win.setAttribute("centro", centro);
 				win.setTitle("Opciones");
-				win.doModal();		
+				win.doModal();
+				win.detach();
 			}
 			public void onClick$buttonreportes(){
 				Window win=(Window) Executions.createComponents("Submenues/submenuReporte.zul", null, null );

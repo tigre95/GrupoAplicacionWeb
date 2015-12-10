@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window id="winNuevoTipoUsuario3" title="Buscar nivel tarea" border="normal" closable="true" apply="com.tareas.controlador.buscarNivelTarea">
+<window id="winNuevoNivelTarea" title="Buscar nivel tarea" border="normal" closable="true" apply="com.tareas.controlador.buscarNivelTarea">
 	
 	<toolbar>
 

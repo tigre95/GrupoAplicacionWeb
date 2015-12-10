@@ -1,17 +1,17 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="TipoUsuarios" border="normal" id="winNuevoNivelTarea2" closable="true" apply="com.tareas.controlador.EditarNivelTarea">
+<window title="NivelTarea" border="normal" id="winNuevoNivelTarea2" closable="true" apply="com.tareas.controlador.EditarNivelTarea">
 	
 	<toolbar>
 <toolbarbutton image="/imagenes/nuevo.png" id="toolbarButtonNuevo" tooltip="nuevo"/>
 <toolbarbutton image="/imagenes/editar.png" id="toolbarButtonEditar" tooltip="editar"/>
-<toolbarbutton image="/imagenes/editar.png" id="toolbarButtonEliminacion" tooltip="eliminar"/>
+<toolbarbutton image="/imagenes/eliminar.png" id="toolbarButtonEliminacion" tooltip="eliminar"/>
 
 </toolbar>
 	
 	<groupbox closable="true">
 		<caption label="Busqueda"></caption>
-		<label>Tipo tarea: </label><textbox id="textboxBuscar"></textbox>
+		<label>Nivel tarea: </label><textbox id="textboxBuscar"></textbox>
 		
 		<space/>
 		<button image="/Imagenes/searchs.png" id="buttonBuscar" label="Buscar">
@@ -35,9 +35,9 @@
 		
 	</listbox>
   	
-  	<popup id="nuevo" width="160px"><html><![CDATA[Agregar Nuevo tipo tarea.]]></html></popup>
-  	<popup id="editar" width="115px"><html><![CDATA[Editar tipo tarea.]]></html></popup>
-  	<popup id="eliminar" width="125px"><html><![CDATA[Eliminar tipo tarea.]]></html></popup>
+  	<popup id="nuevo" width="160px"><html><![CDATA[Agregar Nuevo nivel tarea.]]></html></popup>
+  	<popup id="editar" width="115px"><html><![CDATA[Editar nivel tarea.]]></html></popup>
+  	<popup id="eliminar" width="125px"><html><![CDATA[Eliminar nivel tarea.]]></html></popup>
   	
 </window>
 </zk>
