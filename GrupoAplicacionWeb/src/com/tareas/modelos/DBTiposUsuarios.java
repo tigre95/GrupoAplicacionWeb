@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import org.zkoss.zul.ListModelList;
+
 
 import com.controlador.entidades.tiposusuarios;
 
@@ -309,7 +311,82 @@ public class DBTiposUsuarios {
 		return resultado;
 	}
 	
-
+	public ListModelList<tiposusuarios> listartipousuarios(){			
+		ListModelList<tiposusuarios> tipousuario= new ListModelList<tiposusuarios>();
+		DBManager dbm= new DBManager();
+		Connection con = dbm.getConection();
+		if(con==null){
+			System.out.println("Conexion es null");
+			return null;
+		}		
+		java.sql.Statement sentencia;
+		ResultSet resultados= null;
+				//EncriptarPassword(pass);
+		String query="select * from tiposusuarios where estado = 'A';";		
+		System.out.println(query);		
+		try {
+			sentencia= con.createStatement();
+			resultados = sentencia.executeQuery(query);
+		} catch (SQLException e) {
+			System.out.println("Error en ejecucion de sentencia");
+			e.printStackTrace();
+		}
+		try {
+			while(resultados.next()){
+				tiposusuarios tipousuario2 = new tiposusuarios();
+				tipousuario2.setId_tipousuario(resultados.getInt(1));
+				tipousuario2.setDescripcion(resultados.getString(2));
+				tipousuario2.setEstado(resultados.getString(3));
+				tipousuario.add(tipousuario2);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}		
+		return tipousuario;
+	}
+	
+	public ListModelList<tiposusuarios> listartipousuariossinpermisos(){			
+		ListModelList<tiposusuarios> tipousuario= new ListModelList<tiposusuarios>();
+		DBManager dbm= new DBManager();
+		Connection con = dbm.getConection();
+		if(con==null){
+			System.out.println("Conexion es null");
+			return null;
+		}		
+		java.sql.Statement sentencia;
+		ResultSet resultados= null;
+				//EncriptarPassword(pass);
+		String query="select * from tiposusuarios tu where tu.estado = 'A' and not exists(select * from permisos p"
+				+ " where p.id_tipousuario = tu.id_tipousuario and p.estado = 'A');";		
+		System.out.println(query);		
+		try {
+			sentencia= con.createStatement();
+			resultados = sentencia.executeQuery(query);
+		} catch (SQLException e) {
+			System.out.println("Error en ejecucion de sentencia");
+			e.printStackTrace();
+		}
+		try {
+			while(resultados.next()){
+				tiposusuarios tipousuario2 = new tiposusuarios();
+				tipousuario2.setId_tipousuario(resultados.getInt(1));
+				tipousuario2.setDescripcion(resultados.getString(2));
+				tipousuario2.setEstado(resultados.getString(3));
+				tipousuario.add(tipousuario2);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}		
+		if (tipousuario.isEmpty()==true){
+			return null;
+		}else{
+			return tipousuario;
+		}
+	}
 }
 	
 

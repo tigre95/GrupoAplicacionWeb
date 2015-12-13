@@ -1,0 +1,93 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="new page title" border="normal" closable="true" apply="com.tareas.controlador.NuevoPermisoControlador">
+<groupbox id="gpb_1">
+		<caption label="Permisos"></caption>
+		<space/>
+		<label value="Tipo de Roles:"></label>
+		<space/>
+		<combobox id="cmb_tipo">
+			<template name="model">
+				<comboitem label="${each.descripcion}" value="${each.id_tipousuario}" />
+			</template>
+		</combobox>
+		<space/>
+         <separator />
+        <grid >
+     <columns>
+			<column label="Descripcion"/>
+			<column label="Nuevo"/>
+			<column label="Editar"/>
+			<column label="Eliminar"/>
+			<column label="Buscar"/>
+		</columns>
+		<rows>
+		
+			<row>
+			<label value="Personas" />
+			 	<checkbox id="Pers_nuevo"/>
+				<checkbox id="Pers_editar"/>
+        		<checkbox id="Pers_eliminar"/>
+        		<checkbox id="Pers_buscar"/>
+       		 
+			</row>
+			
+			<row>
+			<label value="Tareas" />
+			 	<checkbox id="Tar_nuevo"/>
+				<checkbox id="Tar_editar"/>
+        		<checkbox id="Tar_eliminar"/>
+        		<checkbox id="Tar_buscar"/>
+        	</row>
+        	
+        	<row>
+        	<label value="Grupos" />
+			 	<checkbox id="Gru_nuevo"/>
+				<checkbox id="Gru_editar"/>
+        		<checkbox id="Gru_eliminar"/>
+        		<checkbox id="Gru_buscar"/>
+        	</row>
+        	<row>
+        	<label value="Permisos" />
+			 	<checkbox id="Perm_nuevo"/>
+				<checkbox id="Perm_editar"/>
+        		<checkbox id="Perm_eliminar"/>
+        		<checkbox id="Perm_buscar"/>
+        	</row>
+        	
+        	<row>
+        	<label value="Consultas" />
+			 	<checkbox id="Cons_nuevo"/>
+				<checkbox id="Cons_editar"/>
+        		<checkbox id="Cons_eliminar"/>
+        		<checkbox id="Cons_buscar"/>
+        	</row>
+        	
+        	<row>
+        	<label value="Reportes" />
+			 	<checkbox id="Rep_nuevo"/>
+				<checkbox id="Rep_editar"/>
+        		<checkbox id="Rep_eliminar"/>
+        		<checkbox id="Rep_buscar"/>
+        	</row>
+        	
+        	<row>
+        	<label value="Configuración" />
+			 	<checkbox id="Conf_nuevo"/>
+				<checkbox id="Conf_editar"/>
+        		<checkbox id="Conf_eliminar"/>
+        		<checkbox id="Conf_buscar"/>
+        	</row>
+        	
+			<row>
+				<button id="button_opcion" />
+				<label value="...." id="Label_mensaje" style="color:red"/>
+			</row>
+		</rows>		
+     
+     </grid>
+    
+	</groupbox>
+	
+</window>
+</zk>

@@ -56,4 +56,109 @@ public class DBPermisos {
 	}
 	
 	
+	public int guardarpermisos(permisos objeto) throws SQLException{
+		int resultado = 0;
+		DBManager dbmanager = new DBManager();
+		
+	
+	Connection conexion = dbmanager.getConection();
+		if (conexion == null) {
+			System.out.println("Conexion no se pudo realizar");
+			return 0;
+		}
+		Statement sentencia = null;
+		String query = "insert into permisos (id_tipousuario,descripcion,crear,buscar,editar,eliminar," +
+				"estado) values ("+objeto.getId_tipo_usuario()+",'"+ objeto.getDescripcion() 
+				+"',"+objeto.getCrear()+","+objeto.getBuscar()+","+objeto.getEditar()+","+
+				objeto.getEliminar()+",'"+objeto.getEstado()+"');";
+		try {
+			sentencia = conexion.createStatement();
+			resultado = sentencia.executeUpdate(query);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al crear la sentencia" + e.getMessage());
+		}
+		finally {
+			try {
+				conexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return resultado;
+	}
+
+	public int actualizarpermisos(permisos objeto) throws SQLException{
+		int resultado = 0;
+		DBManager dbmanager = new DBManager();
+		Connection conexion = dbmanager.getConection();
+		if (conexion == null) {
+			System.out.println("Conexion no se pudo realizar");
+			return 0;
+		}
+		Statement sentencia = null;
+		String query = "update permisos set " +
+				"id_tipousuario = " + objeto.getId_tipo_usuario()+","+
+				"descripcion = '" + objeto.getDescripcion()+"',"+
+				"crear = " + objeto.getCrear()+","+
+				"buscar = " + objeto.getBuscar()+","+
+				"editar = " + objeto.getEditar()+","+
+				"eliminar = " + objeto.getEliminar()+","+
+				"estado = '" + objeto.getEstado()+"' where "+
+				"id_permisos = " + objeto.getId_permisos() + ";";
+		try {
+			sentencia = conexion.createStatement();
+			resultado = sentencia.executeUpdate(query);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al crear la sentencia" + e.getMessage());
+		}
+		finally {
+			try {
+				conexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return resultado;
+	}
+	
+	public int eliminarpermisos(permisos objeto) throws SQLException{
+		int resultado = 0;
+		DBManager dbmanager = new DBManager();
+		Connection conexion = dbmanager.getConection();
+		if (conexion == null) {
+			System.out.println("Conexion no se pudo realizar");
+			return 0;
+		}
+		Statement sentencia = null;
+		String query = "update permisos set " +
+				"estado = 'E' where "+
+				"id_permisos = " + objeto.getId_permisos() + ";";
+		try {
+			sentencia = conexion.createStatement();
+			resultado = sentencia.executeUpdate(query);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error al crear la sentencia" + e.getMessage());
+		}
+		finally {
+			try {
+				conexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return resultado;
+	}
+	
 }
