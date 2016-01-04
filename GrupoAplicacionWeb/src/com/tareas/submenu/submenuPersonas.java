@@ -13,6 +13,9 @@ import org.zkoss.zul.Window;
 import com.controlador.entidades.permisos;
 import com.controlador.entidades.tiposusuarios;
 import com.controlador.entidades.usuarios;
+import com.tareas.modelos.DBPermisos;
+import com.tareas.modelos.DBTiposUsuarios;
+
 
 public class submenuPersonas extends GenericForwardComposer<Component>{
 	//enlace a los componentes de la interfaz
@@ -24,15 +27,40 @@ public class submenuPersonas extends GenericForwardComposer<Component>{
 		usuarios usuario=null;
 		tiposusuarios tipousuario = null;
 		permisos permiso_personas = null;
-		
+		DBTiposUsuarios dbtiposusuarios = new DBTiposUsuarios();
+		DBPermisos dbpermisos = new DBPermisos();
+
 	    @Override
-		public void doAfterCompose(Component comp) throws Exception {
-			// TODO Auto-generated method stub
-			super.doAfterCompose(comp);
-			 centro = (Center)winPersonas.getAttribute("centro");
-			 
-			 
-		}
+	   
+			public void doAfterCompose(Component comp) throws Exception {
+				// TODO Auto-generated method stub
+				super.doAfterCompose(comp);
+				 centro = (Center)winPersonas.getAttribute("centro");
+				 
+				 Session session = Sessions.getCurrent();
+					usuario = (usuarios) session.getAttribute("usuario");
+					if(usuario!=null){
+						tipousuario = dbtiposusuarios.mostrartipousuarios(usuario.getId_tipousuario());
+						permiso_personas = dbpermisos.mostrarpermisos(usuario.getId_tipousuario(), "personas");
+						if(permiso_personas.getCrear()==0){
+							buttonnuevoPersona.setVisible(false);
+						}else{
+							buttonnuevoPersona.setVisible(true);
+						}
+						if(permiso_personas.getBuscar()==0){
+							buttonbusquedaPersona.setVisible(false);
+						}else{
+							buttonbusquedaPersona.setVisible(true);
+						}
+						if(permiso_personas.getEditar()==0){
+							buttonedicionPersona.setVisible(false);
+						}else{
+							buttonedicionPersona.setVisible(true);
+						}
+					}else{	
+						Executions.sendRedirect("login.zul");
+					}
+			}
 	    
 		public void onClick$buttonnuevoPersona(){
 	   	 if(centro.getFirstChild()!=null){

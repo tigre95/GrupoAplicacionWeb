@@ -1,0 +1,19 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Seleccione una opcion" width="21%" height="20%" border="normal" id="wintareasjefe" apply="com.tareas.submenu.submenutareasjefes">
+<grid>
+			<rows>
+	
+				<row>
+					<button label="Nuevo" image="imagenes/nuevo.png"  width="130px" id="buttonnuevotareasjefe"/>
+					<button label="Busquedas" image="imagenes/buscar.png" width="130px" id="buttonbusquedatareasjefe" />
+				</row>
+			
+				<row>					
+					<button label="Edicion" image="imagenes/editar.png" width="130px" id="buttonediciontareasjefe" />
+					<button label="Volver" image="imagenes/Volver.png" width="130px" onClick="wintareasjefe.detach()" />
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

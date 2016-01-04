@@ -22,6 +22,13 @@ public class submenuConfiguraciones extends GenericForwardComposer<Component>{
 		
 	}
 	
+	public void crearMenu(){
+		if(roles!=16){
+		//	buttonnuevoli.setDisabled(true);
+			//buttonedicionli.setDisabled(true);
+		}
+
+	}
 	
 	public void onClick$buttontipotareas(){
    	 if(centro.getFirstChild()!=null){

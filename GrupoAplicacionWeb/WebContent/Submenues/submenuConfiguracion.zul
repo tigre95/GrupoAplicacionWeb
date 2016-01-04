@@ -1,21 +1,20 @@
 <?page title="Seleccione una opcion" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Seleccione una opcion" width="32%" height="50%" border="normal" closable="true" id="winConfiguraciones" apply="com.tareas.submenu.submenuConfiguraciones">
+	<window title="Seleccione una opcion" width="16%" height="26%" border="normal" closable="true" id="winConfiguraciones" apply="com.tareas.submenu.submenuConfiguraciones">
 
 
 
 <grid>
 			<rows>
 				<row>
-					<button label="Tipo Tareas" image="imagenes/buscar.png"  width="140px" id="buttontipotareas"  />
+					<button label="Tipo Tareas" image="imagenes/buscar.png"  width="210px" id="buttontipotareas"  />
 				</row>
 			
 				<row>					
-					<button label="Tipo Usuarios" image="imagenes/buscar.png" width="140px" id="buttontipoUsuarios" />
-					<button label="Tipo Departamento" image="imagenes/buscar.png" width="140px" id="buttontipoDepart" />
+					<button label="Tipo Departamento" image="imagenes/buscar.png" width="210px" id="buttontipoDepart" />
 				</row>
 				<row>					
-					<button label="Volver" image="imagenes/Volver.png" width="140px" onClick="winConfiguraciones.detach()"/>
+					<button label="Volver" image="imagenes/Volver.png" width="210px" onClick="winConfiguraciones.detach()"/>
 				</row>
 			</rows>
 		</grid>

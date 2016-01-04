@@ -19,16 +19,17 @@
 
 
 
-<west autoscroll="true" minsize="0" title="Opciones" maxsize="140" width="140px" splittable="true" collapsible="true" border="normal"  >
+<west autoscroll="true" minsize="0" title="Opciones" maxsize="220" width="220px" splittable="true" collapsible="true" border="normal"  >
 	
 	<grid>	
 	<rows id="menues">
-	<row><button label="PERSONAS"  image="imagenes/peronsas.png" style="margin-left:0%; width: 126px; height:60px; background-color:#A9f5A9; border: #000 1px solid;"  id="buttonpersonas" tooltip="personas" /></row>
-	<row><button label="TAREAS" image="imagenes/tareas.png" style="margin-left:0%; width: 126px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttontareas" tooltip="tareas"/></row>
-	<row><button label="PERMISOS" image="imagenes/permisos.png" style="margin-left:0%; width: 126px; height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonpermisos" tooltip="permisos"/></row>
-	<row><button label="CONSULTAS" image="imagenes/consultas.png" style="margin-left:0%; width: 126px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonconsultas" tooltip="consultas"/></row>
-	<row><button label="REPORTE" image="imagenes/reportes.png" style="margin-left:0%; width: 126px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonreportes" tooltip="reportes"/></row>
-	<row><button label="CONFIGURACIONES" image="imagenes/configuraciones.png" style="margin-left:0%; width: 126px; height:60px;background-color:#A9f5A9; border: #000 1px solid;" id="buttonconfiguraciones" tooltip="configuraciones"/></row>
+	<row><button label="PERSONAS"  image="imagenes/peronsas.png" style="margin-left:0%; width: 200px; height:60px; background-color:#A9f5A9; border: #000 1px solid;"  id="buttonpersonas" tooltip="personas" /></row>
+	<row><button label="TAREAS EMPLEADOS" image="imagenes/tareas.png" style="margin-left:0%; width: 200px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonjefe" tooltip="tareas_empleados"/></row>
+	<row><button label="TAREAS JEFE" image="imagenes/grupos.png" style="margin-left:0%; width: 200px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonempleados" tooltip="tareas_jefe"/></row>
+	<row><button label="PERMISOS" image="imagenes/permisos.png" style="margin-left:0%; width: 200px; height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonpermisos" tooltip="permisos"/></row>
+	<row><button label="CONSULTAS" image="imagenes/consultas.png" style="margin-left:0%; width: 200px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonconsultas" tooltip="consultas"/></row>
+	<row><button label="REPORTE" image="imagenes/reportes.png" style="margin-left:0%; width: 200px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonreportes" tooltip="reportes"/></row>
+	<row><button label="CONFIGURACIONES" image="imagenes/configuraciones.png" style="margin-left:0%; width: 200px; height:60px;background-color:#A9f5A9; border: #000 1px solid;" id="buttonconfiguraciones" tooltip="configuraciones"/></row>
 	
 	</rows>
 	
@@ -50,11 +51,14 @@
 		<html><![CDATA[Menu de opciones para Crear, Editar, Eliminar y Realizar Busquedas de Usuarios.
 		]]></html>
 	</popup>
-		<popup id="tareas" width="300px">
+		<popup id="tareas_empleado" width="300px">
 		<html><![CDATA[Menu de opciones para Crear, Editar, Eliminar y Realizar Busquedas de tareas.
 		]]></html>
 	</popup>
-	
+		<popup id="tareas_jefe" width="300px">
+		<html><![CDATA[Menu de opciones para Crear, Editar, Eliminar y Realizar Busquedas de grupos.
+		]]></html>
+	</popup>
 	<popup id="permisos" width="300px">
 		<html><![CDATA[Menu de opciones para asignar permisos a cada rol.
 		]]></html>

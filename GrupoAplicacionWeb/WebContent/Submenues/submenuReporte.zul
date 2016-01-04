@@ -1,6 +1,6 @@
 <?page title="Seleccione una opcion" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Seleccione una opcion" width="21%" height="50%" border="normal" closable="true" id="winReportes" apply="com.tareas.submenu.submenuReportes">
+	<window title="Seleccione una opcion" width="36%" height="26%" border="normal" closable="true" id="winReportes" apply="com.tareas.submenu.submenuReportes">
 
 
 
@@ -8,17 +8,17 @@
 			<rows>
 	
 				<row>
-					<button label="Reporte estado de tareas" image="imagenes/buscar.png"  width="80px" id="buttonRE"  />
-					<button label="Reporte Tareas Asignadas" image="imagenes/buscar.png" width="80px" id="buttonRtareasA"  />
+					<button label="Reporte Estado de Tareas" image="imagenes/buscar.png"  width="250px" id="buttonRE"  />
+					<button label="Reporte Tareas Asignadas" image="imagenes/buscar.png" width="250px" id="buttonRtareasA"  />
 				</row>
 			
 				<row>					
-					<button label="Reporte Tareas Realizadas" image="imagenes/buscar.png" width="80px" id="buttonRtareasR" />
-					<button label="Reporte Tareas Nivel Importancia" image="imagenes/buscar.png" width="80px" id="buttonRtareasN" />
+					<button label="Reporte Tareas Realizadas" image="imagenes/buscar.png" width="250px" id="buttonRtareasR" />
+					<button label="Reporte Tareas Nivel Importancia" image="imagenes/buscar.png" width="250px" id="buttonRtareasN" />
 				</row>
 				<row>					
-					<button label="Reporte Grupos" image="imagenes/buscar.png" width="80px"  id="buttonRtareasG"/>
-					<button label="Volver" image="imagenes/Volver.png" width="80px" onClick="winReportes.detach()"/>
+			
+					<button label="Volver" image="imagenes/Volver.png" width="250px" onClick="winReportes.detach()"/>
 	</row>
 			</rows>
 		</grid>

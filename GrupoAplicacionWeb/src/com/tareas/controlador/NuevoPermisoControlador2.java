@@ -18,8 +18,7 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 
-public class NuevoPermisoControlador extends GenericForwardComposer<Component>{
-
+public class NuevoPermisoControlador2 extends GenericForwardComposer<Component>{
 	@Wire
 	Button button_opcion;
 	Combobox cmb_tipo;
@@ -504,9 +503,5 @@ public class NuevoPermisoControlador extends GenericForwardComposer<Component>{
 			permiso_configuraciones.setEliminar(0);
 		}
 	}
-	
-	public NuevoPermisoControlador() {
-		// TODO Auto-generated constructor stub
-	}
-	
+
 }

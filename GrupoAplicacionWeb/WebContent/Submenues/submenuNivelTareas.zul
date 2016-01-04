@@ -1,6 +1,6 @@
 <?page title="Tipo Tareas" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Seleccione una opcion" width="25%" height="60%" border="normal" closable="true" id="wintipotareas" apply="com.tareas.submenu.submenutipotareas">
+<window title="Seleccione una opcion" width="21%" height="20%" border="normal" closable="true" id="wintipotareas" apply="com.tareas.submenu.submenutipotareas">
 
 
 <grid>
