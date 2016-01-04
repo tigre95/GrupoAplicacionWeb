@@ -66,7 +66,7 @@ public class submenuPersonas extends GenericForwardComposer<Component>{
 	   	 if(centro.getFirstChild()!=null){
 	  	 centro.removeChild(centro.getFirstChild());
 	  	 }
-	   	   	Window win=(Window) Executions.createComponents("", centro, null );
+	   	   	Window win=(Window) Executions.createComponents("FormularioPersonas/Registrar_Persona.zul", centro, null );
 	  		win.setTitle("Nuevo Usuario");
 	  		winPersonas.detach();
 	   }             
@@ -75,7 +75,7 @@ public class submenuPersonas extends GenericForwardComposer<Component>{
 	  	if(centro.getFirstChild()!=null){
 	  	 centro.removeChild(centro.getFirstChild());
 	  	 }
-	  		Window win=(Window) Executions.createComponents("", centro, null );
+	  		Window win=(Window) Executions.createComponents("FormularioPersonas/ListaPersona.zul", centro, null );
 	  		win.setTitle("Busqueda Usuarios"); 
 	  		winPersonas.detach();
 	   }  

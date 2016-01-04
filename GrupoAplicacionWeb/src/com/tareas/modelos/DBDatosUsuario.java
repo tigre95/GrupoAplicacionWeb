@@ -1,13 +1,21 @@
 
 	
 package com.tareas.modelos;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.apache.commons.codec.binary.Hex;
+
 import com.controlador.entidades.usuarios;
 public class DBDatosUsuario {
 	
 	public usuarios autenticarUsuario(String user, String pass){			
+		MessageDigest md=null;
+		String encriptado=null;
+
 		usuarios usuario= null;
 		DBManager dbm= new DBManager();
 		Connection con = dbm.getConection();
@@ -17,13 +25,27 @@ public class DBDatosUsuario {
 	}		
 		java.sql.Statement sentencia;
 		ResultSet resultados= null;
+		try {				
+			md=MessageDigest.getInstance("SHA-1");//<- este es el q estoy usando :)
+			md.update(pass.getBytes());
+			byte[] mb = md.digest();
+			mb = md.digest();
+			encriptado=String.valueOf(Hex.encodeHex(mb));
+		}
+		catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		System.out.println(encriptado);
+		
+		
 		String passwordenc=pass;
 				//EncriptarPassword(pass);
 		String query="select u.id_usuario, u.id_tipousuario, u.id_persona, u.estado from datosusuarios as du,"
 				+ " personas as p, usuarios as u, tiposusuarios as tu"
 		+ " where du.estado = 'A' and p.estado = 'A' and u.estado = 'A' and tu.estado = 'A' and "
 		+ "du.id_usuario=u.id_usuario and u.id_persona=p.id_persona and u.id_tipousuario=tu.id_tipousuario and "
-		+ " du.usuario ='" + user + "' and du.contraseña = '" + passwordenc + "'";		
+		+ " du.usuario ='" + user + "' and du.contraseña = '" + encriptado + "'";		
 		System.out.println(query);		
 		try {
 			sentencia= con.createStatement();
