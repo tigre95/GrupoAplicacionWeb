@@ -21,44 +21,43 @@ import com.controlador.entidades.departamentodb;
 
 
 public class DBUsuarios {
-public boolean CrearUsuario(Usuariodb us){
-	boolean resultado = false;
-	Connection con =null;
-	PreparedStatement stmt =null;							
-	DBManager dbm = new DBManager(); 
-	con = dbm.getConection();
-	String sql ="call sp_ingresar_usuarios(?,?,?,?,?,?,?,?,?);";			
-	try {
-		con.setAutoCommit(false);								
-		stmt = con.prepareStatement(sql);
-		stmt.setString(1, us.getNombres());
-		stmt.setInt(2,us.getIdTipoDepartamento());
-		stmt.setString(3,us.getApellidos());
-		stmt.setString(4,us.getCedula());
-		stmt.setString(5,us.getEmail());
-		stmt.setString(6,us.getDireccion());
-		
-		stmt.setInt(7,us.getId_tipousuario());
-		stmt.setString(8,us.getAlias());
-		stmt.setString(9,us.getDpasssword());
-		System.out.println(stmt);
-		int numerofilas = stmt.executeUpdate();
-		if(numerofilas>0){
-			con.commit();
-			resultado = true;
-		}
-		else {
-   		    System.out.println("No se puedo crear nuevo usuario");
-			con.rollback();
-		}
-		} catch (SQLException e) {
-		// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("Error al crear nuevo usuario" + e.getMessage());
-		}
-		return resultado;
-}
-
+	public boolean CrearUsuario(Usuariodb us){
+		boolean resultado = false;
+		Connection con =null;
+		PreparedStatement stmt =null;							
+		DBManager dbm = new DBManager(); 
+		con = dbm.getConection();
+		String sql ="call sp_ingresar_usuarios(?,?,?,?,?,?,?,?,?);";			
+		try {
+			con.setAutoCommit(false);								
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, us.getNombres());
+			stmt.setInt(2,us.getIdTipoDepartamento());
+			stmt.setString(3,us.getApellidos());
+			stmt.setString(4,us.getCedula());
+			stmt.setString(5,us.getEmail());
+			stmt.setString(6,us.getDireccion());
+			
+			stmt.setInt(7,us.getId_tipousuario());
+			stmt.setString(8,us.getAlias());
+			stmt.setString(9,us.getDpasssword());
+			System.out.println(stmt);
+			int numerofilas = stmt.executeUpdate();
+			if(numerofilas>0){
+				con.commit();
+				resultado = true;
+			}
+			else {
+	   		    System.out.println("No se puedo crear nuevo usuario");
+				con.rollback();
+			}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Error al crear nuevo usuario" + e.getMessage());
+			}
+			return resultado;
+	}
 public boolean editareliminarUsuario(Usuariodb us,int opcion){
 	boolean resultado = false;
 	Connection con =null;
@@ -96,6 +95,7 @@ public boolean editareliminarUsuario(Usuariodb us,int opcion){
 		return resultado;
 }
 
+
 public boolean validarUsuario(String cedula, String user){
 	boolean resultado = false;
 	Connection con =null;
@@ -103,7 +103,7 @@ public boolean validarUsuario(String cedula, String user){
 	//PreparedStatement stmt =null;							
 	DBManager dbm = new DBManager(); 
 	con = dbm.getConection();
-	String sql ="select p.id_persona from personas as p,usuarios as u, datosusuarios as du where p.estado='A' and u.estado='A' and du.estado='A' and p.id_persona=u.id_persona and u.id_usuario=du.id_usuario and (p.cedula ='"+cedula+"' or du.usuario ='"+user+"');";
+	String sql ="select p.id_persona from personas as p,usuarios as u, datosusuarios as du where p.estado='A' and u.estado='A' and du.estado='A' and p.id_persona=u.id_persona and u.id_usuario=du.id_usuario and (p.cedula ='"+cedula+"' or du.usuario='"+user+"');";
 	System.out.println(sql);
 	PreparedStatement sentencia;
 	ResultSet resul= null;
@@ -136,6 +136,8 @@ public boolean validarUsuario(String cedula, String user){
 	
 	return resultado;
 }
+
+
 
 public boolean validarEliminacion(){
 	boolean resultado = false;

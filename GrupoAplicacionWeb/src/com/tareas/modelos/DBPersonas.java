@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import com.controlador.entidades.personas;
 
 public class DBPersonas {
+	
+	
 
 	public personas mostrarpersonas(int id_persona){			
 		personas persona= null;

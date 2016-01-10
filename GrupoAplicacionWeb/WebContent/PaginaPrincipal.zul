@@ -19,7 +19,7 @@
 
 
 
-<west autoscroll="true" minsize="0" title="Opciones" maxsize="220" width="220px" splittable="true" collapsible="true" border="normal"  >
+<west autoscroll="true" minsize="0" title="Opciones" maxsize="220" width="235px" splittable="true" collapsible="true" border="normal"  >
 	
 	<grid>	
 	<rows id="menues">

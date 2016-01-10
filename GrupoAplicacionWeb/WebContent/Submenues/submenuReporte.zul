@@ -1,6 +1,6 @@
 <?page title="Seleccione una opcion" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Seleccione una opcion" width="36%" height="26%" border="normal" closable="true" id="winReportes" apply="com.tareas.submenu.submenuReportes">
+	<window title="Seleccione una opcion" width="37%" height="28%" border="normal" closable="true" id="winReportes" apply="com.tareas.submenu.submenuReportes">
 
 
 

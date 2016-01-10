@@ -439,6 +439,86 @@ public class DBTiposUsuarios {
 		
 		return lista;	
 	}
+	
+	public int ObtenerIdTipoUs(String descripcion){
+		int id=0;
+		DBManager dbmanager = new DBManager();
+		Connection con = dbmanager.getConection();
+		if(con==null){id=0;}
+		String query= "select id_tipousuario from tiposusuarios where estado='A' and descripcion='"+descripcion+"'";
+		System.out.println(query);
+		Statement sentencia;
+		ResultSet resultados= null;
+		try {
+			sentencia= con.createStatement();
+			resultados= sentencia.executeQuery(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Error en ejecucion de sentencia" + e.getMessage());
+		}
+		
+		try {
+			while (resultados.next()){
+				id=resultados.getInt("id_tipousuario");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Error en recorrer los resultados");
+		}
+		
+		
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Error al cerrar la conexion");
+		}
+		return id;		
+	}
+
+	public int ObtenerIdTipodept(String descripcion){
+		int id=0;
+		DBManager dbmanager = new DBManager();
+		Connection con = dbmanager.getConection();
+		if(con==null){id=0;}
+		String query= "select idTipoDepartamento from departamento where estado='A' and descripcion='"+descripcion+"'";
+		System.out.println(query);
+		Statement sentencia;
+		ResultSet resultados= null;
+		try {
+			sentencia= con.createStatement();
+			resultados= sentencia.executeQuery(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Error en ejecucion de sentencia" + e.getMessage());
+		}
+		
+		try {
+			while (resultados.next()){
+				id=resultados.getInt("idTipoDepartamento");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Error en recorrer los resultados");
+		}
+		
+		
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Error al cerrar la conexion");
+		}
+		return id;		
+	}
+
+	
 }
 	
 

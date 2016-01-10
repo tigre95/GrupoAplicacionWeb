@@ -29,8 +29,7 @@ import com.tareas.modelos.DBUsuarios;
 public class PersonaControlador extends GenericForwardComposer<Component>{
 	@Wire
 	Window winNuevoUsuario;
-	Textbox textbox_Usuario,textbox_password,textbox_Nombres,textbox_Apellidos,textbox_Direccion,textbox_Email;
-	Intbox textbox_Cedula;
+	Textbox textbox_Usuario,textbox_password,textbox_Cedula,textbox_Nombres,textbox_Apellidos,textbox_Direccion,textbox_Email;
 	Button button_Registrar,button_Cancelar;
 	Combobox Combobox_TipoUsuario,Combobox_TipoDept;
 						
@@ -55,7 +54,6 @@ public void doAfterCompose(Component comp) throws Exception {
 				alert("No hay elementos que mostrar");
 			}
 			
-			////Array list para llenar el combo Sucursal///
 			ArrayList <Departamento> departamento = null;
 			departamento=dbu.listarSucursal();
 			if(departamento != null)
@@ -68,29 +66,11 @@ public void doAfterCompose(Component comp) throws Exception {
 				alert("No hay elementos que mostrar");
 			}
 		
-	
-	
-	
-	
 	super.doAfterCompose(comp);
-	//vaciar();
+	
 }
 
 public void onCreate$winNuevoUsuario(){
-	//CargarTipoUsuarios();
-	/*Usuarios u;
-	 Session s;
-	   s=Sessions.getCurrent();
-	   u=(Usuarios) s.getAttribute("Usuario");
-	   if(u!=null){
-		   if(u.getId_tipousuario()==1){*/
-			   //CargarTipoUsuarios();
-		   /*}else{
-			   Executions.sendRedirect("/MenuPrincipalTV.zul");
-		   }
-	   }else{
-		   Executions.sendRedirect("/MenuPrincipalTV.zul");
-	   }*/
 }
 
 public void vaciar(){
@@ -115,16 +95,15 @@ public void CargarTipoUsuarios(){
 
 public void onClick$button_Registrar(){
 	DBUsuarios dbu=new DBUsuarios();
-	
-	if(dbu.validarUsuario(textbox_Cedula.getText(),textbox_Usuario.getValue())){
-		//alert("Usuario ya existe en es registro");
+	if(dbu.validarUsuario(textbox_Cedula.getValue(),textbox_Usuario.getValue())){
+		alert("Usuario y/o Cedula ya existen");
 	}
 	else{
 		String password = textbox_password.getText();
 		MessageDigest md=null;
-		String encriptado=null;
+		String encriptado=null; 
 		try {				
-			md=MessageDigest.getInstance("SHA-1");//<- este es el q estoy usando :)
+			md=MessageDigest.getInstance("SHA-1");
 			md.update(password.getBytes());
 			byte[] mb = md.digest();
 			mb = md.digest();
@@ -144,18 +123,22 @@ public void onClick$button_Registrar(){
 		us.setDpasssword(encriptado);
 		us.setId_tipousuario((int) Combobox_TipoUsuario.getSelectedItem().getValue());
 		us.setIdTipoDepartamento((int) Combobox_TipoDept.getSelectedItem().getValue());
-		
 		boolean resultado= false;
 		resultado=dbu.CrearUsuario(us);
 		if(resultado){
 			alert("Guardado Exitosamente");
-		//	Executions.sendRedirect("/MenuPrincipalTV.zul");
+			winNuevoUsuario.detach();
+
+		vaciar();
+		
 		}else{
 			alert("Error al guardar usuario");
 		}
 	}
 	
 }
+	
+
 
 public void onClick$button_Cancelar(){
 	winNuevoUsuario.detach();

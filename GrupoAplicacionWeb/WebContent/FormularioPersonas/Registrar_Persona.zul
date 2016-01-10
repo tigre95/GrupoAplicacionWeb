@@ -51,9 +51,9 @@
 				</row>
 				<row>
 					<label value="Cedula:" />
-					<intbox id="textbox_Cedula"
+					<textbox id="textbox_Cedula"
 						constraint="no empty">
-					</intbox>
+					</textbox>
 				</row>
 				<row>
 					<label value="Direccion:" />

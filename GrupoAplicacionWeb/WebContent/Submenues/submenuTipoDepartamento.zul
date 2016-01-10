@@ -7,13 +7,13 @@
 			<rows>
 	
 				<row>
-					<button label="Nuevo" image="imagenes/nuevo.png"  width="140px"  id="buttonnuevotipodepart"/>
-					<button label="Busquedas" image="imagenes/buscar.png" width="140px" id="buttonbusquedatipodepart"/>
+					<button label="Nuevo" image="imagenes/nuevo.png"  width="130px"  id="buttonnuevotipodepart"/>
+					<button label="Busquedas" image="imagenes/buscar.png" width="130px" id="buttonbusquedatipodepart"/>
 				</row>
 			
 				<row>					
-					<button label="Edicion" image="imagenes/editar.png" width="140px"  id="buttonedicionttipodepart"/>
-					<button label="Volver" image="imagenes/Volver.png" width="140px" onClick="wintipodepart.detach()"/>
+					<button label="Edicion" image="imagenes/editar.png" width="130px"  id="buttonedicionttipodepart"/>
+					<button label="Volver" image="imagenes/Volver.png" width="130px" onClick="wintipodepart.detach()"/>
 				</row>
 			</rows>
 		</grid>
