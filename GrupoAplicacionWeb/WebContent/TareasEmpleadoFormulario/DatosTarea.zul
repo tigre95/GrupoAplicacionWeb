@@ -1,0 +1,57 @@
+<?page title="Datos Tarea a Realizar" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window style="text-align:'center';" border="none" width="50%" 
+height="426px" contentStyle="overflow:auto" mode="modal" sizable="false" id="WinDatosTareas"
+apply="">
+<borderlayout>
+	<center>
+		<grid>
+			<rows>
+				<row style="background-color:yellow;" spans="2">
+					<label >DATOS DE TAREA A REALIZAR</label>
+				</row>
+				<row spans="1,1">
+					<label>Listado de Tareas</label>
+					<button width="100%" label="Tareas" id="buttonTareas" ></button>					
+				</row>
+				<row spans="1,1">
+					<label>Descargar archivo de la Tarea</label>
+					<button width="100%" label="Descargar" id="buttonDescargarTarea" ></button>
+				</row>
+				<row>
+					<label>Fecha inicio:</label>
+					<label>Fecha Fin:</label>
+				</row>
+				<row>
+					<datebox width="100%" id="dateboxFechaInicio"></datebox>
+					<datebox width="100%" id="dateboxFechaFin"></datebox>
+				</row>
+				<row>
+					<label>Descripción:</label>
+				</row>
+				<row spans="2">
+					<textbox rows="2" multiline="true" width="100%" id="textboxDescripcion"></textbox>
+				</row>
+				<row style="background-color:yellow;" spans="2">
+					<label >DATOS DE TAREA A SUBIR</label>
+				</row>
+				<row spans="1,1">
+					<label>Subir archivo de la Tarea</label>
+					<button width="100%" label="Subir" id="buttonSubirTarea" ></button>
+				</row>
+				<row spans="2">
+					<label>Comentario:</label>
+				</row>
+				<row spans="2">
+					<textbox rows="2" multiline="true" width="100%" id="textboxComentario"></textbox>
+				</row>
+				<row >
+					<label>Fecha de subida d Tarea:</label>
+					<label id="labelFechaSubida"></label>
+				</row>
+			</rows>
+		</grid>
+	</center>
+</borderlayout>
+</window>
+</zk>
