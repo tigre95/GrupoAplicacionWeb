@@ -1,0 +1,51 @@
+<?page title="Asignar Tarea" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Asignar Tarea" style="text-align:'center';" border="none" width="50%" 
+height="365px" contentStyle="overflow:auto" mode="modal" sizable="false" id="WinAsignarTarea"
+apply="">
+<borderlayout>
+	<center>
+		<grid>
+			<rows>
+				<row>
+					<combobox width="100%" id="comboNivelTarea"></combobox>
+					<label>NIVEL TAREAS</label>
+				</row>
+				<row >
+					<label>EMPLEADO:</label>
+					<button width="100%" label="Ver Lista de Empleados" id="buttonVer" style="float:'right';"></button>
+				</row>
+				<row >
+					<label width="100%">Nombre del Empleado: </label>
+					<label width="100%" id="labelNombreEmpleado">Nombre del Empleado</label>
+				</row>
+				<row>
+					<label>Descripción:</label>
+				</row>
+				<row spans="2">
+					<textbox rows="2" multiline="true" width="100%" id="textboxDescripcion"></textbox>
+				</row>
+				<row>
+					<tabbox></tabbox>
+					<label>Fecha inicio:</label>
+					<label>Fecha Fin:</label>
+				</row>
+				<row>
+					<button label="Archivo Adjunto" width="100%" id="buttonArchivoAdjunto"></button>
+					<datebox width="100%" id="dateboxFechaInicio"></datebox>
+					<datebox width="100%" id="dateboxFechaFin"></datebox>
+				</row>
+				<row>
+					<tabbox></tabbox>
+					<label>Comentario:</label>
+				</row>
+				<row spans="1,2">
+					<label>#tareas: </label>
+					<textbox width="100%" multiline="true" rows="2"></textbox>
+				</row>
+			</rows>
+		</grid>
+	</center>
+</borderlayout>
+</window>
+</zk>

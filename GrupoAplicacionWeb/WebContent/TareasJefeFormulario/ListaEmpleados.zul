@@ -1,0 +1,32 @@
+<?page title="Lista de Empleados" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Lista de Empleados" style="text-align:'center';" border="none" width="50%" 
+height="365px" contentStyle="overflow:auto" mode="modal" sizable="false" id="WinListaEmpleados"
+apply="">
+	<listbox id="ListaEmpleados" mold="paging" pageSize="10"
+		multiple="false" width="100%"
+		emptyMessage="No hay Empleados" >
+		<auxhead sclass="category-center" >
+			<auxheader  rowspan="1" colspan="2">
+				<label>Cédula: </label>
+				<textbox id="textboxCedula" width="30%"></textbox>
+				<button label="Buscar" id="button_Buscar" />
+			</auxheader>
+		</auxhead>
+		<auxhead sclass="category-center">
+		</auxhead>
+		<listhead sizable="true" menupopup="auto">
+			<listheader label="Cédula" sort="auto(cedula)" />
+			<listheader label="Nombre Completo" sort="auto(nombre)" />
+			<listheader label="#Tareas Asignadas" sort="auto(numero_tareas)" />
+		</listhead>
+		<template name="model">
+			<listitem>
+				<listcell label="${each.cedula}" />
+				<listcell label="${each.nombre}" />
+				<listcell label="${each.numero_tareas}" />
+			</listitem>
+		</template>
+	</listbox>
+</window>
+</zk>
