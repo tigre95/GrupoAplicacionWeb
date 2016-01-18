@@ -48,7 +48,8 @@ public class editarPersona extends GenericForwardComposer<Component>{
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
-		
+		grilla.setVisible(false);
+		buscarUsuarios("");
 	}
 	
 	public void onClick$btnCancelarre(){

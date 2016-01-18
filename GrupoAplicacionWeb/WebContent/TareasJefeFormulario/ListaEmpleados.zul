@@ -1,8 +1,8 @@
 <?page title="Lista de Empleados" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Lista de Empleados" style="text-align:'center';" border="none" width="50%" 
-height="365px" contentStyle="overflow:auto" mode="modal" sizable="false" id="WinListaEmpleados"
-apply="">
+<window title="Lista de Empleados" style="text-align:'center';" border="none" width="100%" 
+height="365px" contentStyle="overflow:auto" sizable="false" id="WinListaEmpleados"
+apply="com.tareas.controlador.ListaEmpleadosControlador" closable="true">
 	<listbox id="ListaEmpleados" mold="paging" pageSize="10"
 		multiple="false" width="100%"
 		emptyMessage="No hay Empleados" >
@@ -17,14 +17,12 @@ apply="">
 		</auxhead>
 		<listhead sizable="true" menupopup="auto">
 			<listheader label="Cédula" sort="auto(cedula)" />
-			<listheader label="Nombre Completo" sort="auto(nombre)" />
-			<listheader label="#Tareas Asignadas" sort="auto(numero_tareas)" />
+			<listheader label="Nombre Completo" sort="auto(nombres)" />
 		</listhead>
 		<template name="model">
 			<listitem>
 				<listcell label="${each.cedula}" />
-				<listcell label="${each.nombre}" />
-				<listcell label="${each.numero_tareas}" />
+				<listcell label="${each.nombres} ${each.apellidos}"  />
 			</listitem>
 		</template>
 	</listbox>

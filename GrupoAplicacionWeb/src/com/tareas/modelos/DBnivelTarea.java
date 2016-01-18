@@ -211,6 +211,55 @@ public class DBnivelTarea {
 	}
 	
 	
+public ArrayList<NivelTareas> listarTareasnivel() {
+		
+		ArrayList<NivelTareas> tipo_usuario = new ArrayList<NivelTareas>();
+		
+		NivelTareas tipo_user = null;
+		//busqueda de existencia de usuario para conectarse a la Base de Datos
+		DBManager dbm= new DBManager();
+		Connection con= dbm.getConection();
+		if(con==null){
+			System.out.println("error de Conexion");
+			return tipo_usuario;
+		}
+		//sentencia a ejecutar
+		Statement sentencia;
+		
+		//objeto para almacenar resultados
+		ResultSet resultados;
+		
+		String sql="SELECT * FROM niveltareas as niv where niv.estado='A' order by niv.descripcion" ;
+		//ejecutar sentencia
+		try {
+			sentencia=con.createStatement();
+			resultados=sentencia.executeQuery(sql);
+			//recorrer el ResultSet=conjunto de registros que se obtiene como resultado de la sentencia
+			while(resultados.next()){
+				tipo_user=new NivelTareas();
+				tipo_user.setId_tipotarea(resultados.getInt("id_tipotarea"));
+				tipo_user.setDescripcion(resultados.getString("descripcion"));
+					tipo_user.setEstado(resultados.getString("estado"));
+								
+				tipo_usuario.add(tipo_user);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return tipo_usuario;
+	}
+
+	
 }
 
 

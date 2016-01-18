@@ -35,7 +35,7 @@ public class submenuConsultas extends GenericForwardComposer<Component>{
    	 if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   	   	Window win=(Window) Executions.createComponents("", centro, null );
+   	   	Window win=(Window) Executions.createComponents("Consultas/ConsultaTareaActiva.zul", centro, null );
   		win.setTitle("Nueva Categoria");
   		winconsultas.detach();
    }             
@@ -62,7 +62,7 @@ public class submenuConsultas extends GenericForwardComposer<Component>{
 	  	if(centro.getFirstChild()!=null){
 	  	 centro.removeChild(centro.getFirstChild());
 	  	 }
-	   		Window win=(Window) Executions.createComponents("", centro, null );  		
+	   		Window win=(Window) Executions.createComponents("Consultas/ConsultaNivelTareas.zul", centro, null );  		
 	  		win.setTitle("Listar Categorias");
 	  		winconsultas.detach();
 	   }
