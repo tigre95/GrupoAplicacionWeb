@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import org.zkoss.zul.ListModelList;
 
 import com.controlador.entidades.NivelTareas;
 
@@ -259,6 +260,38 @@ public ArrayList<NivelTareas> listarTareasnivel() {
 		return tipo_usuario;
 	}
 
+public ListModelList<NivelTareas> cargar_NivelTareas(){
+	Statement state = null;
+	Integer cont = 0;
+	ResultSet resultado = null;
+	ListModelList<NivelTareas> niveltareas = new ListModelList<NivelTareas>();
+	DBManager dbmanager = new DBManager();
+	Connection con = dbmanager.getConection();
+	if(con==null){return niveltareas;}
+	try{
+	state = (Statement) con.createStatement();
+	resultado = state.executeQuery("select * from niveltareas where estado = 'A';");
+	
+			while(resultado.next()){
+			cont = cont + 1;
+			NivelTareas niveltarea = new NivelTareas();
+			niveltarea.setId_tipotarea(resultado.getInt(1));
+			niveltarea.setDescripcion(resultado.getString(2));
+			niveltarea.setEstado(resultado.getString(3));
+			niveltareas.add(niveltarea);
+		}
+	if(cont>0){
+		return niveltareas;
+	}else{
+		return null;
+	}
+	}
+	catch(SQLException e)
+	{
+		e.printStackTrace();
+		return null;
+	}
+}
 	
 }
 

@@ -10,7 +10,7 @@ import org.zkoss.zul.Window;
 
 public class submenuConsultas extends GenericForwardComposer<Component>{
 	@Wire
-	Button buttontareasA,buttonRepGeneral,buttontareasR,buttontareasN,buttontareasG;
+	Button buttontareasA,buttonRepGeneral,buttontareasR,buttontareasN,buttontareasG,buttonTareaEliminada,buttonTareaAtrasada;
 	Center centro= null;
 	Window winconsultas;
 	int roles;
@@ -36,7 +36,7 @@ public class submenuConsultas extends GenericForwardComposer<Component>{
   	 centro.removeChild(centro.getFirstChild());
   	 }
    	   	Window win=(Window) Executions.createComponents("Consultas/ConsultaTareaActiva.zul", centro, null );
-  		win.setTitle("Nueva Categoria");
+  		win.setTitle("Consulta Tarea Activa");
   		winconsultas.detach();
    }             
                 
@@ -44,8 +44,8 @@ public class submenuConsultas extends GenericForwardComposer<Component>{
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-  		Window win=(Window) Executions.createComponents("", centro, null );
-  		win.setTitle("Busqueda Categorias"); 
+  		Window win=(Window) Executions.createComponents("Consultas/ConsultaTareasPendientes.zul", centro, null );
+  		win.setTitle("Consulta Tarea Pendiente"); 
   		winconsultas.detach();
    }  
 	
@@ -53,8 +53,8 @@ public class submenuConsultas extends GenericForwardComposer<Component>{
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   		Window win=(Window) Executions.createComponents("", centro, null );  		
-  		win.setTitle("Listar Categorias");
+   		Window win=(Window) Executions.createComponents("Consultas/ConsultaTareasRealizadas.zul", centro, null );  		
+  		win.setTitle("Consultas Tareas Realizada");
   		winconsultas.detach();
    }
    
@@ -63,17 +63,29 @@ public class submenuConsultas extends GenericForwardComposer<Component>{
 	  	 centro.removeChild(centro.getFirstChild());
 	  	 }
 	   		Window win=(Window) Executions.createComponents("Consultas/ConsultaNivelTareas.zul", centro, null );  		
-	  		win.setTitle("Listar Categorias");
+	  		win.setTitle("Cosulta Nivel Tareas");
 	  		winconsultas.detach();
 	   }
    
    
-   public void onClick$buttontareasG(){
+   public void onClick$buttonTareaEliminada(){
 	  	if(centro.getFirstChild()!=null){
 	  	 centro.removeChild(centro.getFirstChild());
 	  	 }
-	   		Window win=(Window) Executions.createComponents("", centro, null );  		
-	  		win.setTitle("Listar Categorias");
+	   		Window win=(Window) Executions.createComponents("Consultas/ConsultaTareaEliminada.zul", centro, null );  		
+	  		win.setTitle("Consulta Tarea Eliminada");
 	  		winconsultas.detach();
 	   }
+   
+   
+   public void onClick$buttonTareaAtrasada(){
+	  	if(centro.getFirstChild()!=null){
+	  	 centro.removeChild(centro.getFirstChild());
+	  	 }
+	   		Window win=(Window) Executions.createComponents("Consultas/ConsultaTareaAtrazada.zul", centro, null );  		
+	  		win.setTitle("Consulta Tarea Atrazada");
+	  		winconsultas.detach();
+	   }
+   
+   
 }

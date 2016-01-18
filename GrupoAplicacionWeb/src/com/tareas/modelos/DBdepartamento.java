@@ -10,7 +10,42 @@ import java.util.ArrayList;
 import com.controlador.entidades.Departamento;
 
 public class DBdepartamento {
-	
+	public Departamento mostrardepartamento(int id_departamento){			
+		Departamento departamento= null;
+		DBManager dbm= new DBManager();
+		Connection con = dbm.getConection();
+		if(con==null){
+			System.out.println("Conexion es null");
+			return null;
+	}		
+		java.sql.Statement sentencia;
+		ResultSet resultados= null;
+				//EncriptarPassword(pass);
+		String query="select * from departamento where estado = 'A' and"
+		+ " idTipoDepartamento =" + id_departamento + ";";		
+		System.out.println(query);		
+		try {
+			sentencia= con.createStatement();
+			resultados = sentencia.executeQuery(query);
+		} catch (SQLException e) {
+			System.out.println("Error en ejecucion de sentencia");
+			e.printStackTrace();
+		}
+		try {
+			while(resultados.next()){
+				Departamento departamento2 = new Departamento();
+				departamento2.setId_tipodepartamento(resultados.getInt(1));
+				departamento2.setDescripcion(resultados.getString(2));
+				departamento2.setEstado(resultados.getString(3));
+				departamento = departamento2;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}	
+		return departamento;
+	}
 	public ArrayList<Departamento>ValidarDepartamento(String criterio, int criterio2){			
 		ArrayList<Departamento> lista= null;
 		//conectar a la bd

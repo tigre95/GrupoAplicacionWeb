@@ -1,6 +1,6 @@
 <?page title="Seleccione una opcion" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Seleccione una opcion" width="37%" height="28%" border="normal" closable="true" id="winconsultas" apply="com.tareas.submenu.submenuConsultas">
+	<window title="Seleccione una opcion" width="70%" height="28%" border="normal" closable="true" id="winconsultas" apply="com.tareas.submenu.submenuConsultas">
 
 
 
@@ -8,8 +8,12 @@
 			<rows>
 	
 				<row>
-					<button label="Consultas General" image="imagenes/buscar.png"  width="250px" id="buttonRepGeneral"  />
+					<button label="Consultas Tareas Pendientes" image="imagenes/buscar.png"  width="250px" id="buttonRepGeneral"  />
 					<button label="ConsuLtas Tareas Asignadas" image="imagenes/buscar.png" width="250px" id="buttontareasA"  />
+					
+					<button label="Consultas Tareas Eliminadas" image="imagenes/buscar.png"  width="250px" id="buttonTareaEliminada"  />
+					<button label="ConsuLtas Tareas Atrasada" image="imagenes/buscar.png" width="250px" id="buttonTareaAtrasada"  />
+			
 				</row>
 			
 				<row>					

@@ -1,28 +1,34 @@
 <?page title="Asignar Tarea" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Asignar Tarea" style="text-align:'center';" border="none" width="50%" 
-height="365px" contentStyle="overflow:auto" mode="modal" sizable="false" id="WinAsignarTarea"
-apply="">
+<window title="Asignar Tarea" style="text-align:'center';" border="none" width="100%" 
+height="365px" contentStyle="overflow:auto" sizable="false" id="WinAsignarTarea"
+apply="com.tareas.controlador.AsignarTareaControlador" closable="true">
 <borderlayout>
 	<center>
 		<grid>
 			<rows>
 				<row>
-					<combobox width="100%" id="comboNivelTarea"></combobox>
+					<combobox width="100%" id="comboNivelTarea" autodrop="true">
+						<template name="model">
+							<comboitem label="${each.descripcion}" value="${each.id_tipotarea}" />
+						</template>
+					</combobox>
 					<label>NIVEL TAREAS</label>
+					<label id="labelDatosUsuario"></label>
 				</row>
-				<row >
+				<row spans="2">
 					<label>EMPLEADO:</label>
 					<button width="100%" label="Ver Lista de Empleados" id="buttonVer" style="float:'right';"></button>
 				</row>
 				<row >
 					<label width="100%">Nombre del Empleado: </label>
-					<label width="100%" id="labelNombreEmpleado">Nombre del Empleado</label>
+					<label width="100%" id="labelNombreEmpleado" value=""></label>
+					<button width="100%" disabled="true" label="Ver historial" id="buttonVerHistorial"></button>
 				</row>
-				<row>
+				<row spans="3">
 					<label>Descripción:</label>
 				</row>
-				<row spans="2">
+				<row spans="3">
 					<textbox rows="2" multiline="true" width="100%" id="textboxDescripcion"></textbox>
 				</row>
 				<row>
@@ -31,17 +37,18 @@ apply="">
 					<label>Fecha Fin:</label>
 				</row>
 				<row>
-					<button label="Archivo Adjunto" width="100%" id="buttonArchivoAdjunto"></button>
-					<datebox width="100%" id="dateboxFechaInicio"></datebox>
+					<button label="Archivo Adjunto" width="100%" id="buttonArchivoAdjunto"
+					upload="true,maxsize=8192" autodisable="self"> </button>
+					<label width="100%" id="labelFechaInicio" value=""></label>
 					<datebox width="100%" id="dateboxFechaFin"></datebox>
 				</row>
-				<row>
-					<tabbox></tabbox>
+				<row spans="2">
 					<label>Comentario:</label>
+					<button label="" width="100%" id="buttonOpcion"></button>
 				</row>
-				<row spans="1,2">
-					<label>#tareas: </label>
-					<textbox width="100%" multiline="true" rows="2"></textbox>
+				<row spans="2">
+					<textbox width="100%" multiline="true" rows="2" id="textboxComentario"></textbox>
+					<button label="Cancelar" width="100%" id="buttonCancelar"></button>
 				</row>
 			</rows>
 		</grid>

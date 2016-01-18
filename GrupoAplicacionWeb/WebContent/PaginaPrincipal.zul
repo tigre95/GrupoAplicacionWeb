@@ -24,8 +24,8 @@
 	<grid>	
 	<rows id="menues">
 	<row><button label="PERSONAS"  image="imagenes/peronsas.png" style="margin-left:0%; width: 200px; height:60px; background-color:#A9f5A9; border: #000 1px solid;"  id="buttonpersonas" tooltip="personas" /></row>
-	<row><button label="TAREAS EMPLEADOS" image="imagenes/tareas.png" style="margin-left:0%; width: 200px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonjefe" tooltip="tareas_empleados"/></row>
-	<row><button label="TAREAS JEFE" image="imagenes/grupos.png" style="margin-left:0%; width: 200px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonempleados" tooltip="tareas_jefe"/></row>
+	<row><button label="TAREAS EMPLEADOS" image="imagenes/tareas.png" style="margin-left:0%; width: 200px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonempleados" tooltip="tareas_empleados"/></row>
+	<row><button label="TAREAS JEFE" image="imagenes/grupos.png" style="margin-left:0%; width: 200px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonjefe"  tooltip="tareas_jefe"/></row>
 	<row><button label="PERMISOS" image="imagenes/permisos.png" style="margin-left:0%; width: 200px; height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonpermisos" tooltip="permisos"/></row>
 	<row><button label="CONSULTAS" image="imagenes/consultas.png" style="margin-left:0%; width: 200px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonconsultas" tooltip="consultas"/></row>
 	<row><button label="REPORTE" image="imagenes/reportes.png" style="margin-left:0%; width: 200px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonreportes" tooltip="reportes"/></row>
@@ -43,6 +43,9 @@
 	<label value="">
 	</label>
 </center>
+<east id="este" width="40%" collapsible="true" visible="false">
+
+</east>
 
 <south>
 </south>

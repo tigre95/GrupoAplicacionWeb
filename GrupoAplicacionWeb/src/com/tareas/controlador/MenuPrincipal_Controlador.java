@@ -10,7 +10,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Center;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Window;
-
+import org.zkoss.zul.East;
 import com.controlador.entidades.permisos;
 import com.controlador.entidades.personas;
 import com.controlador.entidades.tiposusuarios;
@@ -26,6 +26,7 @@ public class MenuPrincipal_Controlador extends GenericForwardComposer<Component>
 	Label label_usuario;
 	Button buttonpersonas, buttonjefe, buttonempleados, buttonpermisos, buttonconsultas, buttonreportes, buttonconfiguraciones;
 	Center centro;
+	East este;
 	
 	//declarar variables
 	usuarios usuario=null;
@@ -70,14 +71,14 @@ public class MenuPrincipal_Controlador extends GenericForwardComposer<Component>
 			buttonpersonas.setVisible(true);
 		}
 		if(permiso_tareas.getCrear()==0 && permiso_tareas.getBuscar()==0 && permiso_tareas.getEditar()==0 && permiso_tareas.getEliminar()==0){
-			buttonjefe.setVisible(false);
-		}else{
-			buttonjefe.setVisible(true);
-		}
-		if(permiso_tareasjefe.getCrear()==0 && permiso_tareasjefe.getBuscar()==0 && permiso_tareasjefe.getEditar()==0 && permiso_tareasjefe.getEliminar()==0){
 			buttonempleados.setVisible(false);
 		}else{
 			buttonempleados.setVisible(true);
+		}
+		if(permiso_tareasjefe.getCrear()==0 && permiso_tareasjefe.getBuscar()==0 && permiso_tareasjefe.getEditar()==0 && permiso_tareasjefe.getEliminar()==0){
+			buttonjefe.setVisible(false);
+		}else{
+			buttonjefe.setVisible(true);
 		}
 		if(permiso_permisos.getCrear()==0 && permiso_permisos.getBuscar()==0 && permiso_permisos.getEditar()==0 && permiso_permisos.getEliminar()==0){
 			buttonpermisos.setVisible(false);
@@ -116,6 +117,7 @@ public class MenuPrincipal_Controlador extends GenericForwardComposer<Component>
 		
 		
 	public void onClick$buttonconsultas(){
+		este.setVisible(false);
 		Window win=(Window) Executions.createComponents("Submenues/submenuConsulta.zul", null, null );
 		win.setAttribute("centro", centro);
 		win.setTitle("Opciones");
@@ -123,6 +125,7 @@ public class MenuPrincipal_Controlador extends GenericForwardComposer<Component>
 	}
 	
 	public void onClick$buttonpermisos(){
+		este.setVisible(false);
 		Window win=(Window) Executions.createComponents("Submenues/submenuPermisos.zul", null, null );
 		win.setAttribute("centro", centro);
 		win.setTitle("Opciones");
@@ -130,6 +133,7 @@ public class MenuPrincipal_Controlador extends GenericForwardComposer<Component>
 	}
 
 	public void onClick$buttonpersonas(){
+		este.setVisible(false);
 		Window win=(Window) Executions.createComponents("Submenues/submenuPersonas.zul", null, null );
 		win.setAttribute("centro", centro);
 		win.setTitle("Opciones");
@@ -137,25 +141,31 @@ public class MenuPrincipal_Controlador extends GenericForwardComposer<Component>
 	}
 	
 	public void onClick$buttonjefe(){
+		este.setVisible(true);
 		Window win=(Window) Executions.createComponents("Submenues/submenuTareasjefe.zul", null, null );
 		win.setAttribute("centro", centro);
+		win.setAttribute("este", este);
 		win.setTitle("Opciones");
 		win.doModal();		
 	}
 	
 	public void onClick$buttonempleados(){
+		este.setVisible(true);
 		Window win=(Window) Executions.createComponents("Submenues/submenuTareasEmpleado.zul", null, null );
 		win.setAttribute("centro", centro);
+		win.setAttribute("este", este);
 		win.setTitle("Opciones");
 		win.doModal();		
 	}
 	public void onClick$buttonconfiguraciones(){
+		este.setVisible(false);
 		Window win=(Window) Executions.createComponents("Submenues/submenuConfiguracion.zul", null, null );
 		win.setAttribute("centro", centro);
 		win.setTitle("Opciones");
 		win.doModal();		
 	}
 	public void onClick$buttonreportes(){
+		este.setVisible(false);
 		Window win=(Window) Executions.createComponents("Submenues/submenuReporte.zul", null, null );
 		win.setAttribute("centro", centro);
 		win.setTitle("Opciones");
@@ -169,5 +179,4 @@ public class MenuPrincipal_Controlador extends GenericForwardComposer<Component>
 		}
 */
 	}
-
 }

@@ -60,29 +60,35 @@ public class submenutareasjefes extends GenericForwardComposer<Component>{
 			}
 	}
     
-	public void onClick$buttonnuevotareas(){
+	public void onClick$buttonnuevotareasjefe(){
    	 if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   	   	Window win=(Window) Executions.createComponents("Modulo_Control_Categoria/RegistroCategoria.zul", centro, null );
-  		win.setTitle("Nueva Tarea");
+   	 	Session session = Sessions.getCurrent();
+   	 	session.setAttribute("OpcionTareasJefe", "Guardar");
+   	   	Window win=(Window) Executions.createComponents("TareasJefeFormulario/AsignarTarea.zul", centro, null );
+  		win.setAttribute("opcion", "Guardar");
   		wintareasjefe.detach();
    }             
                 
-   public void onClick$buttonbusquedatareas(){
+   public void onClick$buttonbusquedatareasjefe(){
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-  		Window win=(Window) Executions.createComponents("Modulo_Control_Categoria/BuscarCategoria.zul", centro, null );
-  		win.setTitle("Busqueda Tarea"); 
+  		Session session = Sessions.getCurrent();
+	 	session.setAttribute("OpcionTareasJefe", "Buscar");
+  		Window win=(Window) Executions.createComponents("TareasJefeFormulario/BuscarTarea.zul", centro, null );
+  		win.setTitle("Busqueda Tarea");
   		wintareasjefe.detach();
    }  
 	
-   public void onClick$buttonediciontareas(){
+   public void onClick$buttonediciontareasjefe(){
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   		Window win=(Window) Executions.createComponents("Modulo_Control_Categoria/ListarCategoria.zul", centro, null );  		
+  		Session session = Sessions.getCurrent();
+	 	session.setAttribute("OpcionTareasJefe", "Editar");
+   		Window win=(Window) Executions.createComponents("TareasJefeFormulario/BuscarTarea.zul", centro, null );  		
   		win.setTitle("Listar Tareas");
   		wintareasjefe.detach();
    }

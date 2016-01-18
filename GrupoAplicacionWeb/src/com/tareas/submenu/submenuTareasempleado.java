@@ -64,7 +64,7 @@ public class submenuTareasempleado extends GenericForwardComposer<Component>{
    	 if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   	   	Window win=(Window) Executions.createComponents("Modulo_Control_Categoria/RegistroCategoria.zul", centro, null );
+   	   	Window win=(Window) Executions.createComponents("", centro, null );
   		win.setTitle("Nueva Tarea");
   		wintareas.detach();
    }             
@@ -73,7 +73,7 @@ public class submenuTareasempleado extends GenericForwardComposer<Component>{
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-  		Window win=(Window) Executions.createComponents("Modulo_Control_Categoria/BuscarCategoria.zul", centro, null );
+  		Window win=(Window) Executions.createComponents("", centro, null );
   		win.setTitle("Busqueda Tarea"); 
   		wintareas.detach();
    }  
@@ -82,7 +82,7 @@ public class submenuTareasempleado extends GenericForwardComposer<Component>{
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   		Window win=(Window) Executions.createComponents("Modulo_Control_Categoria/ListarCategoria.zul", centro, null );  		
+   		Window win=(Window) Executions.createComponents("", centro, null );  		
   		win.setTitle("Listar Tareas");
   		wintareas.detach();
    }
