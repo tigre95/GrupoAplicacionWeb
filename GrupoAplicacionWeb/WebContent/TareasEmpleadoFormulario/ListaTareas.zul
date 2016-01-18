@@ -2,7 +2,7 @@
 <zk>
 <window title="Listado de Tareas" style="text-align:'center';" border="none" width="50%" 
 height="365px" contentStyle="overflow:auto" mode="modal" sizable="false" id="WinListaTareas"
-apply="">
+apply="com.tareas.controlador.ListaTareasControlador">
 	<listbox id="ListaTareas" mold="paging" pageSize="10"
 		multiple="false" width="100%"
 		emptyMessage="No hay Tareas" >

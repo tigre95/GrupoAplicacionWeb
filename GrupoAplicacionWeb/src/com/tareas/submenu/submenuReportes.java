@@ -30,14 +30,21 @@ public class submenuReportes extends GenericForwardComposer<Component>{
 		}
 
 	}
-
+	public void onClick$buttonNivelTarea(){
+	   	 if(centro.getFirstChild()!=null){
+	  	 centro.removeChild(centro.getFirstChild());
+	  	 }
+	   	   	Window win=(Window) Executions.createComponents("Reportes/ReporteNivelImportancia.zul", centro, null );
+	  		win.setTitle("Reporte nivel importancia");
+	  		winReportes.detach();
+	   }   
     
 	public void onClick$buttonTareaPendiente(){
    	 if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
    	   	Window win=(Window) Executions.createComponents("Reportes/ReportesTareasPendientes.zul", centro, null );
-  		win.setTitle("Nueva Categoria");
+  		win.setTitle("Reporte Tareas Pendientes");
   		winReportes.detach();
    }             
                 
@@ -45,8 +52,8 @@ public class submenuReportes extends GenericForwardComposer<Component>{
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-  		Window win=(Window) Executions.createComponents("", centro, null );
-  		win.setTitle("Busqueda Categorias"); 
+  		Window win=(Window) Executions.createComponents("Reportes/ReportesTareasActivas.zul", centro, null );
+  		win.setTitle("Reporte Tareas Asignadas"); 
   		winReportes.detach();
    }  
 	
@@ -55,7 +62,7 @@ public class submenuReportes extends GenericForwardComposer<Component>{
   	 centro.removeChild(centro.getFirstChild());
   	 }
    		Window win=(Window) Executions.createComponents("", centro, null );  		
-  		win.setTitle("Listar Categorias");
+  		win.setTitle("Reporte Tareas Realizadas");
   		winReportes.detach();
    }
    
@@ -64,7 +71,7 @@ public class submenuReportes extends GenericForwardComposer<Component>{
 	  	 centro.removeChild(centro.getFirstChild());
 	  	 }
 	   		Window win=(Window) Executions.createComponents("", centro, null );  		
-	  		win.setTitle("Listar Categorias");
+	  		win.setTitle("Reporte Tareas Atrasadas");
 	  		winReportes.detach();
 	   }
    
@@ -74,7 +81,7 @@ public class submenuReportes extends GenericForwardComposer<Component>{
 	  	 centro.removeChild(centro.getFirstChild());
 	  	 }
 	   		Window win=(Window) Executions.createComponents("", centro, null );  		
-	  		win.setTitle("Listar Categorias");
+	  		win.setTitle("Reporte Tarea Eliminada");
 	  		winReportes.detach();
 	   }
 }

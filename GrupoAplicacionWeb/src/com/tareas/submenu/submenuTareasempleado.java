@@ -64,7 +64,7 @@ public class submenuTareasempleado extends GenericForwardComposer<Component>{
    	 if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   	   	Window win=(Window) Executions.createComponents("", centro, null );
+   	   	Window win=(Window) Executions.createComponents("TareasEmpleadoFormulario/DatosTarea.zul", centro, null );
   		win.setTitle("Nueva Tarea");
   		wintareas.detach();
    }             

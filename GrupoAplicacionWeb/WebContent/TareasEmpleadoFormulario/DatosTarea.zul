@@ -2,7 +2,7 @@
 <zk>
 <window style="text-align:'center';" border="none" width="50%" 
 height="426px" contentStyle="overflow:auto" mode="modal" sizable="false" id="WinDatosTareas"
-apply="">
+apply="com.tareas.controlador.RealizarTareaControlador">
 <borderlayout>
 	<center>
 		<grid>
