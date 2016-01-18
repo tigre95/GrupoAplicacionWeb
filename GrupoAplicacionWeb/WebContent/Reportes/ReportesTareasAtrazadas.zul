@@ -1,0 +1,144 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Reporte de tareas atrasadas" border="normal" id="win_reportetareas" apply="" >
+	<groupbox id="gpb_1">
+		<caption label="Elija Parametros"></caption>
+		<space/>
+		<label value="Parámetros de Busqueda:"></label>
+		<space/>
+		
+		<combobox id="cmb_nivel">
+		<comboitem label="Alto"/>
+		<comboitem label="Medio"/>
+		<comboitem label="Bajo"/>
+		</combobox>
+		<space/>
+		
+		<combobox id="cmb_tipo">
+		<comboitem label="General"/>
+		</combobox>
+		<space/>
+		
+		<combobox id="cmb_tiempo"><comboitem label="Por Año"/><comboitem label="Por Mes"/><comboitem label="Por Fecha"/></combobox>
+		<space/>
+		
+		<button image="/Imagenes/Yes_button_Boton_Si.png" id="buttonAceptaru" label="Aceptar">
+		</button>
+		<space/>
+		
+		<button image="/Imagenes/Yes_button_Boton_Si.png" id="buttonDeshacer" label="Nuevo Reporte">
+		</button>
+		<button image="/Imagenes/imprimir.png" id="buttonImprimir" label="Guardar Reporte">
+		</button>
+	</groupbox>
+	
+	<groupbox id="gpb_anio">
+		<label value="Elija Año:"></label>
+		<space/>
+	
+		<combobox id="cmb_anio">
+		</combobox>
+		<space/>
+	
+		<button image="/Imagenes/Yes_button_Boton_Si.png" id="buttonAceptarA" label="Aceptar">
+		</button>
+		<space/>
+	</groupbox>
+	
+	<groupbox id="gpb_2">
+		<label value="Elija Mes:"></label>
+		<space/>
+		<combobox id="cmb_mes">
+			<comboitem label="Enero" value="1"/> 
+			<comboitem label="Febrero" value="2"/>
+			<comboitem label="Marzo" value="3"/>
+			<comboitem label="Abril" value="4"/>
+			<comboitem label="Mayo" value="5"/>
+			<comboitem label="Junio" value="6"/>
+			<comboitem label="Julio" value="7"/>
+			<comboitem label="Agosto" value="8"/>
+			<comboitem label="Septiembre" value="9"/>
+			<comboitem label="Octubre" value="10"/>
+			<comboitem label="Noviembre" value="11"/>
+			<comboitem label="Diciembre" value="12"/>
+		</combobox>
+		<space/>
+	
+		<label value="Elija Año:"></label>
+			<space/>
+	
+		<combobox id="cmb_anio2">
+	 	</combobox>
+		<space/>
+	
+		<button image="/Imagenes/Yes_button_Boton_Si.png" id="buttonAceptarP" label="Aceptar">
+		</button>
+		<space/>	
+</groupbox>
+
+	<groupbox id="gpb_3">
+		<caption label="Elija Fechas"></caption>
+		<space/>
+
+		<label value="Fecha Inicial:"></label>
+		<space/>
+
+		<datebox id="txtFechaLlegada"/>
+		<space/>
+
+		<label value="Fecha Final:"></label>
+		<space/>
+
+		<datebox id="txtFechaSalida"/>
+		<space/>
+
+		<button image="/Imagenes/Yes_button_Boton_Si.png" id="buttonAceptar" label="Aceptar">
+		</button>
+	</groupbox>
+
+	<groupbox id="gpb_lista">
+	<listbox id="listatareas" mold="paging" pageSize="6"
+		multiple="false" width="100%"
+		emptyMessage="No items found in the result">
+		
+		<auxhead sclass="category-center" >
+			<auxheader label="LISTADO DE TAREAS ATRASADAS" style="color:blue; font-size:14px" colspan="6"
+				rowspan="1" />
+		</auxhead>
+		<listhead sizable="true" menupopup="auto">
+		<listheader label="Nombres" sort="auto(nombre)"/>
+		<listheader label="Apellidos" sort="auto(apellidos)"/>
+	    <listheader label="Cedula" sort="auto(cedula)"/>
+	    <listheader label="Nivel" sort="auto(nivel)" id="liscat"/>
+		
+		<listheader label="Fecha inicio tarea" sort="auto(fecha_inicio)" id="listfinicial"/>
+		<listheader label="Fecha fin tarea " sort="auto(fecha_fin)" id="listffinal"/>
+		<listheader label="Descripcion tarea" sort="auto(descripcion_jefe)"/>
+		
+		<listheader label="Cant. tareas" sort="auto(cantidad)" sortDirection="descending" id="liscant"/>
+		
+		<listheader label="Descripcion tarea empleado" sort="auto(descripcion_empleado)"/>
+			
+		<listheader label="Fecha termina empleado" sort="auto(fecha_fin)"/>
+			
+	</listhead>
+		<template name="model">
+			<listitem>
+			<listcell label="${each.nombre}" />
+				<listcell label="${each.apellidos}" />
+				<listcell label="${each.cedula}" />
+				<listcell label="${each.nivel}" />
+				
+				<listcell label="${each.fecha_inicio}" />
+				<listcell label="${each.fecha_fin}" />
+				<listcell label="${each.descripcion_jefe}" />
+				<listcell label="${each.cantidad}" />
+				
+				<listcell label="${each.descripcion_empleado}" />
+				<listcell label="${each.fecha_fin}" />
+			</listitem>
+		</template>
+	</listbox>
+	</groupbox>
+</window>
+</zk>

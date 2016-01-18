@@ -10,7 +10,8 @@ import org.zkoss.zul.Window;
 
 public class submenuReportes extends GenericForwardComposer<Component>{
 	@Wire
-	Button buttonRtareasA,buttonRE,buttonRtareasR,buttonRtareasN,buttonRtareasG;
+			
+	Button buttonNivelTarea,buttonTareaAsignada,buttonTareaRelizada,buttonTareaPendiente,buttonTareaEliminada,buttonTareaAtrasada;
 	Center centro= null;
 	Window winReportes;
 	int roles;
@@ -31,16 +32,16 @@ public class submenuReportes extends GenericForwardComposer<Component>{
 	}
 
     
-	public void onClick$buttonRtareasA(){
+	public void onClick$buttonTareaPendiente(){
    	 if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   	   	Window win=(Window) Executions.createComponents("", centro, null );
+   	   	Window win=(Window) Executions.createComponents("Reportes/ReportesTareasPendientes.zul", centro, null );
   		win.setTitle("Nueva Categoria");
   		winReportes.detach();
    }             
                 
-   public void onClick$buttonRE(){
+   public void onClick$buttonTareaAsignada(){
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
@@ -49,7 +50,7 @@ public class submenuReportes extends GenericForwardComposer<Component>{
   		winReportes.detach();
    }  
 	
-   public void onClick$buttonRtareasR(){
+   public void onClick$buttonTareaRelizada(){
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
@@ -58,7 +59,7 @@ public class submenuReportes extends GenericForwardComposer<Component>{
   		winReportes.detach();
    }
    
-   public void onClick$buttonRtareasN(){
+   public void onClick$buttonTareaAtrasada(){
 	  	if(centro.getFirstChild()!=null){
 	  	 centro.removeChild(centro.getFirstChild());
 	  	 }
@@ -68,7 +69,7 @@ public class submenuReportes extends GenericForwardComposer<Component>{
 	   }
    
    
-   public void onClick$buttonRtareasG(){
+   public void onClick$buttonTareaEliminada(){
 	  	if(centro.getFirstChild()!=null){
 	  	 centro.removeChild(centro.getFirstChild());
 	  	 }
