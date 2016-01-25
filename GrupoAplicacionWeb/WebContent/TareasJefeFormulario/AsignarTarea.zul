@@ -16,38 +16,33 @@ apply="com.tareas.controlador.AsignarTareaControlador" closable="true">
 					<label>NIVEL TAREAS</label>
 					<label id="labelDatosUsuario"></label>
 				</row>
-				<row spans="2">
-					<label>EMPLEADO:</label>
-					<button width="100%" label="Ver Lista de Empleados" id="buttonVer" style="float:'right';"></button>
-				</row>
 				<row >
 					<label width="100%">Nombre del Empleado: </label>
 					<label width="100%" id="labelNombreEmpleado" value=""></label>
-					<button width="100%" disabled="true" label="Ver historial" id="buttonVerHistorial"></button>
+					<button width="100%" label="Ver Lista de Empleados" id="buttonVer" ></button>
 				</row>
-				<row spans="3">
+				<row spans="1,2">
 					<label>Descripción:</label>
+					<textbox rows="2" multiline="true" width="100%" id="textboxDescripcion" ></textbox>
 				</row>
-				<row spans="3">
-					<textbox rows="2" multiline="true" width="100%" id="textboxDescripcion"></textbox>
+				<row spans="1,2">
+					<label>Comentario:</label>
+					<textbox width="100%" multiline="true" rows="2" id="textboxComentario" ></textbox>
 				</row>
 				<row>
-					<tabbox></tabbox>
+					<button label="Archivo Adjunto" width="100%" id="buttonArchivoAdjunto"
+					 autodisable="self" upload="true,maxsize=8192"></button>
 					<label>Fecha inicio:</label>
 					<label>Fecha Fin:</label>
 				</row>
 				<row>
-					<button label="Archivo Adjunto" width="100%" id="buttonArchivoAdjunto"
-					upload="true,maxsize=8192" autodisable="self"> </button>
+					<label id="labelArchivo" width="100%"></label>
 					<label width="100%" id="labelFechaInicio" value=""></label>
-					<datebox width="100%" id="dateboxFechaFin"></datebox>
+					<datebox width="100%" id="dateboxFechaFin" format="yyyy-MM-dd"></datebox>
 				</row>
-				<row spans="2">
-					<label>Comentario:</label>
+				<row>
 					<button label="" width="100%" id="buttonOpcion"></button>
-				</row>
-				<row spans="2">
-					<textbox width="100%" multiline="true" rows="2" id="textboxComentario"></textbox>
+					<button label="Eliminar" width="100%" id="buttonEliminar" visible="false"></button>
 					<button label="Cancelar" width="100%" id="buttonCancelar"></button>
 				</row>
 			</rows>

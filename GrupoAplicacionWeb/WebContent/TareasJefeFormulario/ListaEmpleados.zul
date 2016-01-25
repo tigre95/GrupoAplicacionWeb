@@ -7,9 +7,21 @@ apply="com.tareas.controlador.ListaEmpleadosControlador" closable="true">
 		multiple="false" width="100%"
 		emptyMessage="No hay Empleados" >
 		<auxhead sclass="category-center" >
-			<auxheader  rowspan="1" colspan="2">
+			<auxheader  rowspan="1" colspan="1">
 				<label>Cédula: </label>
-				<textbox id="textboxCedula" width="30%"></textbox>
+				<textbox id="textboxCedula" width="30%" value=""></textbox>
+			</auxheader>
+			<auxheader  rowspan="1" colspan="1">
+				<label>Nombres: </label>
+				<textbox id="textboxNombres" width="30%" value=""></textbox>
+			</auxheader>
+		</auxhead>
+		<auxhead sclass="category-center" >
+			<auxheader  rowspan="1" colspan="1">
+				<label>Apellidos: </label>
+				<textbox id="textboxApellidos" width="30%" value=""></textbox>
+			</auxheader>
+			<auxheader  rowspan="1" colspan="1">
 				<button label="Buscar" id="button_Buscar" />
 			</auxheader>
 		</auxhead>

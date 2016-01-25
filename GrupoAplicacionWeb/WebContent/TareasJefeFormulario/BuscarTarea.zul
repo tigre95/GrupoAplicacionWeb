@@ -1,0 +1,39 @@
+<?page title="Listado de Tareas" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Listado de Tareas" style="text-align:'center';" border="none" width="100%" 
+height="365px" contentStyle="overflow:auto" sizable="false" id="WinListaTareas"
+apply="com.tareas.controlador.BuscarTareaControlador" closable="true">
+	<listbox id="ListaTareas" mold="paging" pageSize="10"
+		multiple="false" width="100%"
+		emptyMessage="No hay Tareas" >
+		<auxhead sclass="category-center" >
+			<auxheader  rowspan="1" colspan="2">
+				<label>Estado: </label>
+				<combobox id="comboEstadoBusqueda" autodrop="true" value="" >
+					<comboitem label="A" value="1" />
+					<comboitem label="P" value="2" />
+					<comboitem label="R" value="3" />
+					<comboitem label="T" value="4" />
+				</combobox>
+				<combobox  id="comboEstadoEdicion" autodrop="true" >
+					<comboitem label="A" value="1" />
+					<comboitem label="P" value="2" />
+				</combobox>
+				<button id="buttonBuscar" label="Buscar"></button>
+			</auxheader>
+		</auxhead>
+		<listhead sizable="true" menupopup="auto">
+			<listheader label="Descripción" sort="auto(descripcion)" />
+			<listheader label="Fecha de inicio" sort="auto(fecha_inicio)" />
+			<listheader label="Fecha final" sort="auto(fecha_fin)" />
+		</listhead>
+		<template name="model">
+			<listitem>
+				<listcell label="${each.descripcion}" />
+				<listcell label="${each.fecha_inicio}" />
+				<listcell label="${each.fecha_fin}" />
+			</listitem>
+		</template>
+	</listbox>
+</window>
+</zk>

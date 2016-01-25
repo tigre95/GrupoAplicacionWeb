@@ -49,35 +49,28 @@
         	</row>
         	<row>
         	<label value="Permisos" />
-			 	<checkbox id="Perm_nuevo"/>
+			 	<checkbox id="Perm_nuevo" disabled="true" label="No existe"/>
 				<checkbox id="Perm_editar"/>
-        		<checkbox id="Perm_eliminar"/>
-        		<checkbox id="Perm_buscar"/>
+        		<checkbox id="Perm_eliminar" disabled="true" label="No existe"/>
+        		<checkbox id="Perm_buscar" disabled="true" label="No existe"/>
         	</row>
         	
         	<row>
         	<label value="Consultas" />
-			 	<checkbox id="Cons_nuevo"/>
-				<checkbox id="Cons_editar"/>
-        		<checkbox id="Cons_eliminar"/>
+			 	<checkbox id="Cons_nuevo" disabled="true" label="No existe"/>
+				<checkbox id="Cons_editar" disabled="true" label="No existe"/>
+        		<checkbox id="Cons_eliminar" disabled="true" label="No existe"/>
         		<checkbox id="Cons_buscar"/>
         	</row>
         	
         	<row>
         	<label value="Reportes" />
-			 	<checkbox id="Rep_nuevo"/>
-				<checkbox id="Rep_editar"/>
-        		<checkbox id="Rep_eliminar"/>
+			 	<checkbox id="Rep_nuevo" disabled="true" label="No existe"/>
+				<checkbox id="Rep_editar" disabled="true" label="No existe"/>
+        		<checkbox id="Rep_eliminar" disabled="true" label="No existe"/>
         		<checkbox id="Rep_buscar"/>
         	</row>
         	
-        	<row>
-        	<label value="Configuración" />
-			 	<checkbox id="Conf_nuevo"/>
-				<checkbox id="Conf_editar"/>
-        		<checkbox id="Conf_eliminar"/>
-        		<checkbox id="Conf_buscar"/>
-        	</row>
         	
 			<row>
 				<button id="button_opcion" />

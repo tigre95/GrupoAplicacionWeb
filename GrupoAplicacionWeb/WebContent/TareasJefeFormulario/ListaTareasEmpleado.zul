@@ -18,14 +18,14 @@ apply="com.tareas.controlador.ListaTareasEmpleadoControlador" closable="true">
 			<listheader label="Descripción" sort="auto(descripcion)" />
 			<listheader label="Fecha de Inicio" sort="auto(fecha_inicio)" />
 			<listheader label="Fecha de fin" sort="auto(fecha_fin)" />
-			<listheader label="Estado" sort="auto(estado_tarea)" />
+			<listheader label="Estado" sort="auto(estado)" />
 		</listhead>
 		<template name="model">
 			<listitem>
 				<listcell label="${each.descripcion}" />
 				<listcell label="${each.fecha_inicio}"  />
 				<listcell label="${each.fecha_fin}"  />
-				<listcell label="${each.estado_tarea}"  />
+				<listcell label="${each.estado}"  />
 			</listitem>
 		</template>
 	</listbox>

@@ -1,11 +1,15 @@
 package com.tareas.controlador;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
+
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
@@ -17,51 +21,68 @@ import org.zkoss.zul.Center;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.East;
+import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 import com.controlador.entidades.Departamento;
 import com.controlador.entidades.NivelTareas;
+import com.controlador.entidades.permisos;
 import com.controlador.entidades.personas;
+import com.controlador.entidades.tareas;
 import com.controlador.entidades.usuarios;
 import com.tareas.archivos.Util;
+import com.tareas.modelos.DBPermisos;
 import com.tareas.modelos.DBPersonas;
+import com.tareas.modelos.DBTareas;
 import com.tareas.modelos.DBdepartamento;
 import com.tareas.modelos.DBnivelTarea;
-
 public class AsignarTareaControlador extends GenericForwardComposer<Component>{
 
 	@Wire
 	Window WinAsignarTarea;
-	Button buttonVer,buttonArchivoAdjunto,buttonVerHistorial,
-	buttonOpcion,buttonCancelar;
-	Label labelNombreEmpleado,labelDatosUsuario,labelFechaInicio;
+	Button buttonVer,buttonArchivoAdjunto,
+	buttonOpcion,buttonCancelar,buttonEliminar;
+	Label labelNombreEmpleado,labelDatosUsuario,labelFechaInicio,
+	labelArchivo;
 	Textbox textboxDescripcion,textboxComentario;
 	Datebox dateboxFechaFin;
 	Combobox comboNivelTarea;
 	Center centro= null;
 	East este=null;
+	DBTareas dbtareas = new DBTareas();
+	int id_ultima_tarea = dbtareas.ultima_tarea();
 	
-	
-	usuarios usuario=null;
-	personas persona=null;
-	Departamento departamento=null;
+	usuarios usuario=new usuarios();
+	personas persona=new personas();
+	Departamento departamento=new Departamento();
+	personas empleado = new personas();
+	tareas tarea_seleccionada = new tareas();
 	DBPersonas dbpersonas = new DBPersonas();
 	DBdepartamento dbdepartamento = new DBdepartamento();
 	String opcion;
 	String fecha_creacion;
-	String dir_raiz="C:/ArchivosAplicacionWeb/";
+	int id_nivel_tarea = 0;
+	String nombre_archivo = "";
+	String dir_raiz = System.getProperty("user.home").replace("\\", "/")+"/ArchivosTareas/";
+	org.zkoss.util.media.Media media = null;
+	permisos permiso_tareas = null;
+	DBPermisos dbpermisos = new DBPermisos();
+	ListModelList<NivelTareas> niveltareas;
+	DBnivelTarea dbniveltarea = new DBnivelTarea();
 	
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
+		cargarComboNivelTareas();
 		centro = (Center)WinAsignarTarea.getAttribute("centro"); 
 		este = (East)WinAsignarTarea.getAttribute("este");
 		Session session = Sessions.getCurrent();
 		opcion = (String)session.getAttribute("OpcionTareasJefe");
 		usuario = (usuarios) session.getAttribute("usuario");
+		permiso_tareas = dbpermisos.mostrarpermisos(usuario.getId_tipousuario(), "tareasjefe");
 		persona = dbpersonas.mostrarpersona(usuario.getId_persona());
 		departamento = dbdepartamento.mostrardepartamento(persona.getId_departamento());
 		labelDatosUsuario.setValue(persona.getNombres()+" "+persona.getApellidos()+" "+
@@ -70,15 +91,60 @@ public class AsignarTareaControlador extends GenericForwardComposer<Component>{
 			buttonOpcion.setLabel("Guardar");
 		}else{
 			if(opcion.equals("Buscar")){
+				
 				buttonOpcion.setVisible(false);
+				buttonArchivoAdjunto.setDisabled(true);
+				tarea_seleccionada = (tareas)session.getAttribute("tarea_seleccionada");
+				textboxDescripcion.setText(tarea_seleccionada.getDescripcion());
+				textboxComentario.setText(tarea_seleccionada.getComentario());
+				labelFechaInicio.setValue(tarea_seleccionada.getFecha_inicio());
+				dateboxFechaFin.setText(tarea_seleccionada.getFecha_fin());
+				labelArchivo.setValue("tarea_asignada"+tarea_seleccionada.getId_tarea()+".docx");
+				media = null;
+				empleado =  dbpersonas.mostrarpersona(tarea_seleccionada.getId_persotarea());
+				id_nivel_tarea = tarea_seleccionada.getId_tipotarea();
+				labelNombreEmpleado.setValue(empleado.getNombres()+" "+empleado.getApellidos());
+				buttonArchivoAdjunto.setVisible(false);
+				buttonVer.setVisible(false);
+				Iterator<NivelTareas> it = niveltareas.iterator();
+				while(it.hasNext()) {
+					 
+					NivelTareas niveltarea = it.next();
+					if (niveltarea.getId_tipotarea()==id_nivel_tarea) {
+					 comboNivelTarea.setText(niveltarea.getDescripcion());
+					}
+					}
+				
 			}else{
 				buttonOpcion.setLabel("Actualizar");
+				tarea_seleccionada = (tareas)session.getAttribute("tarea_seleccionada");
+				if(permiso_tareas.getEliminar()==1){
+					buttonEliminar.setVisible(true);
+				}
+				tarea_seleccionada = (tareas)session.getAttribute("tarea_seleccionada");
+				textboxDescripcion.setText(tarea_seleccionada.getDescripcion());
+				textboxComentario.setText(tarea_seleccionada.getComentario());
+				labelFechaInicio.setValue(tarea_seleccionada.getFecha_inicio());
+				dateboxFechaFin.setText(tarea_seleccionada.getFecha_fin());
+				labelArchivo.setValue("tarea_asignada"+tarea_seleccionada.getId_tarea()+".docx");
+				media = null;
+				empleado =  dbpersonas.mostrarpersona(tarea_seleccionada.getId_persotarea());
+				id_nivel_tarea = tarea_seleccionada.getId_tipotarea();
+				labelNombreEmpleado.setValue(empleado.getNombres()+" "+empleado.getApellidos());
+				Iterator<NivelTareas> it = niveltareas.iterator();
+				while(it.hasNext()) {
+					 
+					NivelTareas niveltarea = it.next();
+					if (niveltarea.getId_tipotarea()==id_nivel_tarea) {
+					 comboNivelTarea.setText(niveltarea.getDescripcion());
+					}
+					}
 			}
 		}
 		Calendar c1 = new GregorianCalendar();
 		fecha_creacion = ""+c1.get(Calendar.YEAR)+"-"+(c1.get(Calendar.MONTH)+1)+"-"+c1.get(Calendar.DATE);
 		labelFechaInicio.setValue(fecha_creacion);
-		cargarComboNivelTareas();
+		
 		File directorio=new File(dir_raiz); 
 		directorio.mkdir(); 
 	}
@@ -109,8 +175,7 @@ public class AsignarTareaControlador extends GenericForwardComposer<Component>{
 	}
 	
 	public void cargarComboNivelTareas(){
-		ListModelList<NivelTareas> niveltareas;
-		DBnivelTarea dbniveltarea = new DBnivelTarea();
+		
 		niveltareas = dbniveltarea.cargar_NivelTareas();
 		if(niveltareas.isEmpty()==false){
 			comboNivelTarea.setModel(niveltareas);
@@ -127,7 +192,6 @@ public class AsignarTareaControlador extends GenericForwardComposer<Component>{
 		  	 }
 		   	   	Window win=(Window) Executions.createComponents("TareasJefeFormulario/ListaEmpleados.zul", este, null );
 		   	   	win.setAttribute("labelNombreEmpleado", labelNombreEmpleado);
-		   	   	win.setAttribute("buttonVerHistorial", buttonVerHistorial);
 		   	   	//WinAsignarTarea.detach();
 	}
 	
@@ -136,22 +200,167 @@ public class AsignarTareaControlador extends GenericForwardComposer<Component>{
 		  	 este.removeChild(este.getFirstChild());
 		  	 }
 		   	   	Window win=(Window) Executions.createComponents("TareasJefeFormulario/ListaTareasEmpleado.zul", este, null );
-		   	   	//WinAsignarTarea.detach();
 	}
 	
 	public void onUpload$buttonArchivoAdjunto(org.zkoss.zk.ui.event.UploadEvent event){
-		boolean respuesta;
-		Util util = new Util();
-		org.zkoss.util.media.Media media = event.getMedia();
-		String ruta_tarea = dir_raiz+labelDatosUsuario.getValue()+"/";
-		String nombre_tarea = "tarea1.docx";
-		File directorio=new File(ruta_tarea); 
-		directorio.mkdir(); 
-		respuesta = util.uploadFile(media,ruta_tarea,nombre_tarea);
-		if(respuesta == true){
-			alert("archivo subido correctamente");
+		if(opcion.equals("Guardar")){
+			int id_aux = id_ultima_tarea +1;
+			media = event.getMedia();
+			nombre_archivo = "tarea_asignada_"+id_aux+"."+media.getFormat();
+			labelArchivo.setValue(nombre_archivo);
 		}else{
-			alert("error");
+			media = event.getMedia();
+			nombre_archivo = "tarea_asignada_"+tarea_seleccionada.getId_tarea()+"."+media.getFormat();
+			labelArchivo.setValue(nombre_archivo);
 		}
 	}
+	
+	public boolean validar_campos(){
+		boolean respuesta = false;
+		if(empleado != null && labelArchivo.getValue().equals("")==false && 
+				textboxDescripcion.getText().equals("")==false &&
+				textboxComentario.getText().equals("")==false && id_nivel_tarea != 0){
+			respuesta = true;
+		}
+		return respuesta;
+	}
+	
+	public void onClick$buttonOpcion(){
+		Util util = new Util();
+		boolean respuesta = false;
+		if(validar_campos()){
+			if(opcion.equals("Guardar")){
+				id_ultima_tarea = id_ultima_tarea +1 ;
+				String ruta_tarea = dir_raiz+departamento.getDescripcion()+"/";
+				File directorio=new File(ruta_tarea); 
+				directorio.mkdir(); 
+				respuesta = util.uploadFile(media,ruta_tarea,nombre_archivo);
+				if(respuesta == true){
+					alert("Tarea guardada");
+					Session session = Sessions.getCurrent();
+					empleado = (personas)session.getAttribute("empleado_seleccionado");
+					tareas tarea = new tareas();
+					tarea.setId_tarea(0);
+					tarea.setId_tipotarea((int)comboNivelTarea.getSelectedItem().getValue());
+					tarea.setId_persona(usuario.getId_persona());
+					tarea.setId_persotarea(empleado.getId_persona());
+					tarea.setDescripcion(textboxDescripcion.getText());
+					tarea.setArchivo(ruta_tarea+""+nombre_archivo);
+					tarea.setComentario(textboxComentario.getText());
+					tarea.setFecha_inicio(labelFechaInicio.getValue());
+					tarea.setFecha_fin(dateboxFechaFin.getText());
+					tarea.setEstado("P");
+					tarea.setEstado_tarea(0);
+					try {
+						dbtareas.guardartareas(tarea);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					empleado = null;
+					labelArchivo.setValue("");
+					textboxComentario.setText("");
+					textboxDescripcion.setText("");
+					media = null;
+					dateboxFechaFin.setText("");
+					comboNivelTarea.setSelectedItem(null);
+				}else{
+					alert("error");
+				}
+			}else{
+				if(opcion.equals("Buscar")){
+					buttonOpcion.setVisible(false);
+				}else{
+					buttonOpcion.setLabel("Actualizar");
+					String ruta_tarea = dir_raiz+departamento.getDescripcion()+"/";
+					File directorio=new File(ruta_tarea); 
+					directorio.mkdir();
+					if(media!=null){
+						respuesta = util.uploadFile(media,ruta_tarea,nombre_archivo);
+					}
+					if(respuesta == true || media == null){
+						alert("Tarea guardada");
+						Session session = Sessions.getCurrent();
+						empleado = (personas)session.getAttribute("empleado_seleccionado");
+						tareas tarea = new tareas();
+						tarea.setId_tarea(tarea_seleccionada.getId_tarea());
+						tarea.setId_tipotarea(id_nivel_tarea);
+						tarea.setId_persona(usuario.getId_persona());
+						tarea.setId_persotarea(empleado.getId_persona());
+						tarea.setDescripcion(textboxDescripcion.getText());
+						if(media!=null){
+							tarea.setArchivo(tarea_seleccionada.getArchivo());
+						}else{
+							tarea.setArchivo(ruta_tarea+""+nombre_archivo);
+						}
+						tarea.setComentario(textboxComentario.getText());
+						tarea.setFecha_inicio(labelFechaInicio.getValue());
+						tarea.setFecha_fin(dateboxFechaFin.getText());
+						tarea.setEstado("P");
+						tarea.setEstado_tarea(0);
+						try {
+							dbtareas.actualizartareas(tarea);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						empleado = null;
+						labelArchivo.setValue("");
+						textboxComentario.setText("");
+						textboxDescripcion.setText("");
+						media = null;
+						dateboxFechaFin.setText("");
+						comboNivelTarea.setSelectedItem(null);
+					}else{
+						alert("error");
+					}
+				}
+			}
+		}else{
+			alert("No se han llenado todos los campos");
+		}
+	}
+	
+	public void onClick$buttonEliminar(){
+		try {
+			dbtareas.eliminartareas(tarea_seleccionada.getId_tarea());
+			alert("Archivo eliminado");
+			empleado = null;
+			labelArchivo.setValue("");
+			textboxComentario.setText("");
+			textboxDescripcion.setText("");
+			media = null;
+			dateboxFechaFin.setText("");
+			comboNivelTarea.setSelectedItem(null);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			alert("datos incorrectos");
+		}
+	}
+	
+	public void onSelect$comboNivelTarea(){
+		id_nivel_tarea = (Integer)comboNivelTarea.getSelectedItem().getValue();
+	}
+	
+	public void onClick$buttonCancelar(){
+		//File file_aux = new File(dir_raiz+departamento.getDescripcion()+"/"+media.getName()+"."+media.getContentType());
+		//alert(file_aux.getAbsolutePath());
+		//file_aux.delete();
+		WinAsignarTarea.detach();
+	}
+	
+	public void onClick$labelArchivo(){
+		if(opcion.equals("Guardar")==false){
+			File file = new File(tarea_seleccionada.getArchivo());
+			if(file != null)
+				try {
+					Filedownload.save(file, null);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
+	
 }

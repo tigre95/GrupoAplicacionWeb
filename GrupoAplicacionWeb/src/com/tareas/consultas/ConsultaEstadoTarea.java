@@ -13,15 +13,19 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 import com.controlador.entidades.NivelTareas;
 import com.controlador.entidades.TareasAsignadas;
+import com.controlador.entidades.TipoUsuarios;
+import com.controlador.entidades.Usuariodb;
 import com.tareas.modelos.DBConsultas;
+import com.tareas.modelos.DBUsuarios;
 import com.tareas.modelos.DBnivelTarea;
 
-public class ConsultaTareaAtrazada extends GenericForwardComposer<Component>{
+public class ConsultaEstadoTarea extends GenericForwardComposer<Component>{
 	@Wire
 	Textbox textboxBuscar;
 	Button buttonBuscar,buttonListar;
 	Listbox listboxtareas;
 	Window win_tareas_asig;
+	Combobox comboboxTipo;
 	Combobox comboNivelTarea;
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
@@ -29,31 +33,21 @@ public class ConsultaTareaAtrazada extends GenericForwardComposer<Component>{
 		super.doAfterCompose(comp);
 		buscartareas2();
 		DBnivelTarea dbu=new DBnivelTarea();
-		ArrayList <NivelTareas> listatusu = null;
-		listatusu=dbu.listarTareasnivel();
-	
-		if(listatusu != null)
-		{
-			ListModelList<NivelTareas> modelo= new ListModelList<NivelTareas>(listatusu);
-			comboNivelTarea.setModel(modelo);
-		}
-		else
-		{
-			alert("No hay elementos que mostrar");
-		}
-	
+		comboboxTipo.setText("Seleccione");
+		comboNivelTarea.setText("Seleccione");
 	}
 	
 	public void onCreate$win_tareas_asig(){
-		buscartareas("");
+		buscartareas2();
 		buttonListar.setDisabled(true);
 	}
 		
 	public void buscartareas(String criterio){
-		Integer id_tipo = (Integer)comboNivelTarea.getSelectedItem().getValue();
+		int id_tipo= comboNivelTarea.getSelectedIndex();
+		int estado= comboboxTipo.getSelectedIndex();
 		
 		DBConsultas dbu= new DBConsultas();
-		ArrayList<TareasAsignadas> lista = dbu.buscarytareaatrazada(criterio,id_tipo);
+		ArrayList<TareasAsignadas> lista = dbu.buscarytareasRealizada(criterio,id_tipo,estado);
 		if(lista != null){
 			ListModelList<TareasAsignadas> modeloDeDatos= new ListModelList<TareasAsignadas>(lista);
 			listboxtareas.setModel(modeloDeDatos);
@@ -66,7 +60,7 @@ public class ConsultaTareaAtrazada extends GenericForwardComposer<Component>{
 	
 	public void buscartareas2(){
 		DBConsultas dbu= new DBConsultas();
-		ArrayList<TareasAsignadas> lista = dbu.buscarytareaatrazada2();
+		ArrayList<TareasAsignadas> lista = dbu.buscarytareasRealizada2();
 		if(lista != null){
 			ListModelList<TareasAsignadas> modeloDeDatos= new ListModelList<TareasAsignadas>(lista);
 			listboxtareas.setModel(modeloDeDatos);
@@ -74,11 +68,11 @@ public class ConsultaTareaAtrazada extends GenericForwardComposer<Component>{
 			listboxtareas.renderAll();
 		}else{
 			alert("lista no encontrado");
-		}	
+		}
 	}
 	
 	public void onClick$buttonListar(){
-		buscartareas("");
+		buscartareas2();
 		buttonListar.setDisabled(true);
 	}
 	
@@ -87,5 +81,4 @@ public class ConsultaTareaAtrazada extends GenericForwardComposer<Component>{
 		buscartareas(textboxBuscar.getValue());
 		buttonListar.setDisabled(false);
 	}
-	
 }

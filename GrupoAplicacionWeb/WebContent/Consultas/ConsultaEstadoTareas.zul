@@ -1,0 +1,82 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Tareas " border="normal" id="win_tareas_asig" closable="true" apply="com.tareas.consultas.ConsultaEstadoTarea">
+	<groupbox>
+		<caption label="Buscar"></caption>
+		<space/>
+			<grid>
+				<rows>
+					<row>
+						<label value="Buscar nombre , apellido , cedula de Personas " />
+						<textbox id="textboxBuscar"></textbox>
+					</row>
+					
+					<row>
+						<div>
+		          			<label value="Seleccione el nivel:">
+		          			</label>
+					          <combobox id="comboNivelTarea">
+					          <comboitem label="Seleccione" value="0"></comboitem>
+					          <comboitem label="Alto" value="1"></comboitem>
+					          <comboitem label="Medio" value="2"></comboitem>
+					          <comboitem label="Bajo" value="3"></comboitem>
+					          </combobox>
+			   			</div>
+					</row>
+
+					<row>
+						<div>
+				        <label value="Seleccione el tipo de estado: ">
+				        </label>
+				        <combobox id="comboboxTipo">
+			           	<comboitem label="Seleccione" value="0"></comboitem>
+				        <comboitem label="Pendiente" value="1"></comboitem>
+				        <comboitem label="Activa" value="2"></comboitem>
+				        <comboitem label="Realizada" value="3"></comboitem>
+				        <comboitem label="Atrazada" value="4"></comboitem>
+				        <comboitem label="Eliminado" value="5"></comboitem>
+				        </combobox>
+					   </div>
+					
+					</row>			
+				</rows>
+			</grid>
+	
+		<button image="/imagenes/buscar.png" id="buttonBuscar" label="Buscar">
+		</button>
+		<space/>
+		<button image="/imagenes/buscar.png" id="buttonListar" label="Ver Todos"/>
+	</groupbox>
+	
+	<listbox id="listboxtareas" mold="paging" pageSize="3" width="100%" emptyMessage="No existen datos" >
+		<listhead sizable="true" menupopup="auto">
+			<listheader label="Descripcion" sort="auto(descripcion)"/>
+			<listheader label="Fecha_inicio" sort="auto(fecha_inicio)"/>
+			<listheader label="Fecha_fin" sort="auto(fecha_fin)"/>
+			<listheader label="Nombres" sort="auto(nombres)"/>
+			<listheader label="Apellidos" sort="auto(apellidos)"/>
+		    <listheader label="Cedula" sort="auto(cedula)"/>
+		    <listheader label="Nivel" sort="auto(nivel)"/>
+			<listheader label="Descripcion_re" sort="auto(descripcion_re)"/>
+			<listheader label="Fecha_fin" sort="auto(fecha_fin)"/>
+			
+		</listhead>
+		
+			<template name="model"> 
+			<listitem value="${each}">
+				<listcell label="${each.descripcion}" />
+				<listcell label="${each.fecha_inicio}" />
+				<listcell label="${each.fecha_fin}" />
+				<listcell label="${each.nombres}" />
+				<listcell label="${each.apellidos}" />
+				<listcell label="${each.cedula}" />
+				<listcell label="${each.nivel}" />
+				<listcell label="${each.descripcion_re}" />
+				<listcell label="${each.fecha_fin}" />
+			</listitem>
+		</template>
+		
+	</listbox>
+  	
+</window>
+</zk>

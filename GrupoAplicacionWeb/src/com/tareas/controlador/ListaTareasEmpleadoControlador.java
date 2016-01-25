@@ -35,21 +35,13 @@ public class ListaTareasEmpleadoControlador extends GenericForwardComposer<Compo
 		Session session = Sessions.getCurrent();
 		empleado = (personas) session.getAttribute("empleado_seleccionado");
 		labelNombreEmpleado.setValue(empleado.getNombres()+" "+empleado.getApellidos());
-		CargarListaTareas();
+		//CargarListaTareas();
 	}
 
-	public void CargarListaTareas(){
+	public void CargarListaTareasBusqueda(){
 		ListModelList<tareas> lista_tareas;
 		DBTareas dbtareas = new DBTareas();
-		lista_tareas = dbtareas.historial_tareas(1);
-		if(lista_tareas != null){
-			ListModelList<tareas> listmodel = new ListModelList<tareas>(lista_tareas);
-			ListaTareasEmpleados.setModel(listmodel);
-			//refrescar la lista
-			ListaTareasEmpleados.renderAll();
-		}else{
-			alert("No existen datos");
-		}
+	
 	}
 
 	

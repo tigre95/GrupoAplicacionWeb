@@ -130,6 +130,52 @@ public class DBPersonas {
 		return persona;
 	}
 	
+	
+	public ListModelList<personas> cargarpersonafiltrado(int id_departamento, String cedula, String nombre,
+			String apellido){
+		ListModelList<personas> lista_personas = new ListModelList<personas>();
+		int cont = 0;
+		ResultSet resultado = null;
+		DBManager dbmanager = new DBManager();
+		Connection conexion = dbmanager.getConection();
+		if (conexion == null) {
+			System.out.println("Conexion no se pudo realizar");
+			return null;
+		}
+		Statement state = null;
+		try {
+			state = (Statement) conexion.createStatement();
+			resultado = state.executeQuery("select p.id_persona, p.nombres, p.id_departamento, p.apellidos,"
+					+ " p.cedula, p.direccion, p.email, p.estado from personas p, usuarios u, "
+					+ "tiposusuarios tu where u.id_tipousuario = tu.id_tipousuario and "
+					+ "p.estado = 'A' and u.estado = 'A' and p.id_departamento = "+id_departamento+" and "
+					+ "tu.descripcion = 'empleado' and u.id_persona = p.id_persona and "
+					+ "p.cedula like '%"+ cedula +"%' and p.nombres like '%"+nombre+"%' and "
+					+ "p.apellidos like '%"+apellido+"%';");
+			while(resultado.next()){
+				cont = cont + 1;
+				personas persona = new personas();
+				persona.setId_persona(resultado.getInt(1));
+				persona.setNombres(resultado.getString(2));
+				persona.setId_departamento(resultado.getInt(3));
+				persona.setApellidos(resultado.getString(4));
+				persona.setCedula(resultado.getString(5));
+				persona.setDireccion(resultado.getString(6));
+				persona.setEmail(resultado.getString(7));
+				persona.setEstado(resultado.getString(8));
+				lista_personas.add(persona);
+			}
+			if(cont>0){
+				return lista_personas;
+			}else{	 
+				return null;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 	public DBPersonas() {
 		// TODO Auto-generated constructor stub
 	}

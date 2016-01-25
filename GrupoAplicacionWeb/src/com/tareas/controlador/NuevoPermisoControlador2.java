@@ -27,8 +27,7 @@ public class NuevoPermisoControlador2 extends GenericForwardComposer<Component>{
 	tjef_nuevo, tjef_editar, tjef_eliminar, tjef_buscar,
 	Perm_nuevo, Perm_editar, Perm_eliminar, Perm_buscar,
 	Cons_nuevo, Cons_editar, Cons_eliminar, Cons_buscar,
-	Rep_nuevo, Rep_editar, Rep_eliminar, Rep_buscar,
-	Conf_nuevo, Conf_editar, Conf_eliminar, Conf_buscar;
+	Rep_nuevo, Rep_editar, Rep_eliminar, Rep_buscar;
 	
 	String opcion;
 	usuarios usuario;
@@ -60,6 +59,7 @@ public class NuevoPermisoControlador2 extends GenericForwardComposer<Component>{
 		if(opcion.equals("editar")){
 			button_opcion.setLabel("Actualizar");
 			cargarComboRoles();
+			cambiar_permisos_defecto();
 		}		
 	}
 	
@@ -75,6 +75,7 @@ public class NuevoPermisoControlador2 extends GenericForwardComposer<Component>{
 				respuesta = dbpermisos.guardarpermisos(permiso_tareasjefe);
 				respuesta = dbpermisos.guardarpermisos(permiso_tareas);
 				respuesta = dbpermisos.guardarpermisos(permiso_reportes);
+				alert("Guardado exitosamente!!!");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -90,6 +91,7 @@ public class NuevoPermisoControlador2 extends GenericForwardComposer<Component>{
 					respuesta = dbpermisos.actualizarpermisos(permiso_tareasjefe);
 					respuesta = dbpermisos.actualizarpermisos(permiso_tareas);
 					respuesta = dbpermisos.actualizarpermisos(permiso_reportes);
+					alert("Actualizado exitosamente!!!");
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -104,6 +106,7 @@ public class NuevoPermisoControlador2 extends GenericForwardComposer<Component>{
 		tipos_usuarios = dbtiposusuarios.listartipousuarios();
 		if(tipos_usuarios.isEmpty()==false){
 			cmb_tipo.setModel(tipos_usuarios);
+			cmb_tipo.setSelectedText(1, 1, "administrador", true);
 		}else{
 			alert("no existen temas");
 		}
@@ -124,7 +127,7 @@ public class NuevoPermisoControlador2 extends GenericForwardComposer<Component>{
 		}
 	}
 	
-	public void onChange$cmb_tipo(){
+	public void cambiar_permisos(){
 		permiso_personas = dbpermisos.mostrarpermisos(tipos_usuarios.get(cmb_tipo.getSelectedIndex()).getId_tipousuario(), "personas");
 		permiso_tareas = dbpermisos.mostrarpermisos(tipos_usuarios.get(cmb_tipo.getSelectedIndex()).getId_tipousuario(), "empleadostareas");
 		permiso_tareasjefe = dbpermisos.mostrarpermisos(tipos_usuarios.get(cmb_tipo.getSelectedIndex()).getId_tipousuario(), "tareasjefe");
@@ -257,27 +260,145 @@ public class NuevoPermisoControlador2 extends GenericForwardComposer<Component>{
 		}else{
 			Rep_eliminar.setChecked(true);
 		}
+	}
+	
+	public void cambiar_permisos_defecto(){
+		permiso_personas = dbpermisos.mostrarpermisos(1, "personas");
+		permiso_tareas = dbpermisos.mostrarpermisos(1, "empleadostareas");
+		permiso_tareasjefe = dbpermisos.mostrarpermisos(1, "tareasjefe");
+		permiso_permisos = dbpermisos.mostrarpermisos(1, "permisos");
+		permiso_consultas = dbpermisos.mostrarpermisos(1, "consultas");
+		permiso_reportes = dbpermisos.mostrarpermisos(1, "reportes");
+		permiso_configuraciones = dbpermisos.mostrarpermisos(1, "configuracion");
+		if(permiso_personas.getCrear()==0){
+			Pers_nuevo.setChecked(false);
+		}else{
+			Pers_nuevo.setChecked(true);
+		}
+		if(permiso_personas.getBuscar()==0){
+			Pers_buscar.setChecked(false);
+		}else{
+			Pers_buscar.setChecked(true);
+		}
+		if(permiso_personas.getEditar()==0){
+			Pers_editar.setChecked(false);
+		}else{
+			Pers_editar.setChecked(true);
+		}
+		if(permiso_personas.getEliminar()==0){
+			Pers_eliminar.setChecked(false);
+		}else{
+			Pers_eliminar.setChecked(true);
+		}
 		
-		if(permiso_configuraciones.getCrear()==0){
-			Conf_nuevo.setChecked(false);
+		if(permiso_tareas.getCrear()==0){
+			Tar_nuevo.setChecked(false);
 		}else{
-			Conf_nuevo.setChecked(true);
+			Tar_nuevo.setChecked(true);
 		}
-		if(permiso_configuraciones.getBuscar()==0){
-			Conf_buscar.setChecked(false);
+		if(permiso_tareas.getBuscar()==0){
+			Tar_buscar.setChecked(false);
 		}else{
-			Conf_buscar.setChecked(true);
+			Tar_buscar.setChecked(true);
 		}
-		if(permiso_configuraciones.getEditar()==0){
-			Conf_editar.setChecked(false);
+		if(permiso_tareas.getEditar()==0){
+			Tar_editar.setChecked(false);
 		}else{
-			Conf_editar.setChecked(true);
+			Tar_editar.setChecked(true);
 		}
-		if(permiso_configuraciones.getEliminar()==0){
-			Conf_eliminar.setChecked(false);
+		if(permiso_tareas.getEliminar()==0){
+			Tar_eliminar.setChecked(false);
 		}else{
-			Conf_eliminar.setChecked(true);
+			Tar_eliminar.setChecked(true);
 		}
+		
+		if(permiso_tareasjefe.getCrear()==0){
+			tjef_nuevo.setChecked(false);
+		}else{
+			tjef_nuevo.setChecked(true);
+		}
+		if(permiso_tareasjefe.getBuscar()==0){
+			tjef_buscar.setChecked(false);
+		}else{
+			tjef_buscar.setChecked(true);
+		}
+		if(permiso_tareasjefe.getEditar()==0){
+			tjef_editar.setChecked(false);
+		}else{
+			tjef_editar.setChecked(true);
+		}
+		if(permiso_tareasjefe.getEliminar()==0){
+			tjef_eliminar.setChecked(false);
+		}else{
+			tjef_eliminar.setChecked(true);
+		}
+		
+		if(permiso_permisos.getCrear()==0){
+			Perm_nuevo.setChecked(false);
+		}else{
+			Perm_nuevo.setChecked(true);
+		}
+		if(permiso_permisos.getBuscar()==0){
+			Perm_buscar.setChecked(false);
+		}else{
+			Perm_buscar.setChecked(true);
+		}
+		if(permiso_permisos.getEditar()==0){
+			Perm_editar.setChecked(false);
+		}else{
+			Perm_editar.setChecked(true);
+		}
+		if(permiso_permisos.getEliminar()==0){
+			Perm_eliminar.setChecked(false);
+		}else{
+			Perm_eliminar.setChecked(true);
+		}
+		
+		if(permiso_consultas.getCrear()==0){
+			Cons_nuevo.setChecked(false);
+		}else{
+			Cons_nuevo.setChecked(true);
+		}
+		if(permiso_consultas.getBuscar()==0){
+			Cons_buscar.setChecked(false);
+		}else{
+			Cons_buscar.setChecked(true);
+		}
+		if(permiso_consultas.getEditar()==0){
+			Cons_editar.setChecked(false);
+		}else{
+			Cons_editar.setChecked(true);
+		}
+		if(permiso_consultas.getEliminar()==0){
+			Cons_eliminar.setChecked(false);
+		}else{
+			Cons_eliminar.setChecked(true);
+		}
+		
+		if(permiso_reportes.getCrear()==0){
+			Rep_nuevo.setChecked(false);
+		}else{
+			Rep_nuevo.setChecked(true);
+		}
+		if(permiso_reportes.getBuscar()==0){
+			Rep_buscar.setChecked(false);
+		}else{
+			Rep_buscar.setChecked(true);
+		}
+		if(permiso_reportes.getEditar()==0){
+			Rep_editar.setChecked(false);
+		}else{
+			Rep_editar.setChecked(true);
+		}
+		if(permiso_reportes.getEliminar()==0){
+			Rep_eliminar.setChecked(false);
+		}else{
+			Rep_eliminar.setChecked(true);
+		}
+	}
+	
+	public void onChange$cmb_tipo(){
+		cambiar_permisos();
 	}
 	
 	public void onClick$Pers_nuevo(){
@@ -471,37 +592,4 @@ public class NuevoPermisoControlador2 extends GenericForwardComposer<Component>{
 			permiso_reportes.setEditar(0);
 		}
 	}
-	
-	public void onClick$Conf_nuevo(){
-		if(Conf_nuevo.isChecked()==true){
-			permiso_configuraciones.setCrear(1);
-		}else{
-			permiso_configuraciones.setCrear(0);
-		}
-	}
-	
-	public void onClick$Conf_buscar(){
-		if(Conf_buscar.isChecked()==true){
-			permiso_configuraciones.setBuscar(1);
-		}else{
-			permiso_configuraciones.setBuscar(0);
-		}
-	}
-	
-	public void onClick$Conf_editar(){
-		if(Conf_editar.isChecked()==true){
-			permiso_configuraciones.setEditar(1);
-		}else{
-			permiso_configuraciones.setEditar(0);
-		}
-	}
-	
-	public void onClick$Conf_eliminar(){
-		if(Conf_eliminar.isChecked()==true){
-			permiso_configuraciones.setEliminar(1);
-		}else{
-			permiso_configuraciones.setEliminar(0);
-		}
-	}
-
 }
