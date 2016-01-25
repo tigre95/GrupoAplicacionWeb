@@ -31,7 +31,7 @@ public class consultaNivelTarea extends GenericForwardComposer<Component>{
 		super.doAfterCompose(comp);
 		DBnivelTarea dbu=new DBnivelTarea();
 		ArrayList <NivelTareas> listatusu = null;
-		listatusu=dbu.listarTareasnivel();
+	listatusu=dbu.listarTareasnivel();
 		buscartareas2();
 		if(listatusu != null)
 		{
@@ -47,23 +47,14 @@ public class consultaNivelTarea extends GenericForwardComposer<Component>{
 	
 	
 	public void onCreate$win_tareas_asig(){
-		/*Usuarios u;
-		 Session s;
-		   s=Sessions.getCurrent();
-		   u=(Usuarios) s.getAttribute("Usuario");
-		   if(u!=null){*/
 		buscartareas("");
-				buttonListar.setDisabled(true);
-		/*   }else{
-			   Executions.sendRedirect("/MenuPrincipalTV.zul");
-		   }*/
+		buttonListar.setDisabled(true);
 	}
 		
 	public void buscartareas(String criterio){
 		Integer id_tipo = (Integer)comboNivelTarea.getSelectedItem().getValue();
-		
 		DBConsultas dbu= new DBConsultas();
-		ArrayList<TareasAsignadas> lista = dbu.buscaryNivel(id_tipo);
+		ArrayList<TareasAsignadas> lista = dbu.buscaryNivel(criterio,id_tipo);
 		if(lista != null){
 			ListModelList<TareasAsignadas> modeloDeDatos= new ListModelList<TareasAsignadas>(lista);
 			listboxtareas.setModel(modeloDeDatos);
@@ -72,12 +63,9 @@ public class consultaNivelTarea extends GenericForwardComposer<Component>{
 		}else{
 			alert("lista no encontrado");
 		}
-		
-		
-			}
+	}
 	
 	public void buscartareas2(){
-		
 		DBConsultas dbu= new DBConsultas();
 		ArrayList<TareasAsignadas> lista = dbu.buscaryNivel2();
 		if(lista != null){
@@ -88,14 +76,7 @@ public class consultaNivelTarea extends GenericForwardComposer<Component>{
 		}else{
 			alert("lista no encontrado");
 		}
-		
-		
-			}
-	
-	
-	
-	
-	
+	}
 	
 	public void onClick$buttonListar(){
 		buscartareas("");
@@ -104,8 +85,7 @@ public class consultaNivelTarea extends GenericForwardComposer<Component>{
 	
 	public void onClick$buttonBuscar()
 	{
-		buscartareas(comboNivelTarea.getValue());
+		buscartareas(textboxBuscar.getValue());
 		buttonListar.setDisabled(false);
 	}
-	
 }

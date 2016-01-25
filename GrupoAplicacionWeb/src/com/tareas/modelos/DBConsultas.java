@@ -12,7 +12,7 @@ import com.controlador.entidades.personas;
 
 public class DBConsultas {
 
-	public ArrayList<TareasAsignadas>buscaryNivel(int  criterio10){			
+	public ArrayList<TareasAsignadas>buscaryNivel(String criterio ,int  criterio10){			
 		ArrayList<TareasAsignadas> lista= null;
 		//conectar a la bd
 		DBManager dbmanager = new DBManager();
@@ -27,9 +27,10 @@ public class DBConsultas {
 		query = "select tar.descripcion as descripcion,tar.fecha_inicio as fecha_inicio,tar.fecha_fin as fecha_fin ,"
 				+ "per.nombres as nombres ,per.apellidos as apellidos,per.cedula as cedula,niv.descripcion as nivel ,"
 				+ "tr.descipcion as descripcion_re ,tr.fecha_fin as fecha_terminada  from tareas as tar ,personas as per,"
-				+ " niveltareas niv ,tarearealizada tr where tar.estado='A' and per.estado='A' and niv.estado='A' and "
-				+ "tar.estado='A' and tar.id_persona= per.id_persona and niv.id_tipotarea=tar.id_tipotarea and "
-				+ "tr.id_tarea=tar.id_tarea  and niv.id_tipotarea = "+criterio10+";";
+				+ " niveltareas niv ,tarearealizada tr where  per.estado='A' and niv.estado='A' and "
+				+ " tar.id_persotarea= per.id_persona and niv.id_tipotarea=tar.id_tipotarea and "
+				+ "tr.id_tarea=tar.id_tarea and (per.nombres like '%"+criterio+"%' and per.apellidos "
+				+ "like '%"+criterio+"%' and per.cedula like '%"+criterio+"%') and niv.id_tipotarea = "+criterio10+";";
 			
 		System.out.println(query);
 		
@@ -84,10 +85,6 @@ public class DBConsultas {
 		
 		return lista;	
 	}
-	
-	
-	
-	
 	public ArrayList<TareasAsignadas>buscaryNivel2(){			
 		ArrayList<TareasAsignadas> lista= null;
 		//conectar a la bd
@@ -103,8 +100,8 @@ public class DBConsultas {
 		query = "select tar.descripcion as descripcion,tar.fecha_inicio as fecha_inicio,tar.fecha_fin as fecha_fin ,"
 				+ "per.nombres as nombres ,per.apellidos as apellidos,per.cedula as cedula,niv.descripcion as nivel ,"
 				+ "tr.descipcion as descripcion_re ,tr.fecha_fin as fecha_terminada  from tareas as tar ,personas as per,"
-				+ " niveltareas niv ,tarearealizada tr where tar.estado='A' and per.estado='A' and niv.estado='A' and "
-				+ "tar.estado='A' and tar.id_persona= per.id_persona and niv.id_tipotarea=tar.id_tipotarea and "
+				+ " niveltareas niv ,tarearealizada tr where  per.estado='A' and niv.estado='A' and "
+				+ "tar.id_persotarea= per.id_persona and niv.id_tipotarea=tar.id_tipotarea and "
 				+ "tr.id_tarea=tar.id_tarea  ";
 			
 		System.out.println(query);
@@ -159,7 +156,8 @@ public class DBConsultas {
 		}
 		
 		return lista;	
-	}
+	}	
+	
 	
 	
 	public ArrayList<TareasAsignadas>buscarytareaatrazada(String criterio,int criterio10){			
