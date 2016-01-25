@@ -1,0 +1,16 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Seleccione una opcion" width="21%" height="20%" border="normal" closable="true" id="wincontraseñas" apply="com.tareas.submenu.submenuContrasenas">
+
+
+<grid>
+			<rows>
+	
+				<row>
+					<button label="Cambio Contraseñas" image="imagenes/nuevo.png"  width="130px"  id="buttonContraseñas"/>
+				</row>
+			</rows>
+				
+		</grid>
+	</window>
+</zk>

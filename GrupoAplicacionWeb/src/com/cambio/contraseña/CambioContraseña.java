@@ -1,7 +1,10 @@
-package com.tareas.controlador;
+package com.cambio.contraseña;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+import org.apache.commons.codec.binary.Hex;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
@@ -12,6 +15,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Groupbox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
@@ -19,23 +23,22 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbar;
 import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Window;
-
-import com.cambio.contraseña.Encriptacion;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 import com.controlador.entidades.DatosUsuarioss;
 import com.controlador.entidades.Departamento;
 import com.controlador.entidades.TipoUsuarios;
 import com.controlador.entidades.Usuariodb;
-import com.controlador.entidades.datosusuarios;
 import com.controlador.entidades.permisos;
+import com.controlador.entidades.personas;
 import com.controlador.entidades.tiposusuarios;
 import com.controlador.entidades.usuarios;
 import com.tareas.modelos.DBPermisos;
+import com.tareas.modelos.DBPersonas;
 import com.tareas.modelos.DBTiposUsuarios;
 import com.tareas.modelos.DBUsuarios;
 
-
-
-public class editarPersona extends GenericForwardComposer<Component>{
+public class CambioContraseña extends GenericForwardComposer<Component>{
 	@Wire
 	Textbox textboxBuscar,txtNombres,txtApellidos,txtced,txtEmail,txtDireccion,textbox_Usuario,textbox_password,txtUsuarioedit;
 	Textbox txtNuevoPassword,txtConfPassword;
@@ -47,13 +50,8 @@ public class editarPersona extends GenericForwardComposer<Component>{
 	Groupbox gpb_lista,gpb_buscar;
 	Grid grilla;
 	Window win_editarUsuario;
-	
-	Usuariodb usuario_seleccionado;
-	usuarios usuario=null;
-	tiposusuarios tipousuario = null;
-	permisos permiso_personas = null;
-	DBTiposUsuarios dbtiposusuarios = new DBTiposUsuarios();
-	DBPermisos dbpermisos = new DBPermisos();
+	usuarios usuarios=null;
+	Usuariodb usuario;
 	
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
@@ -61,25 +59,6 @@ public class editarPersona extends GenericForwardComposer<Component>{
 		super.doAfterCompose(comp);
 		grilla.setVisible(false);
 		buscarUsuarios("");
-		
-		Session session = Sessions.getCurrent();
-		usuario = (usuarios) session.getAttribute("usuario");
-		if(usuario!=null){
-			tipousuario = dbtiposusuarios.mostrartipousuarios(usuario.getId_tipousuario());
-			permiso_personas = dbpermisos.mostrarpermisos(usuario.getId_tipousuario(), "personas");
-			if(permiso_personas.getEditar()==0){
-				toolbarbuttonEditar.setVisible(false);
-			}else{
-				toolbarbuttonEditar.setVisible(true);
-			}
-			if(permiso_personas.getEliminar()==0){
-				toolbarbuttonEliminar.setVisible(false);
-			}else{
-				toolbarbuttonEliminar.setVisible(true);
-			}
-		}else{	
-			Executions.sendRedirect("login.zul");
-		}
 	}
 	
 	public void onClick$btnCancelarre(){
@@ -89,12 +68,16 @@ public class editarPersona extends GenericForwardComposer<Component>{
 		grilla.setVisible(false);
 		buscarUsuarios("");
 	}
-	
+	public String EncriptarPassword(String dpassword){
+		Encriptacion e=new Encriptacion("Encriptar");
+		String passwordEncriptado=e.encrypt(dpassword);
+		return passwordEncriptado;
+	}
 	public void onClick$btnGuardarre(){
 		if(txtNuevoPassword.getValue().equals(txtConfPassword.getValue())){
 			DBUsuarios dbu=new DBUsuarios();
 			boolean resultado= false;
-			resultado=dbu.modificarContrasena(usuario_seleccionado.getId_persona(), txtUsuarioedit.getValue(), txtConfPassword.getValue());
+			resultado=dbu.modificarContrasena(usuario.getId_persona(), txtUsuarioedit.getValue(), txtConfPassword.getValue());
 			if(resultado){
 				alert("Contraseña Modificada!!");
 				toolOpciones.setVisible(false);
@@ -129,7 +112,7 @@ public class editarPersona extends GenericForwardComposer<Component>{
 				toolOpciones.setVisible(false);
 				gpb_buscar.setVisible(false);
 				gpb_lista.setVisible(false);
-				txtUsuarioedit.setValue(usuario_seleccionado.getAlias());
+				txtUsuarioedit.setValue(usuario.getAlias());
 			}
 			else{
 				alert("Usuario y/o Clave Incorrecta! Intente Nuevamente!");
@@ -201,13 +184,29 @@ public class editarPersona extends GenericForwardComposer<Component>{
 	
 	
 	public void buscarUsuarios(String criterio){
-		DBUsuarios dbu= new DBUsuarios();
-		ArrayList<Usuariodb> lista = dbu.buscarUsuarios(criterio);
-		ListModelList<Usuariodb> modeloDeDatos= new ListModelList<Usuariodb>(lista);
-		listboxUsuarios.setModel(modeloDeDatos);
-		buttonListar.setDisabled(true);
+		tiposusuarios tipousuario = null;
+		DBTiposUsuarios dbtiposusuarios = new DBTiposUsuarios();
+		DBPersonas dbpersonas = new DBPersonas();
+		personas persona = null;
+		Session session = Sessions.getCurrent();
+		usuarios = (usuarios) session.getAttribute("usuario");
+			if(usuarios!=null){
+				tipousuario = dbtiposusuarios.mostrartipousuarios(usuarios.getId_tipousuario());
+				persona = dbpersonas.mostrarpersonas(usuarios.getId_persona());
+				
+				String nombrec=  persona.getNombres();
+				DBUsuarios dbu= new DBUsuarios();
+				ArrayList<Usuariodb> lista = dbu.buscarUsuarios(nombrec);
+				ListModelList<Usuariodb> modeloDeDatos= new ListModelList<Usuariodb>(lista);
+				listboxUsuarios.setModel(modeloDeDatos);
+				buttonListar.setDisabled(true);
+			}else{	
+				Executions.sendRedirect("login.zul");
+			}
+
+		
 	}
-	
+
 	public void onClick$buttonListar(){
 		buscarUsuarios("");
 		toolOpciones.setVisible(false);
@@ -223,23 +222,23 @@ public class editarPersona extends GenericForwardComposer<Component>{
 
 	public void onSelect$listboxUsuarios(){
 		toolOpciones.setVisible(true);
-		usuario_seleccionado=listboxUsuarios.getSelectedItem().getValue();
+		usuario=listboxUsuarios.getSelectedItem().getValue();
 		DBUsuarios du=new DBUsuarios();
 		DBTiposUsuarios dbu=new DBTiposUsuarios();
-		usuario_seleccionado.setId_persona(du.ObtenerIdPersona(usuario_seleccionado.getCedula()));
-		usuario_seleccionado.setId_tipousuario(dbu.ObtenerIdTipoUs(usuario_seleccionado.getDescripcionTU()));
-		usuario_seleccionado.setIdTipoDepartamento(dbu.ObtenerIdTipodept(usuario_seleccionado.getDescripciondep()));
+		usuario.setId_persona(du.ObtenerIdPersona(usuario.getCedula()));
+		usuario.setId_tipousuario(dbu.ObtenerIdTipoUs(usuario.getDescripcionTU()));
+		usuario.setIdTipoDepartamento(dbu.ObtenerIdTipodept(usuario.getDescripciondep()));
 	}
 	
 	public void onClick$toolbarbuttonEliminar(){
 		if(listboxUsuarios.getSelectedItem() != null){
-			if(usuario_seleccionado.getId_tipousuario()==16){
+			if(usuario.getId_tipousuario()==16){
 				DBUsuarios dbu=new DBUsuarios();
 				if(dbu.validarEliminacion()){
-					if(Messagebox.show("Esta seguro de eliminar al usuario "+usuario_seleccionado.getNombres()+" "+usuario_seleccionado.getApellidos()+"?","Eliminacion", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.CANCEL){				
+					if(Messagebox.show("Esta seguro de eliminar al usuario "+usuario.getNombres()+" "+usuario.getApellidos()+"?","Eliminacion", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.CANCEL){				
 						return;
 					}			
-					EditarEliminarUsuario(usuario_seleccionado, 2,"Eliminado","Eliminar");	
+					EditarEliminarUsuario(usuario, 2,"Eliminado","Eliminar");	
 					buscarUsuarios("");
 				}
 				else{
@@ -248,10 +247,10 @@ public class editarPersona extends GenericForwardComposer<Component>{
 				}
 			}
 			else{
-				if(Messagebox.show("Esta seguro de eliminar al usuario "+usuario_seleccionado.getNombres()+" "+usuario_seleccionado.getApellidos()+"?","Eliminacion", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.CANCEL){				
+				if(Messagebox.show("Esta seguro de eliminar al usuario "+usuario.getNombres()+" "+usuario.getApellidos()+"?","Eliminacion", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.CANCEL){				
 					return;
 				}			
-				EditarEliminarUsuario(usuario_seleccionado, 2,"Eliminado","Eliminar");	
+				EditarEliminarUsuario(usuario, 2,"Eliminado","Eliminar");	
 				buscarUsuarios("");
 			}
 			
@@ -280,19 +279,19 @@ public class editarPersona extends GenericForwardComposer<Component>{
 			grilla.setVisible(true);
 			CargarTipoUsuarios();
 			CargarDepartamento();
-			cbbTipoUsuario.setText(usuario_seleccionado.getDescripcionTU());
+			cbbTipoUsuario.setText(usuario.getDescripcionTU());
 			cbbTipoUsuario.setReadonly(true);
-			Combobox_TipoDept.setText(usuario_seleccionado.getDescripciondep());
+			Combobox_TipoDept.setText(usuario.getDescripciondep());
 			Combobox_TipoDept.setReadonly(true);
 			
-			txtNombres.setValue(usuario_seleccionado.getNombres());
-			txtApellidos.setValue(usuario_seleccionado.getApellidos());
-			txtDireccion.setValue(usuario_seleccionado.getDireccion());
-			txtEmail.setValue(usuario_seleccionado.getEmail());
-			txtced.setValue(usuario_seleccionado.getCedula());
-			textbox_Usuario.setValue(usuario_seleccionado.getAlias());
-			textbox_password.setValue(usuario_seleccionado.getDpasssword());
-	
+			txtNombres.setValue(usuario.getNombres());
+			txtApellidos.setValue(usuario.getApellidos());
+			txtDireccion.setValue(usuario.getDireccion());
+			txtEmail.setValue(usuario.getEmail());
+			txtced.setValue(usuario.getCedula());
+			textbox_Usuario.setValue(usuario.getAlias());
+			textbox_password.setValue(usuario.getDpasssword());
+			
 		}else{
 			alert("Seleccione Usuario a eliminar de la lista");
 			return;
@@ -306,11 +305,7 @@ public class editarPersona extends GenericForwardComposer<Component>{
 		grilla.setVisible(false);
 		buscarUsuarios("");
 	}
-	public String EncriptarPassword(String dpassword){
-		Encriptacion e=new Encriptacion("Encriptar");
-		String passwordEncriptado=e.encrypt(dpassword);
-		return passwordEncriptado;
-	}
+	
 	public void onClick$btnGuardarreU(){
 		Usuariodb us2=new Usuariodb();
 		us2.setApellidos(txtApellidos.getValue());
@@ -320,33 +315,20 @@ public class editarPersona extends GenericForwardComposer<Component>{
 		us2.setEmail(txtEmail.getValue());
 		us2.setDescripcionTU(cbbTipoUsuario.getValue());
 		us2.setDescripciondep(Combobox_TipoDept.getValue());
+		us2.setAlias(textbox_Usuario.getValue());
+		us2.setDpasssword(EncriptarPassword(textbox_password.getValue()));
+		
+		
+		
 		
 		DBUsuarios du2=new DBUsuarios();
 		DBTiposUsuarios dbu2=new DBTiposUsuarios();
-		us2.setId_persona(usuario_seleccionado.getId_persona());
+		us2.setId_persona(usuario.getId_persona());
 		us2.setId_tipousuario(dbu2.ObtenerIdTipoUs(us2.getDescripcionTU()));
 		us2.setIdTipoDepartamento(dbu2.ObtenerIdTipodept(us2.getDescripciondep()));
-		us2.setAlias(textbox_Usuario.getValue());
-//		String password = textbox_password.getValue();
-//		
-//		MessageDigest md=null;
-//		String encriptado=null; 
-//		try {				
-//			md=MessageDigest.getInstance("SHA-1");
-//			md.update(password.getBytes());
-//			byte[] mb = md.digest();
-//			mb = md.digest();
-//			encriptado=String.valueOf(Hex.encodeHex(mb));
-//		} 
-//		catch (NoSuchAlgorithmException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-		us2.setDpasssword(EncriptarPassword(textbox_password.getValue()));
-		//us2.setDpasssword(textbox_password.getValue());
 		
-		if(usuario_seleccionado.getId_tipousuario()==14){
-			if(usuario_seleccionado.getId_tipousuario()==us2.getId_tipousuario()){
+		if(usuario.getId_tipousuario()==14){
+			if(usuario.getId_tipousuario()==us2.getId_tipousuario()){
 				if(du2.validarEdicion(us2)){
 					alert("No se puede Modificar! Usuario ya existe!");
 				}

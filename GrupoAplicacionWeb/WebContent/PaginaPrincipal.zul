@@ -30,6 +30,7 @@
 	<row><button label="CONSULTAS" image="imagenes/consultas.png" style="margin-left:0%; width: 200px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonconsultas" tooltip="consultas"/></row>
 	<row><button label="REPORTE" image="imagenes/reportes.png" style="margin-left:0%; width: 200px;height:60px; background-color:#A9f5A9; border: #000 1px solid;" id="buttonreportes" tooltip="reportes"/></row>
 	<row><button label="CONFIGURACIONES" image="imagenes/configuraciones.png" style="margin-left:0%; width: 200px; height:60px;background-color:#A9f5A9; border: #000 1px solid;" id="buttonconfiguraciones" tooltip="configuraciones"/></row>
+	<row><button label="CAMBIO CONTRASEÑAS" image="imagenes/configuraciones.png" style="margin-left:0%; width: 200px; height:60px;background-color:#A9f5A9; border: #000 1px solid;" id="buttoncontraseñas" tooltip="contraseñas"/></row>
 	
 	</rows>
 	

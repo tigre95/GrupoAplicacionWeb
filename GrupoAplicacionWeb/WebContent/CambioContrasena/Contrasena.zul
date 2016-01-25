@@ -1,13 +1,15 @@
-<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?page title="Contrase�a" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Editar Usuario" border="normal" id="win_editarUsuario" closable="true" apply="com.tareas.controlador.editarPersona">
+<window title="Editar Usuario empleado" border="normal" id="win_editarUsuario2" closable="true" apply="com.cambio.contraseña.CambioContraseña">
  <toolbar id="toolOpciones">
 		<toolbarbutton image="/imagenes/editar.png" id="toolbarbuttonEditar" label="Modificar"/>
-		<toolbarbutton image="/imagenes/eliminar.png" id="toolbarbuttonEliminar" label="Eliminar"/>
 	</toolbar>
 	
 	<groupbox id="gpb_buscar">
+	
 		<caption label="Buscar"></caption>
+		<label id="label_usuario" style="color:#000000;"  value="nombre usuario"  />
+	
 		<textbox id="textboxBuscar"></textbox>
 		<space/>
 		<button image="/Imagenes/searchs.png" id="buttonBuscar" label="Buscar">
@@ -107,7 +109,6 @@
 					</textbox>
 				</row>
 			
-			
 			<row>	
 			<button id="btnGuardarreU" label="Guardar">
 			</button>
@@ -121,5 +122,4 @@
 		</grid>
 	
 </window>
-
 </zk>

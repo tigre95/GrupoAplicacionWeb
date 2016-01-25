@@ -25,6 +25,7 @@ public class LoginControlador extends GenericForwardComposer
 	String mensaje="";
 	
 	
+	
 	public void onClick$button_ingresar(){
 		usuarios usuario = null;
 		

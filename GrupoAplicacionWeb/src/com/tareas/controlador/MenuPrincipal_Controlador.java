@@ -24,7 +24,7 @@ public class MenuPrincipal_Controlador extends GenericForwardComposer<Component>
 	//enlazar los componentes de la interfaz
 	@Wire
 	Label label_usuario;
-	Button buttonpersonas, buttonjefe, buttonempleados, buttonpermisos, buttonconsultas, buttonreportes, buttonconfiguraciones;
+	Button buttonpersonas, buttonjefe, buttonempleados, buttonpermisos, buttonconsultas, buttonreportes, buttonconfiguraciones,buttoncontraseñas;
 	Center centro;
 	East este;
 	
@@ -167,6 +167,14 @@ public class MenuPrincipal_Controlador extends GenericForwardComposer<Component>
 	public void onClick$buttonreportes(){
 		este.setVisible(false);
 		Window win=(Window) Executions.createComponents("Submenues/submenuReporte.zul", null, null );
+		win.setAttribute("centro", centro);
+		win.setTitle("Opciones");
+		win.doModal();		
+	}
+	
+	public void onClick$buttoncontraseñas(){
+		este.setVisible(false);
+		Window win=(Window) Executions.createComponents("Submenues/SubmenuContraseña.zul", null, null );
 		win.setAttribute("centro", centro);
 		win.setTitle("Opciones");
 		win.doModal();		

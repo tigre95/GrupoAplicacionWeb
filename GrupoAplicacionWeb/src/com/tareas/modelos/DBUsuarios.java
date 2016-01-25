@@ -58,42 +58,45 @@ public class DBUsuarios {
 			}
 			return resultado;
 	}
-public boolean editareliminarUsuario(Usuariodb us,int opcion){
-	boolean resultado = false;
-	Connection con =null;
-	PreparedStatement stmt =null;							
-	DBManager dbm = new DBManager(); 
-	con = dbm.getConection();
-	String sql ="call sp_modulo_usuarios(?,?,?,?,?,?,?,?,?);";
-	try {
-		con.setAutoCommit(false);								
-		stmt = con.prepareStatement(sql);
-		   stmt.setInt(1, us.getId_persona());
-		stmt.setString(2, us.getNombres());
-		stmt.setString(3,us.getApellidos());
-		stmt.setString(4,us.getCedula());
-		stmt.setString(5,us.getEmail());
-		stmt.setString(6,us.getDireccion());
-		stmt.setInt(7,us.getIdTipoDepartamento());
-		stmt.setInt(8,us.getId_tipousuario());
-		stmt.setInt(9,opcion);
-		System.out.println(stmt);
-		int numerofilas = stmt.executeUpdate();
-		if(numerofilas>0 ){
-			con.commit();
-			resultado = true;
-		}
-		else {
-   		    System.out.println("No se puedo eliminar/editar usuario");
-			con.rollback();
-		}
-		} catch (SQLException e) {
-		// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("Error al eliminar/editar usuario" + e.getMessage());
-		}
-		return resultado;
-}
+	public boolean editareliminarUsuario(Usuariodb us,int opcion){
+		boolean resultado = false;
+		Connection con =null;
+		PreparedStatement stmt =null;							
+		DBManager dbm = new DBManager(); 
+		con = dbm.getConection();
+		String sql ="call sp_modulo_usuarios(?,?,?,?,?,?,?,?,?,?,?);";
+		try {
+			con.setAutoCommit(false);								
+			stmt = con.prepareStatement(sql);
+			   stmt.setInt(1, us.getId_persona());
+			stmt.setString(2, us.getNombres());
+			stmt.setString(3,us.getApellidos());
+			stmt.setString(4,us.getCedula());
+			stmt.setString(5,us.getEmail());
+			stmt.setString(6,us.getDireccion());
+			stmt.setInt(7,us.getIdTipoDepartamento());
+			stmt.setInt(8,us.getId_tipousuario());
+			stmt.setString(9,us.getAlias());
+			
+			stmt.setString(10,us.getDpasssword());
+			stmt.setInt(11,opcion);
+			System.out.println(stmt);
+			int numerofilas = stmt.executeUpdate();
+			if(numerofilas>0 ){
+				con.commit();
+				resultado = true;
+			}
+			else {
+	   		    System.out.println("No se puedo eliminar/editar usuario");
+				con.rollback();
+			}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Error al eliminar/editar usuario" + e.getMessage());
+			}
+			return resultado;
+	}
 
 
 public boolean validarUsuario(String cedula, String user){

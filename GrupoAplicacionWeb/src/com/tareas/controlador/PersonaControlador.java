@@ -16,6 +16,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import com.cambio.contraseña.Encriptacion;
 import com.controlador.entidades.Departamento;
 import com.controlador.entidades.TipoUsuario;
 import com.controlador.entidades.TipoUsuarios;
@@ -93,26 +94,31 @@ public void CargarTipoUsuarios(){
 
 
 
+public String EncriptarPassword(String dpassword){
+	Encriptacion e=new Encriptacion("Encriptar");
+	String passwordEncriptado=e.encrypt(dpassword);
+	return passwordEncriptado;
+}
 public void onClick$button_Registrar(){
 	DBUsuarios dbu=new DBUsuarios();
 	if(dbu.validarUsuario(textbox_Cedula.getValue(),textbox_Usuario.getValue())){
 		alert("Usuario y/o Cedula ya existen");
 	}
 	else{
-		String password = textbox_password.getText();
-		MessageDigest md=null;
-		String encriptado=null; 
-		try {				
-			md=MessageDigest.getInstance("SHA-1");
-			md.update(password.getBytes());
-			byte[] mb = md.digest();
-			mb = md.digest();
-			encriptado=String.valueOf(Hex.encodeHex(mb));
-		} 
-		catch (NoSuchAlgorithmException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		String password = textbox_password.getText();
+//		MessageDigest md=null;
+//		String encriptado=null; 
+//		try {				
+//			md=MessageDigest.getInstance("SHA-1");
+//			md.update(password.getBytes());
+//			byte[] mb = md.digest();
+//			mb = md.digest();
+//			encriptado=String.valueOf(Hex.encodeHex(mb));
+//		} 
+//		catch (NoSuchAlgorithmException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 		Usuariodb us=new Usuariodb();
 		us.setNombres(textbox_Nombres.getValue());
 		us.setApellidos(textbox_Apellidos.getValue());
@@ -120,7 +126,7 @@ public void onClick$button_Registrar(){
 		us.setEmail(textbox_Email.getValue());
 		us.setDireccion(textbox_Direccion.getValue());
 		us.setAlias(textbox_Usuario.getValue());
-		us.setDpasssword(encriptado);
+		us.setDpasssword(EncriptarPassword(textbox_password.getValue()));
 		us.setId_tipousuario((int) Combobox_TipoUsuario.getSelectedItem().getValue());
 		us.setIdTipoDepartamento((int) Combobox_TipoDept.getSelectedItem().getValue());
 		boolean resultado= false;
