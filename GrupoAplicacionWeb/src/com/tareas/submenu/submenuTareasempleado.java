@@ -64,7 +64,9 @@ public class submenuTareasempleado extends GenericForwardComposer<Component>{
    	 if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   	   	Window win=(Window) Executions.createComponents("TareasEmpleadoFormulario/DatosTarea.zul", centro, null );
+   	 	Session session = Sessions.getCurrent();
+	 	session.setAttribute("OpcionTareasEmpleado", "Guardar");
+   	 	Window win=(Window) Executions.createComponents("TareasEmpleadoFormulario/DatosTarea.zul", centro, null );
   		win.setTitle("Nueva Tarea");
   		wintareas.detach();
    }             
@@ -73,7 +75,9 @@ public class submenuTareasempleado extends GenericForwardComposer<Component>{
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-  		Window win=(Window) Executions.createComponents("", centro, null );
+  		Session session = Sessions.getCurrent();
+  		session.setAttribute("OpcionTareasEmpleado", "Buscar");
+  		Window win=(Window) Executions.createComponents("TareasEmpleadoFormulario/ListaTareas.zul", centro, null );
   		win.setTitle("Busqueda Tarea"); 
   		wintareas.detach();
    }  
@@ -82,7 +86,9 @@ public class submenuTareasempleado extends GenericForwardComposer<Component>{
   	if(centro.getFirstChild()!=null){
   	 centro.removeChild(centro.getFirstChild());
   	 }
-   		Window win=(Window) Executions.createComponents("", centro, null );  		
+	  	Session session = Sessions.getCurrent();
+	 	session.setAttribute("OpcionTareasEmpleado", "Editar");
+   		Window win=(Window) Executions.createComponents("TareasEmpleadoFormulario/ListaTareas.zul", centro, null );  		
   		win.setTitle("Listar Tareas");
   		wintareas.detach();
    }

@@ -1,8 +1,8 @@
 <?page title="Datos Tarea a Realizar" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window style="text-align:'center';" border="none" width="50%" 
-height="426px" contentStyle="overflow:auto" mode="modal" sizable="false" id="WinDatosTareas"
-apply="com.tareas.controlador.RealizarTareaControlador">
+<window style="text-align:'center';" border="none" width="100%" 
+height="426px" contentStyle="overflow:auto" sizable="false" id="WinDatosTareas"
+apply="com.tareas.controlador.DatosTareaControlador" closable="true">
 <borderlayout>
 	<center>
 		<grid>
@@ -20,34 +20,36 @@ apply="com.tareas.controlador.RealizarTareaControlador">
 				</row>
 				<row>
 					<label>Fecha inicio:</label>
-					<label>Fecha Fin:</label>
+					<label id="labelFechaInicio"></label>
 				</row>
 				<row>
-					<datebox width="100%" id="dateboxFechaInicio"></datebox>
-					<datebox width="100%" id="dateboxFechaFin"></datebox>
+					<label>Fecha fin:</label>
+					<label id="labelFechaFin"></label>
 				</row>
-				<row>
+				<row spans="1,2">
 					<label>Descripción:</label>
-				</row>
-				<row spans="2">
-					<textbox rows="2" multiline="true" width="100%" id="textboxDescripcion"></textbox>
+					<textbox disabled="true" rows="2" multiline="true" width="100%" id="textboxDescripcion"></textbox>
 				</row>
 				<row style="background-color:yellow;" spans="2">
 					<label >DATOS DE TAREA A SUBIR</label>
 				</row>
 				<row spans="1,1">
-					<label>Subir archivo de la Tarea</label>
-					<button width="100%" label="Subir" id="buttonSubirTarea" ></button>
+					<label id="labelArchivo"></label>
+					<button width="100%" label="Subir Archivo" id="buttonSubirTarea" 
+					autodisable="self" upload="true,maxsize=8192"></button>
 				</row>
-				<row spans="2">
+				<row spans="1,2">
 					<label>Comentario:</label>
-				</row>
-				<row spans="2">
 					<textbox rows="2" multiline="true" width="100%" id="textboxComentario"></textbox>
 				</row>
 				<row >
-					<label>Fecha de subida d Tarea:</label>
+					<label>Fecha de subida:</label>
 					<label id="labelFechaSubida"></label>
+				</row>
+				<row >
+					<button id="buttonOpcion" width="100%" label=""></button>
+					<button id="buttonEliminar" width="100%" label="Eliminar"></button>
+					<button id="buttonCancelar" width="100%" label="Cancelar"></button>
 				</row>
 			</rows>
 		</grid>

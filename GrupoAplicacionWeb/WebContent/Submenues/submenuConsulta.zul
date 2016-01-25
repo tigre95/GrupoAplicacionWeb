@@ -1,28 +1,20 @@
 <?page title="Seleccione una opcion" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Seleccione una opcion" width="70%" height="28%" border="normal" closable="true" id="winconsultas" apply="com.tareas.submenu.submenuConsultas">
-
-
+	<window title="Seleccione una opcion" width="26%" height="29%" border="normal" closable="true" id="winconsultas" apply="com.tareas.submenu.submenuConsultas">
 
 <grid>
 			<rows>
 	
 				<row>
-					<button label="Consultas Tareas Pendientes" image="imagenes/buscar.png"  width="250px" id="buttonRepGeneral"  />
-					<button label="ConsuLtas Tareas Asignadas" image="imagenes/buscar.png" width="250px" id="buttontareasA"  />
-					
-					<button label="Consultas Tareas Eliminadas" image="imagenes/buscar.png"  width="250px" id="buttonTareaEliminada"  />
-					<button label="ConsuLtas Tareas Atrasada" image="imagenes/buscar.png" width="250px" id="buttonTareaAtrasada"  />
-			
+					<button label="Consulta por estado de tareas" image="imagenes/buscar.png" width="320px" id="buttontareasR" />
 				</row>
 			
 				<row>					
-					<button label="Consultas Tareas Realizadas" image="imagenes/buscar.png" width="250px" id="buttontareasR" />
-					<button label="Consultas Tareas Nivel Importancia" image="imagenes/buscar.png" width="250px" id="buttontareasN" />
+					<button label="Consultas por nivel de importancia de la tarea" image="imagenes/buscar.png" width="320px" id="buttontareasN" />
 				</row>
 				<row>					
 
-					<button label="Volver" image="imagenes/Volver.png" width="250px" onClick="winconsultas.detach()"/>
+					<button label="Volver" image="imagenes/Volver.png" width="320px" onClick="winconsultas.detach()"/>
 				</row>
 			</rows>
 		</grid>

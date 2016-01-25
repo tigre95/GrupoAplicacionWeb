@@ -77,7 +77,7 @@ public class submenutareasjefes extends GenericForwardComposer<Component>{
   	 }
   		Session session = Sessions.getCurrent();
 	 	session.setAttribute("OpcionTareasJefe", "Buscar");
-  		Window win=(Window) Executions.createComponents("TareasJefeFormulario/BuscarTarea.zul", centro, null );
+  		Window win=(Window) Executions.createComponents("TareasJefeFormulario/ListaEmpleados.zul", centro, null );
   		win.setTitle("Busqueda Tarea");
   		wintareasjefe.detach();
    }  
@@ -88,9 +88,8 @@ public class submenutareasjefes extends GenericForwardComposer<Component>{
   	 }
   		Session session = Sessions.getCurrent();
 	 	session.setAttribute("OpcionTareasJefe", "Editar");
-   		Window win=(Window) Executions.createComponents("TareasJefeFormulario/BuscarTarea.zul", centro, null );  		
+   		Window win=(Window) Executions.createComponents("TareasJefeFormulario/ListaEmpleados.zul", centro, null );  		
   		win.setTitle("Listar Tareas");
   		wintareasjefe.detach();
    }
 }
-
