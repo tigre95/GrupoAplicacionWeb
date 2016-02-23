@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Iterator;
 
 import org.zkoss.zk.ui.Component;
@@ -21,10 +20,10 @@ import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
-import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Window;
 
 import com.controlador.entidades.Departamento;
+import com.controlador.entidades.NivelTareas;
 import com.controlador.entidades.personas;
 import com.controlador.entidades.tareasReporte;
 import com.controlador.entidades.usuarios;
@@ -39,15 +38,16 @@ import com.lowagie.text.pdf.PdfWriter;
 import com.tareas.modelos.DBPersonas;
 import com.tareas.modelos.DBReportes;
 import com.tareas.modelos.DBdepartamento;
+import com.tareas.modelos.DBnivelTarea;
 
-public class reporteNivelImportancia extends GenericForwardComposer<Component>{
+public class reporteAdministrador extends GenericForwardComposer<Component>{
 	@Wire
 	Label labelA, labelR, labelP, labelT;
 	Groupbox gpb_nivel_estados,gpb_mes,gpb_fechas,gpb_lista,gpb_anio;
-	Window win_reportenivel;
+	Window win_reporteadministrador;
 	Button buttonAceptaru,buttonAceptarAnio,buttonAceptarMes,buttonAceptarFechas,buttonDeshacer,
 	button_porcentajes,buttonImprimir;
-	Combobox cmb_nivel,cmb_tiempo,cmb_mes,cmb_anio,cmb_aniomes;
+	Combobox cmb_nivel,cmb_tiempo,cmb_mes,cmb_anio,cmb_aniomes,cmb_estados,cmb_departamento;
 	Datebox txtFechaLlegada,txtFechaSalida;
 	Listbox listatareas;
 	int id_departamento = 0;
@@ -57,6 +57,7 @@ public class reporteNivelImportancia extends GenericForwardComposer<Component>{
 	DBPersonas dbpersonas = new DBPersonas();
 	DBdepartamento dbdepartamento = new DBdepartamento();
 	
+	ListModelList<Departamento> departamentos;
 	DBReportes dbr=new DBReportes();
 	ArrayList<tareasReporte> lista;
 	
@@ -99,11 +100,20 @@ public class reporteNivelImportancia extends GenericForwardComposer<Component>{
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
+		cargarComboDepartamentos();
 		Session session = Sessions.getCurrent();
 		usuario = (usuarios) session.getAttribute("usuario");
 		persona = dbpersonas.mostrarpersona(usuario.getId_persona());
-		id_departamento = persona.getId_departamento();
-		departamento = dbdepartamento.mostrardepartamento(id_departamento);
+	}
+	
+	public void cargarComboDepartamentos(){
+		departamentos = dbdepartamento.cargar_departamentos();
+		if(departamentos.isEmpty()==false){
+			cmb_departamento.setModel(departamentos);
+		}else{
+			alert("no existen temas");
+		}
+		cmb_departamento.setText("Todos");
 	}
 	
 	public void onClick$buttonImprimir(){
@@ -157,10 +167,14 @@ public class reporteNivelImportancia extends GenericForwardComposer<Component>{
     		          celda.setHorizontalAlignment(Element.ALIGN_CENTER);
     	      	      celda.setVerticalAlignment(Element.ALIGN_CENTER);
     	      	      tabla.addCell(celda);
-	    	      	  celda=new PdfPCell(new Phrase("Estado",miFuente2));
+	    	      	  celda=new PdfPCell(new Phrase("Descripcion empleado",miFuente2));
 	  		          celda.setHorizontalAlignment(Element.ALIGN_CENTER);
 	  	      	      celda.setVerticalAlignment(Element.ALIGN_CENTER);
 	  	      	      tabla.addCell(celda);
+		  	      	  celda=new PdfPCell(new Phrase("terminada",miFuente2));
+			          celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+		      	      celda.setVerticalAlignment(Element.ALIGN_CENTER);
+		      	      tabla.addCell(celda);
     		          for (int i = 0; i < lista.size(); i++)
     		          {
     		        	  rowlista=lista.get(i);
@@ -188,7 +202,11 @@ public class reporteNivelImportancia extends GenericForwardComposer<Component>{
     		        	    c1.setHorizontalAlignment(Element.ALIGN_CENTER);
     		        	    c1.setVerticalAlignment(Element.ALIGN_CENTER);
     		        	    tabla.addCell(c1);
-    		        	    c1= new PdfPCell(new Phrase(""+rowlista.getEstado(),miFuente3));
+    		        	    c1= new PdfPCell(new Phrase(""+rowlista.getDescripcion_empleado(),miFuente3));
+    		        	    c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+    		        	    c1.setVerticalAlignment(Element.ALIGN_CENTER);
+    		        	    tabla.addCell(c1);
+    		        	    c1= new PdfPCell(new Phrase(""+rowlista.getFecha_terminada(),miFuente4));
     		        	    c1.setHorizontalAlignment(Element.ALIGN_CENTER);
     		        	    c1.setVerticalAlignment(Element.ALIGN_CENTER);
     		        	    tabla.addCell(c1);
@@ -196,7 +214,7 @@ public class reporteNivelImportancia extends GenericForwardComposer<Component>{
 			  nombrepdf=nombre+".pdf";
 	          PdfWriter.getInstance(document,new FileOutputStream(nombrepdf));
 	          document.open();
-	          Paragraph Titulo=new Paragraph("Reporte de "+departamento.getDescripcion());
+	          Paragraph Titulo=new Paragraph("Reporte de Administrador");
 			  Titulo.setAlignment(Element.ALIGN_CENTER);
 	          document.add(Titulo);
 	          document.add(new Paragraph("Tipo de Reporte: "+cmb_tiempo.getText()));
@@ -209,7 +227,9 @@ public class reporteNivelImportancia extends GenericForwardComposer<Component>{
 	          if(cmb_tiempo.getText().equals("Por Año")){
 	        	  document.add(new Paragraph("Año: "+ cmb_anio.getText()));
 	          }
+	          document.add(new Paragraph("Departamento:" + cmb_departamento.getText()));
 	          document.add(new Paragraph("Nivel: " +cmb_nivel.getText()));
+	          document.add(new Paragraph("Estado:" + cmb_estados.getText()));
 	          document.add(new Paragraph("Usuario: "+persona.getNombres()+" "+persona.getApellidos()));
 	          document.add(new Paragraph(parrafo));
 	          document.add(new Paragraph(" "));
@@ -258,9 +278,10 @@ public class reporteNivelImportancia extends GenericForwardComposer<Component>{
 		labelR.setValue("0%"); 
 		labelP.setValue("0%");
 		labelT.setValue("0%");
+		cmb_departamento.setText("Todos");
 	}
-	
-	public void onCreate$win_reportenivel(){
+
+	public void onCreate$win_reporteadministrador(){
 		buttonImprimir.setVisible(false);
 		Calendar c1 = Calendar.getInstance();
 		gpb_mes.setVisible(false);
@@ -284,6 +305,8 @@ public class reporteNivelImportancia extends GenericForwardComposer<Component>{
 		cmb_nivel.setReadonly(true);
 		cmb_mes.setText("Enero");
 		cmb_mes.setReadonly(true);
+		cmb_estados.setText("Todos");
+		cmb_estados.setReadonly(true);
 		
 	}
 	
@@ -332,7 +355,45 @@ public class reporteNivelImportancia extends GenericForwardComposer<Component>{
 		if(nivel.equals("Todos")){
 			nivel = "";
 		}
-		lista = dbr.ReportePorAnioNivel(Integer.parseInt(cmb_anio.getText()), nivel, id_departamento);
+		if(cmb_departamento.getText().equals("Todos")==false){
+			if(cmb_estados.getText().equals("Activo")){
+				lista = dbr.ReportePorAnioNoRealizadas(Integer.parseInt(cmb_anio.getText()), nivel, "A", (int)cmb_departamento.getSelectedItem().getValue());
+			}
+			if(cmb_estados.getText().equals("Pendiente")){
+				lista = dbr.ReportePorAnioNoRealizadas(Integer.parseInt(cmb_anio.getText()), nivel, "P", (int)cmb_departamento.getSelectedItem().getValue());
+			}
+			if(cmb_estados.getText().equals("Realizado")){
+				lista = dbr.ReportePorAnioRealizadas(Integer.parseInt(cmb_anio.getText()), nivel, "R", (int)cmb_departamento.getSelectedItem().getValue());
+			}
+			if(cmb_estados.getText().equals("Atrasado")){
+				lista = dbr.ReportePorAnioRealizadas(Integer.parseInt(cmb_anio.getText()), nivel, "T", (int)cmb_departamento.getSelectedItem().getValue());
+			}
+			if(cmb_estados.getText().equals("Eliminado")){
+				lista = dbr.ReportePorAnioNoRealizadas(Integer.parseInt(cmb_anio.getText()), nivel, "E", (int)cmb_departamento.getSelectedItem().getValue());
+			}
+			if(cmb_estados.getText().equals("Todos")){
+				lista = dbr.ReportePorAnioNoRealizadas(Integer.parseInt(cmb_anio.getText()), nivel, "", (int)cmb_departamento.getSelectedItem().getValue());
+			}
+		}else{
+			if(cmb_estados.getText().equals("Activo")){
+				lista = dbr.ReportePorAnioNoRealizadasAdministrador(Integer.parseInt(cmb_anio.getText()), nivel, "A");
+			}
+			if(cmb_estados.getText().equals("Pendiente")){
+				lista = dbr.ReportePorAnioNoRealizadasAdministrador(Integer.parseInt(cmb_anio.getText()), nivel, "P");
+			}
+			if(cmb_estados.getText().equals("Realizado")){
+				lista = dbr.ReportePorAnioRealizadasAdministrador(Integer.parseInt(cmb_anio.getText()), nivel, "R");
+			}
+			if(cmb_estados.getText().equals("Atrasado")){
+				lista = dbr.ReportePorAnioRealizadasAdministrador(Integer.parseInt(cmb_anio.getText()), nivel, "T");
+			}
+			if(cmb_estados.getText().equals("Eliminado")){
+				lista = dbr.ReportePorAnioNoRealizadasAdministrador(Integer.parseInt(cmb_anio.getText()), nivel, "E");
+			}
+			if(cmb_estados.getText().equals("Todos")){
+				lista = dbr.ReportePorAnioNoRealizadasAdministrador(Integer.parseInt(cmb_anio.getText()), nivel, "");
+			}
+		}
 		ListModelList<tareasReporte> modeloDeDatos= new ListModelList<tareasReporte>(lista);
 		listatareas.setModel(modeloDeDatos);
 		gpb_lista.setVisible(true);
@@ -346,7 +407,45 @@ public class reporteNivelImportancia extends GenericForwardComposer<Component>{
 		if(nivel.equals("Todos")){
 			nivel = "";
 		}
-		lista = dbr.ReportePorMesNivel(Integer.parseInt(cmb_aniomes.getText()),cmb_mes.getSelectedIndex()+1, nivel, id_departamento);
+		if(cmb_departamento.getText().equals("Todos")==false){
+			if(cmb_estados.getText().equals("Activo")){
+				lista = dbr.ReportePorMesNoRealizadas(Integer.parseInt(cmb_aniomes.getText()),cmb_mes.getSelectedIndex()+1, nivel, "A", (int)cmb_departamento.getSelectedItem().getValue());
+			}
+			if(cmb_estados.getText().equals("Pendiente")){
+				lista = dbr.ReportePorMesNoRealizadas(Integer.parseInt(cmb_aniomes.getText()),cmb_mes.getSelectedIndex()+1, nivel, "P", (int)cmb_departamento.getSelectedItem().getValue());
+			}
+			if(cmb_estados.getText().equals("Realizado")){
+				lista = dbr.ReportePorMesRealizadas(Integer.parseInt(cmb_aniomes.getText()),cmb_mes.getSelectedIndex()+1, nivel, "R", (int)cmb_departamento.getSelectedItem().getValue());
+			}
+			if(cmb_estados.getText().equals("Atrasado")){
+				lista = dbr.ReportePorMesRealizadas(Integer.parseInt(cmb_aniomes.getText()),cmb_mes.getSelectedIndex()+1, nivel, "T", (int)cmb_departamento.getSelectedItem().getValue());
+			}
+			if(cmb_estados.getText().equals("Eliminado")){
+				lista = dbr.ReportePorMesNoRealizadas(Integer.parseInt(cmb_aniomes.getText()),cmb_mes.getSelectedIndex()+1, nivel, "E", (int)cmb_departamento.getSelectedItem().getValue());
+			}
+			if(cmb_estados.getText().equals("Todos")){
+				lista = dbr.ReportePorMesNoRealizadas(Integer.parseInt(cmb_aniomes.getText()),cmb_mes.getSelectedIndex()+1, nivel, "", (int)cmb_departamento.getSelectedItem().getValue());
+			}
+		}else{
+			if(cmb_estados.getText().equals("Activo")){
+				lista = dbr.ReportePorMesNoRealizadasAdministrador(Integer.parseInt(cmb_aniomes.getText()),cmb_mes.getSelectedIndex()+1, nivel, "A");
+			}
+			if(cmb_estados.getText().equals("Pendiente")){
+				lista = dbr.ReportePorMesNoRealizadasAdministrador(Integer.parseInt(cmb_aniomes.getText()),cmb_mes.getSelectedIndex()+1, nivel, "P");
+			}
+			if(cmb_estados.getText().equals("Realizado")){
+				lista = dbr.ReportePorMesRealizadasAdministrador(Integer.parseInt(cmb_aniomes.getText()),cmb_mes.getSelectedIndex()+1, nivel, "R");
+			}
+			if(cmb_estados.getText().equals("Atrasado")){
+				lista = dbr.ReportePorMesRealizadasAdministrador(Integer.parseInt(cmb_aniomes.getText()),cmb_mes.getSelectedIndex()+1, nivel, "T");
+			}
+			if(cmb_estados.getText().equals("Eliminado")){
+				lista = dbr.ReportePorMesNoRealizadasAdministrador(Integer.parseInt(cmb_aniomes.getText()),cmb_mes.getSelectedIndex()+1, nivel, "E");
+			}
+			if(cmb_estados.getText().equals("Todos")){
+				lista = dbr.ReportePorMesNoRealizadasAdministrador(Integer.parseInt(cmb_aniomes.getText()),cmb_mes.getSelectedIndex()+1, nivel, "");
+			}
+		}
 		ListModelList<tareasReporte> modeloDeDatos= new ListModelList<tareasReporte>(lista);
 		listatareas.setModel(modeloDeDatos);
 		listatareas.renderAll();
@@ -367,7 +466,45 @@ public class reporteNivelImportancia extends GenericForwardComposer<Component>{
 			if(nivel.equals("Todos")){
 				nivel = "";
 			}
-			lista = dbr.ReportePorFechaNivel(txtFechaLlegada.getText(),txtFechaSalida.getText(), nivel, id_departamento);
+			if(cmb_departamento.getText().equals("Todos")==false){
+				if(cmb_estados.getText().equals("Activo")){
+					lista = dbr.ReportePorFechaNoRealizadas(txtFechaLlegada.getText(),txtFechaSalida.getText(), nivel, "A", (int)cmb_departamento.getSelectedItem().getValue());
+				}
+				if(cmb_estados.getText().equals("Pendiente")){
+					lista = dbr.ReportePorFechaNoRealizadas(txtFechaLlegada.getText(),txtFechaSalida.getText(), nivel, "P", (int)cmb_departamento.getSelectedItem().getValue());
+				}
+				if(cmb_estados.getText().equals("Realizado")){
+					lista = dbr.ReportePorFechaRealizadas(txtFechaLlegada.getText(),txtFechaSalida.getText(), nivel, "R", (int)cmb_departamento.getSelectedItem().getValue());
+				}
+				if(cmb_estados.getText().equals("Atrasado")){
+					lista = dbr.ReportePorFechaRealizadas(txtFechaLlegada.getText(),txtFechaSalida.getText(), nivel, "T", (int)cmb_departamento.getSelectedItem().getValue());
+				}
+				if(cmb_estados.getText().equals("Eliminado")){
+					lista = dbr.ReportePorFechaNoRealizadas(txtFechaLlegada.getText(),txtFechaSalida.getText(), nivel, "E", (int)cmb_departamento.getSelectedItem().getValue());
+				}
+				if(cmb_estados.getText().equals("Todos")){
+					lista = dbr.ReportePorFechaNoRealizadas(txtFechaLlegada.getText(),txtFechaSalida.getText(), nivel, "", (int)cmb_departamento.getSelectedItem().getValue());
+				}
+			}else{
+				if(cmb_estados.getText().equals("Activo")){
+					lista = dbr.ReportePorFechaNoRealizadasAdministrador(txtFechaLlegada.getText(),txtFechaSalida.getText(), nivel, "A");
+				}
+				if(cmb_estados.getText().equals("Pendiente")){
+					lista = dbr.ReportePorFechaNoRealizadasAdministrador(txtFechaLlegada.getText(),txtFechaSalida.getText(), nivel, "P");
+				}
+				if(cmb_estados.getText().equals("Realizado")){
+					lista = dbr.ReportePorFechaRealizadasAdministrador(txtFechaLlegada.getText(),txtFechaSalida.getText(), nivel, "R");
+				}
+				if(cmb_estados.getText().equals("Atrasado")){
+					lista = dbr.ReportePorFechaRealizadasAdministrador(txtFechaLlegada.getText(),txtFechaSalida.getText(), nivel, "T");
+				}
+				if(cmb_estados.getText().equals("Eliminado")){
+					lista = dbr.ReportePorFechaNoRealizadasAdministrador(txtFechaLlegada.getText(),txtFechaSalida.getText(), nivel, "E");
+				}
+				if(cmb_estados.getText().equals("Todos")){
+					lista = dbr.ReportePorFechaNoRealizadasAdministrador(txtFechaLlegada.getText(),txtFechaSalida.getText(), nivel, "");
+				}
+			}
 			ListModelList<tareasReporte> modeloDeDatos= new ListModelList<tareasReporte>(lista);
 			listatareas.setModel(modeloDeDatos);
 			gpb_lista.setVisible(true);
@@ -396,4 +533,5 @@ public class reporteNivelImportancia extends GenericForwardComposer<Component>{
 				txtFechaLlegada.setText("");
 			}
 	}
+
 }

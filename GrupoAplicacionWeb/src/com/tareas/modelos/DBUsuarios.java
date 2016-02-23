@@ -224,6 +224,75 @@ public boolean validarEdicion(Usuariodb us){
 	return resultado;
 }
 
+public ArrayList<Usuariodb>buscarUsuarios(String criterio, int id_usuario){			
+	ArrayList<Usuariodb> lista= null;
+	//conectar a la bd
+	DBManager dbmanager = new DBManager();
+	Connection con = dbmanager.getConection();
+	if(con==null){return lista;}
+	
+	Statement sentencia;
+	ResultSet resultados= null;
+	
+	String query="";
+	if(criterio.equals("") ){
+		query = "SELECT p.nombres as nombres,p.apellidos as apellidos, du.usuario as alias,tu.descripcion as descrip , dp.descripcion as descripciondep   ,p.cedula as cedula,p.email as email,p.direccion as direccion FROM personas as p,usuarios as u, tiposusuarios as tu,datosusuarios as du ,departamento as dp where p.id_persona=u.id_persona and u.id_tipousuario=tu.id_tipousuario and du.id_usuario=u.id_usuario and dp.idTipoDepartamento=p.id_departamento and p.estado='A' and u.estado='A' and tu.estado='A' and du.estado='A'and dp.estado='A' and u.id_usuario = "+id_usuario+" order by tu.descripcion";
+	}
+	else{
+	query = "SELECT p.nombres as nombres,p.apellidos as apellidos, du.usuario as alias,tu.descripcion as descrip , dp.descripcion as descripciondep ,p.cedula as cedula ,p.email as email,p.direccion as direccion FROM personas as p,usuarios as u, tiposusuarios as tu,datosusuarios as du ,departamento as dp where p.id_persona=u.id_persona and u.id_tipousuario=tu.id_tipousuario and du.id_usuario=u.id_usuario and dp.idTipoDepartamento=p.id_departamento and p.estado='A' and u.estado='A' and tu.estado='A' and du.estado='A'and dp.estado='A' and (p.nombres like '%"+criterio+"%' or p.apellidos like '%"+criterio+"%' or tu.descripcion like '%"+criterio+"%' or du.usuario like '%"+criterio+"%' or p.cedula like '%"+criterio+"%' or p.direccion like '%"+criterio+"%') and u.id_usuario = "+id_usuario+" order by tu.descripcion";
+		
+	System.out.println(query);
+	}
+	
+	try {
+		sentencia= con.createStatement();
+		resultados= sentencia.executeQuery(query);
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		System.out.println("Error en ejecucion de sentencia" + e.getMessage());
+	}
+	
+	Usuariodb us= null;				
+	lista= new ArrayList<Usuariodb>();
+	
+	//recorrer los resultados
+	try {
+		while (resultados.next()){
+			us= new Usuariodb();
+			
+			
+			us.setNombres(resultados.getString("nombres"));
+			us.setApellidos(resultados.getString("apellidos"));
+			us.setAlias(resultados.getString("alias"));
+			us.setDescripcionTU(resultados.getString("descrip"));
+			//departamentodb dep = new departamentodb();
+			//dep.setDescripciondp(resultados.getString("descripciondep"));
+		//	us.setDepartamentodb(dep);
+			us.setDescripciondep(resultados.getString("descripciondep"));
+			
+			us.setCedula(resultados.getString("cedula"));
+			us.setEmail(resultados.getString("email"));
+			us.setDireccion(resultados.getString("direccion"));
+			lista.add(us);
+							
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		System.out.println("Error en recorrer los resultados");
+	}
+	try {
+		con.close();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		System.out.println("Error al cerrar la conexion");
+	}
+	
+	return lista;	
+}
+
 public ArrayList<Usuariodb>buscarUsuarios(String criterio){			
 	ArrayList<Usuariodb> lista= null;
 	//conectar a la bd

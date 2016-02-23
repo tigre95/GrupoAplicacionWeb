@@ -1,7 +1,7 @@
-<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?page title="Consulta Administrador" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Tareas " border="normal" id="win_tareas_asig" closable="true" 
-apply="com.tareas.consultas.ConsultaEstadoTarea">
+<window title="Consulta Administrador" border="normal" id="winConsultaAdministrador" closable="true" 
+apply="com.tareas.consultas.ConsultaAdministrador">
 	<groupbox>
 		<caption label="Buscar"></caption>
 		<space/>
@@ -11,22 +11,25 @@ apply="com.tareas.consultas.ConsultaEstadoTarea">
 						<label value="Buscar nombre , apellido , cedula de Personas " />
 						<textbox id="textboxBuscar"></textbox>
 					</row>
-					
 					<row>
-						<div>
-		          			<label value="Seleccione el nivel:">
-		          			</label>
-					          <combobox id="comboNivelTarea">
-					          <comboitem label="Todos"></comboitem>
-					          <comboitem label="Alto"></comboitem>
-					          <comboitem label="Medio"></comboitem>
-					          <comboitem label="Bajo"></comboitem>
-					          </combobox>
-			   			</div>
+	          			<label value=" Departamento: "></label>
+						<combobox id="cmb_departamento">
+						<template name="model">
+							<comboitem label="${each.descripcion}" value="${each.id_tipodepartamento}" />
+						</template>
+						</combobox>
 					</row>
-
 					<row>
-						<div>
+	          			<label value="Seleccione el nivel:">
+	          			</label>
+				          <combobox id="comboNivelTarea">
+				          <comboitem label="Todos"></comboitem>
+				          <comboitem label="Alto"></comboitem>
+				          <comboitem label="Medio"></comboitem>
+				          <comboitem label="Bajo"></comboitem>
+				          </combobox>
+					</row>
+					<row>
 				        <label value="Seleccione el tipo de estado: ">
 				        </label>
 				        <combobox id="comboboxTipo">
@@ -37,8 +40,6 @@ apply="com.tareas.consultas.ConsultaEstadoTarea">
 				        <comboitem label="Atrasada"></comboitem>
 				        <comboitem label="Eliminada"></comboitem>
 				        </combobox>
-					   </div>
-					
 					</row>			
 				</rows>
 			</grid>
@@ -80,6 +81,5 @@ apply="com.tareas.consultas.ConsultaEstadoTarea">
 		</template>
 		
 	</listbox>
-  	
 </window>
 </zk>

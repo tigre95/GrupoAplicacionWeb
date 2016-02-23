@@ -2,12 +2,23 @@ package com.controlador.entidades;
 
 public class TareasAsignadas {
 	private String descripcion;
+	private String fecha_inicio;
+	private String fecha_fin;
+	private String nombres;
+	private String apellidos;
+	private String cedula;
+	private String nivel;
+	private String descripcion_re;
+	private String fecha_terminada;
+	private String estado;
+	
 	public TareasAsignadas() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	public TareasAsignadas(String descripcion, String fecha_inicio, String fecha_fin, String nombres, String apellidos,
-			String cedula, String nivel, String descripcion_re, String fecha_terminada) {
+			String cedula, String nivel, String descripcion_re, String fecha_terminada, String estado) {
 		super();
 		this.descripcion = descripcion;
 		this.fecha_inicio = fecha_inicio;
@@ -18,7 +29,17 @@ public class TareasAsignadas {
 		this.nivel = nivel;
 		this.descripcion_re = descripcion_re;
 		this.fecha_terminada = fecha_terminada;
+		this.estado = estado;
 	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -73,13 +94,5 @@ public class TareasAsignadas {
 	public void setFecha_terminada(String fecha_terminada) {
 		this.fecha_terminada = fecha_terminada;
 	}
-	private String fecha_inicio;
-	private String fecha_fin;
-	private String nombres;
-	private String apellidos;
-	private String cedula;
-	private String nivel;
-	private String descripcion_re;
-	private String fecha_terminada;
 	
 }

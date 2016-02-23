@@ -1,47 +1,41 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Nivel de Tareas" border="normal" id="win_tareas_asig" closable="true" apply="com.tareas.consultas.consultaNivelTarea">
+<window title="Nivel de Tareas" border="normal" id="winConsultaNivel" closable="true" apply="com.tareas.consultas.consultaNivelTarea">
 <groupbox>
-	
 		<grid>
 			<rows>
 				<row>
 					<label value="Buscar nombre , apellido , cedula de Personas: " />
 					<textbox id="textboxBuscar"></textbox>
 				</row>
-			
 			<row>
 				<label value="Nivel de importancia:" />
-				<combobox id="comboNivelTarea" constraint="no empty" readonly="true">
-					<template name="model">
-					<comboitem label="${each.descripcion}" value="${each.id_tipotarea}"/>
-					</template>
+				 <combobox id="comboNivelTarea">
+					<comboitem label="Todos"></comboitem>
+					<comboitem label="Alto"></comboitem>
+					<comboitem label="Medio"></comboitem>
+					<comboitem label="Bajo"></comboitem>
 				</combobox>
-
 			</row>
 			</rows>
 		</grid>
-			
-		
 		<button image="/imagenes/buscar.png" id="buttonBuscar" label="Buscar">
 		</button>
 		<space/>
 		<button image="/imagenes/buscar.png" id="buttonListar" label="Ver Todos"/>
 	</groupbox>
-	
-
 	<listbox id="listboxtareas" mold="paging" pageSize="3" width="100%" emptyMessage="No existen datos" >
 		<listhead sizable="true" menupopup="auto">
-			<listheader label="Descripcion" sort="auto(descripcion)"/>
-			<listheader label="Fecha inicio tarea" sort="auto(fecha_inicio)"/>
-			<listheader label="Fecha fin tarea" sort="auto(fecha_fin)"/>
+			<listheader label="Descripción" sort="auto(descripcion)"/>
+			<listheader label="Fecha inicio" sort="auto(fecha_inicio)"/>
+			<listheader label="Fecha fin" sort="auto(fecha_fin)"/>
 			<listheader label="Nombres" sort="auto(nombres)"/>
 			<listheader label="Apellidos" sort="auto(apellidos)"/>
-		    <listheader label="Cedula" sort="auto(cedula)"/>
+		    <listheader label="Cédula" sort="auto(cedula)"/>
 		    <listheader label="Nivel" sort="auto(nivel)"/>
-			<listheader label="Descripcion tarea" sort="auto(descripcion_re)"/>
-			<listheader label="Fecha finalizacion tarea" sort="auto(fecha_fin)"/>
-			
+			<listheader label="Descripción Entrega" sort="auto(descripcion_re)"/>
+			<listheader label="Fecha de Entrega" sort="auto(fecha_terminada)"/>
+			<listheader label="Estado" sort="auto(estado)"/>
 		</listhead>
 		
 			<template name="model"> 
@@ -54,11 +48,11 @@
 				<listcell label="${each.cedula}" />
 				<listcell label="${each.nivel}" />
 				<listcell label="${each.descripcion_re}" />
-				<listcell label="${each.fecha_fin}" />
+				<listcell label="${each.fecha_terminada}" />
+				<listcell label="${each.estado}" />
 			</listitem>
 		</template>
 		
 	</listbox>
-  	
 </window>
 </zk>

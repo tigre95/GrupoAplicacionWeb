@@ -38,6 +38,7 @@ import com.tareas.modelos.DBPersonas;
 import com.tareas.modelos.DBTareas;
 import com.tareas.modelos.DBdepartamento;
 import com.tareas.modelos.DBnivelTarea;
+
 public class AsignarTareaControlador extends GenericForwardComposer<Component>{
 
 	@Wire
@@ -217,6 +218,8 @@ public class AsignarTareaControlador extends GenericForwardComposer<Component>{
 	
 	public boolean validar_campos(){
 		boolean respuesta = false;
+		Session session = Sessions.getCurrent();
+		empleado = (personas)session.getAttribute("empleado_seleccionado");
 		if(empleado != null && labelArchivo.getValue().equals("")==false && 
 				textboxDescripcion.getText().equals("")==false &&
 				textboxComentario.getText().equals("")==false && id_nivel_tarea != 0){
@@ -236,7 +239,7 @@ public class AsignarTareaControlador extends GenericForwardComposer<Component>{
 				directorio.mkdir(); 
 				respuesta = util.uploadFile(media,ruta_tarea,nombre_archivo);
 				if(respuesta == true){
-					alert("Tarea guardada");
+					alert("Tarea Guardada!!");
 					Session session = Sessions.getCurrent();
 					empleado = (personas)session.getAttribute("empleado_seleccionado");
 					tareas tarea = new tareas();
@@ -279,7 +282,7 @@ public class AsignarTareaControlador extends GenericForwardComposer<Component>{
 						respuesta = util.uploadFile(media,ruta_tarea,nombre_archivo);
 					}
 					if(respuesta == true || media == null){
-						alert("Tarea guardada");
+						alert("archivo subido correctamente");
 						Session session = Sessions.getCurrent();
 						empleado = (personas)session.getAttribute("empleado_seleccionado");
 						tareas tarea = new tareas();
@@ -324,7 +327,7 @@ public class AsignarTareaControlador extends GenericForwardComposer<Component>{
 	public void onClick$buttonEliminar(){
 		try {
 			dbtareas.eliminartareas(tarea_seleccionada.getId_tarea());
-			alert("Archivo eliminado");
+			alert("Tarea Eliminada");
 			empleado = null;
 			labelArchivo.setValue("");
 			textboxComentario.setText("");
@@ -362,5 +365,17 @@ public class AsignarTareaControlador extends GenericForwardComposer<Component>{
 				}
 		}
 	}
+	//alert(Executions.getCurrent().getContextPath());
+			/*
+			File file = new File("C:/Ejercicios/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/"
+					+ "wtpwebapps/GrupoAplicacionWeb/ArchivosAplicacionWeb/Eduardo Ignacio Tigrero"
+					+ " Departamento de Sistemas/pruebas_tareas.docx");
+			if(file != null)
+				try {
+					Filedownload.save(file, null);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}*/
 	
 }

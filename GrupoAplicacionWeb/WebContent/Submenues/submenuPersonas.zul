@@ -1,6 +1,6 @@
 <?page title="Seleccione una opcion" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Seleccione una opcion" width="21%" height="20%" border="normal" id="winPersonas" apply="com.tareas.submenu.submenuPersonas" >
+	<window title="Seleccione una opcion" width="21%" height="21%" border="normal" id="winPersonas" apply="com.tareas.submenu.submenuPersonas" >
 <grid>
 			<rows>
 	

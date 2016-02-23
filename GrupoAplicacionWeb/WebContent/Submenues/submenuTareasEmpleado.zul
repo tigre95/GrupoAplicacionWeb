@@ -1,17 +1,17 @@
 <?page title="Seleccione una opcion" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Seleccione una opcion" width="23%" height="21%" border="normal" id="wintareas" apply="com.tareas.submenu.submenuTareasempleado">
+	<window title="Seleccione una opcion" width="30%" height="21%" border="normal" id="wintareas" apply="com.tareas.submenu.submenuTareasempleado">
 <grid>
 			<rows>
 	
 				<row>
-					<button label="Nuevo" image="imagenes/nuevo.png"  width="130px" id="buttonnuevotareas"/>
-					<button label="Busquedas" image="imagenes/buscar.png" width="130px" id="buttonbusquedatareas" />
+					<button label="Realizar Tarea" image="imagenes/nuevo.png"  width="100%" id="buttonnuevotareas"/>
+					<button label="Busquedas" image="imagenes/buscar.png" width="100%" id="buttonbusquedatareas" />
 				</row>
 			
 				<row>					
-					<button label="Edicion" image="imagenes/editar.png" width="130px" id="buttonediciontareas" />
-					<button label="Volver" image="imagenes/Volver.png" width="130px" onClick="wintareas.detach()" />
+					<button label="Editar Tarea" image="imagenes/editar.png" width="100%" id="buttonediciontareas" />
+					<button label="Volver" image="imagenes/Volver.png" width="100%" onClick="wintareas.detach()" />
 				</row>
 			</rows>
 		</grid>

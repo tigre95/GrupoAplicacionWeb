@@ -96,8 +96,15 @@ public class DatosTareaControlador extends GenericForwardComposer<Component>{
 				buttonEliminar.setVisible(false);
 				tarear_seleccionada = dbtarearealizada.tareasxid_tarea(tarea_seleccionada.getId_tarea());
 				buttonSubirTarea.setVisible(false);
-				labelArchivo.setValue("tarea_realizada_"+tarear_seleccionada.getId_Tarea_realizada());
-				textboxComentario.setText(tarear_seleccionada.getDescipcion());
+				if(tarear_seleccionada.getId_Tarea_realizada()>0){
+					labelArchivo.setValue("tarear_realizada"+tarear_seleccionada.getId_Tarea_realizada());
+					textboxComentario.setText(tarear_seleccionada.getDescipcion());
+				}else{
+					alert("Esta tarea no ha sido realizada");
+					labelArchivo.setValue("");
+					textboxComentario.setText("");
+				}
+				
 			}else{
 				if(permiso_tareasr.getEditar()==1){
 					buttonOpcion.setLabel("Actualizar");
@@ -116,8 +123,14 @@ public class DatosTareaControlador extends GenericForwardComposer<Component>{
 				textboxDescripcion.setText(tarea_seleccionada.getDescripcion());
 				buttonTareas.setVisible(false);
 				tarear_seleccionada = dbtarearealizada.tareasxid_tarea(tarea_seleccionada.getId_tarea());
-				labelArchivo.setValue("tarea_realizada_"+tarear_seleccionada.getId_Tarea_realizada());
-				textboxComentario.setText(tarear_seleccionada.getDescipcion());
+				if(tarear_seleccionada.getId_Tarea_realizada()>0){
+					labelArchivo.setValue("tarear_realizada"+tarear_seleccionada.getId_Tarea_realizada());
+					textboxComentario.setText(tarear_seleccionada.getDescipcion());
+				}else{
+					alert("Esta tarea no ha sido realizada");
+					labelArchivo.setValue("");
+					textboxComentario.setText("");
+				}
 			}
 		}
 		Calendar c1 = new GregorianCalendar();
@@ -198,7 +211,7 @@ public class DatosTareaControlador extends GenericForwardComposer<Component>{
 				directorio.mkdir(); 
 				respuesta = util.uploadFile(media,ruta_tarea,nombre_archivo);
 				if(respuesta == true){
-					alert("archivo subido correctamente");
+					alert("Tarea guardada");
 					empleado = (personas)session.getAttribute("empleado_seleccionado");
 					tarearealizada tarear = new tarearealizada();
 					tarear.setId_Tarea_realizada(0);
@@ -212,12 +225,11 @@ public class DatosTareaControlador extends GenericForwardComposer<Component>{
 						Date date_creacion = formatter.parse(labelFechaSubida.getValue());
 						Date date_tarea = formatter.parse(tarea_seleccionada.getFecha_fin());
 						diferencia_dias = diferenciaEnDias(date_tarea,date_creacion);
-						System.out.println(""+diferencia_dias);
 					} catch (ParseException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					if(diferencia_dias>=0){
+					if(diferencia_dias>0){
 						try {
 							dbtareas.actualizarestadotareas(tarea_seleccionada, "R");
 						} catch (SQLException e) {
@@ -235,7 +247,6 @@ public class DatosTareaControlador extends GenericForwardComposer<Component>{
 					tarear.setEstado("A");
 					
 					try {
-						alert(tarea_seleccionada.getFecha_fin().substring(0, 10));
 						dbtarearealizada.guardartarearealizada(tarear);
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
@@ -263,7 +274,7 @@ public class DatosTareaControlador extends GenericForwardComposer<Component>{
 						respuesta = util.uploadFile(media,ruta_tarea,nombre_archivo);
 					}
 					if(respuesta == true || media == null){
-						alert("archivo subido correctamente");
+						alert("Tarea realizada");
 						Session session = Sessions.getCurrent();
 						empleado = (personas)session.getAttribute("empleado_seleccionado");
 						tarearealizada tarear = new tarearealizada();
@@ -277,7 +288,6 @@ public class DatosTareaControlador extends GenericForwardComposer<Component>{
 							Date date_creacion = formatter.parse(labelFechaSubida.getValue());
 							Date date_tarea = formatter.parse(tarea_seleccionada.getFecha_fin());
 							diferencia_dias = diferenciaEnDias(date_tarea,date_creacion);
-							System.out.println(""+diferencia_dias);
 						} catch (ParseException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();

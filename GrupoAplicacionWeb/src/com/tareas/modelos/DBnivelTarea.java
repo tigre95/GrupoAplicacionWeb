@@ -212,7 +212,7 @@ public class DBnivelTarea {
 	}
 	
 	
-public ArrayList<NivelTareas> listarTareasnivel() {
+	public ArrayList<NivelTareas> listarTareasnivel() {
 		
 		ArrayList<NivelTareas> tipo_usuario = new ArrayList<NivelTareas>();
 		

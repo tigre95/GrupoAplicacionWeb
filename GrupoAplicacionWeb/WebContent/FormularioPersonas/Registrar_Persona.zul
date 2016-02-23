@@ -1,10 +1,12 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Registros de Nuevo Usuarios" border="normal" id="winNuevoUsuario" closable="true" apply="com.tareas.controlador.PersonaControlador">
+<window title="Registros de Nuevo Usuarios" border="normal" id="winNuevoUsuario" closable="true" 
+apply="com.tareas.controlador.PersonaControlador">
 <grid>
 			<columns>
 				<column label="Etiqueta" />
 				<column label="Dato" />
+				<column label="" />
 			</columns>
 			<rows>
 				<row>
@@ -27,42 +29,38 @@
 				</row>
 				<row>
 					<label value="Usuario:" />
-					<textbox id="textbox_Usuario" constraint="no empty">
+					<textbox id="textbox_Usuario">
 					</textbox>
 
 				</row>
 				<row>
 					<label value="Password" />
-					<textbox id="textbox_password" type="password" constraint="no empty">
+					<textbox id="textbox_password" type="password">
 					</textbox>
 				</row>
 				<row>
 
 					<label value="Nombres:" />
-					<textbox id="textbox_Nombres"
-						constraint="no empty">
-					</textbox>
+					<textbox id="textbox_Nombres"/>
 				</row>
 				<row>
 					<label value="Apellidos:" />
-					<textbox id="textbox_Apellidos"
-						constraint="no empty">
-					</textbox>
+					<textbox id="textbox_Apellidos"/>
 				</row>
 				<row>
 					<label value="Cedula:" />
-					<textbox id="textbox_Cedula"
-						constraint="no empty">
-					</textbox>
+					<textbox id="textbox_Cedula" maxlength="10"/>
+					<label id="label_validar_cedula"></label>
 				</row>
 				<row>
 					<label value="Direccion:" />
-					<textbox id="textbox_Direccion" constraint="no empty"></textbox>
+					<textbox id="textbox_Direccion"></textbox>
 				</row>
 				
 				<row>
 					<label value="Email" />
 					<textbox id="textbox_Email"></textbox>
+					<label id="label_validar_correo"></label>
 
 				</row>
 				<row>

@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.zkoss.zul.ListModelList;
+
 import com.controlador.entidades.Departamento;
+import com.controlador.entidades.NivelTareas;
 
 public class DBdepartamento {
 	public Departamento mostrardepartamento(int id_departamento){			
@@ -46,6 +49,7 @@ public class DBdepartamento {
 		}	
 		return departamento;
 	}
+	
 	public ArrayList<Departamento>ValidarDepartamento(String criterio, int criterio2){			
 		ArrayList<Departamento> lista= null;
 		//conectar a la bd
@@ -95,7 +99,6 @@ public class DBdepartamento {
 		
 		return lista;	
 	}				
-
 
 	public boolean editardepartamento(Departamento categorias){
 		boolean resultado = false;
@@ -168,8 +171,6 @@ public class DBdepartamento {
 		String query="";
 		if(criterio.equals("") ){
 		query = "SELECT * FROM departamento as dep where dep.estado='A'";
-			
-			
 		}
 		else{
 		query = "SELECT * FROM departamento as dep where dep.estado='A' and (dep.descripcion like '%" + criterio + "%' ) order by dep.descripcion";
@@ -247,5 +248,35 @@ public class DBdepartamento {
 		return resultado;
 	}
 	
-	
+	public ListModelList<Departamento> cargar_departamentos(){
+		Statement state = null;
+		Integer cont = 0;
+		ResultSet resultado = null;
+		ListModelList<Departamento> departamentos = new ListModelList<Departamento>();
+		DBManager dbmanager = new DBManager();
+		Connection con = dbmanager.getConection();
+		if(con==null){return departamentos;}
+		try{
+		state = (Statement) con.createStatement();
+		resultado = state.executeQuery("select * from departamento where estado = 'A';");
+		
+				while(resultado.next()){
+				cont = cont + 1;
+				Departamento categorias= new Departamento();
+				categorias.setId_tipodepartamento(resultado.getInt("idTipoDepartamento"));
+				categorias.setDescripcion(resultado.getString("descripcion"));
+				departamentos.add(categorias);
+			}
+		if(cont>0){
+			return departamentos;
+		}else{
+			return null;
+		}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

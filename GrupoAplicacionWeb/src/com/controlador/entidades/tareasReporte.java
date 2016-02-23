@@ -12,7 +12,16 @@ public class tareasReporte {
 	private String cedula;
 	private String descripcion_empleado;
 	private String fecha_terminada;
+	private String estado;
 	
+	
+	
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
 	public String getDescripcion_jefe() {
 		return descripcion_jefe;
 	}
@@ -73,8 +82,11 @@ public class tareasReporte {
 	public void setFecha_terminada(String fecha_terminada) {
 		this.fecha_terminada = fecha_terminada;
 	}
+
+
 	public tareasReporte(String descripcion_jefe, String fecha_inicio, String fecha_fin, int cantidad, String nivel,
-			String nombre, String apellidos, String cedula, String descripcion_empleado, String fecha_terminada) {
+			String nombre, String apellidos, String cedula, String descripcion_empleado, String fecha_terminada,
+			String estado) {
 		super();
 		this.descripcion_jefe = descripcion_jefe;
 		this.fecha_inicio = fecha_inicio;
@@ -86,6 +98,7 @@ public class tareasReporte {
 		this.cedula = cedula;
 		this.descripcion_empleado = descripcion_empleado;
 		this.fecha_terminada = fecha_terminada;
+		this.estado = estado;
 	}
 	public tareasReporte() {
 		super();

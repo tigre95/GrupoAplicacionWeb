@@ -41,7 +41,15 @@ public class ListaTareasEmpleadoControlador extends GenericForwardComposer<Compo
 	public void CargarListaTareasBusqueda(){
 		ListModelList<tareas> lista_tareas;
 		DBTareas dbtareas = new DBTareas();
-	
+		//lista_tareas = dbtareas.lista_tareas_busqueda(id_persona, estado)(1);
+		//if(lista_tareas != null){
+			//ListModelList<tareas> listmodel = new ListModelList<tareas>(lista_tareas);
+			//ListaTareasEmpleados.setModel(listmodel);
+			//refrescar la lista
+			//ListaTareasEmpleados.renderAll();
+		//}else{
+			//alert("No existen datos");
+		//}
 	}
 
 	

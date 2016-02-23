@@ -1,6 +1,8 @@
 package com.tareas.controlador;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -12,6 +14,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Groupbox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
@@ -33,9 +36,11 @@ import com.tareas.modelos.DBPermisos;
 import com.tareas.modelos.DBTiposUsuarios;
 import com.tareas.modelos.DBUsuarios;
 
-
-
 public class editarPersona extends GenericForwardComposer<Component>{
+	
+	private static final String PATTERN_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+		    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	
 	@Wire
 	Textbox textboxBuscar,txtNombres,txtApellidos,txtced,txtEmail,txtDireccion,textbox_Usuario,textbox_password,txtUsuarioedit;
 	Textbox txtNuevoPassword,txtConfPassword;
@@ -47,6 +52,7 @@ public class editarPersona extends GenericForwardComposer<Component>{
 	Groupbox gpb_lista,gpb_buscar;
 	Grid grilla;
 	Window win_editarUsuario;
+	Label label_validar_correo, label_validar_cedula;
 	
 	Usuariodb usuario_seleccionado;
 	usuarios usuario=null;
@@ -123,7 +129,7 @@ public class editarPersona extends GenericForwardComposer<Component>{
 		   u=(DatosUsuarioss) s.getAttribute("DatosUsuarioss");
 		DBUsuarios dbu=new DBUsuarios();
 		Usuariodb us2=dbu.logonear(textbox_Usuario.getValue(), textbox_password.getValue());
-		if(us2.getId_tipousuario()==15){
+		if(us2.getId_tipousuario()==2){
 			if (us2.getCedula().equals(u.getUsuario().getPersona().getCedula())){
 				grilla.setVisible(false);
 				toolOpciones.setVisible(false);
@@ -138,7 +144,6 @@ public class editarPersona extends GenericForwardComposer<Component>{
 			alert("Usuario y/o Clave Incorrecta! Intente Nuevamente!");
 		}
 	}
-	
 	
 	public void onClick$toolbarbuttonContrasena(){
 		if(listboxUsuarios.getSelectedItem() != null){
@@ -160,10 +165,7 @@ public class editarPersona extends GenericForwardComposer<Component>{
 		grilla.setVisible(false);
 		buscarUsuarios("");
 	}
-	
-	public void onCreate$win_editarUsuario(){
-	}
-	
+
 	public void CargarTipoUsuarios(){
 		
 		DBUsuarios dbu=new DBUsuarios();
@@ -199,7 +201,6 @@ public class editarPersona extends GenericForwardComposer<Component>{
 	}
 	}
 	
-	
 	public void buscarUsuarios(String criterio){
 		DBUsuarios dbu= new DBUsuarios();
 		ArrayList<Usuariodb> lista = dbu.buscarUsuarios(criterio);
@@ -233,7 +234,7 @@ public class editarPersona extends GenericForwardComposer<Component>{
 	
 	public void onClick$toolbarbuttonEliminar(){
 		if(listboxUsuarios.getSelectedItem() != null){
-			if(usuario_seleccionado.getId_tipousuario()==16){
+			if(usuario_seleccionado.getId_tipousuario()==3){
 				DBUsuarios dbu=new DBUsuarios();
 				if(dbu.validarEliminacion()){
 					if(Messagebox.show("Esta seguro de eliminar al usuario "+usuario_seleccionado.getNombres()+" "+usuario_seleccionado.getApellidos()+"?","Eliminacion", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.CANCEL){				
@@ -306,11 +307,13 @@ public class editarPersona extends GenericForwardComposer<Component>{
 		grilla.setVisible(false);
 		buscarUsuarios("");
 	}
+	
 	public String EncriptarPassword(String dpassword){
 		Encriptacion e=new Encriptacion("Encriptar");
 		String passwordEncriptado=e.encrypt(dpassword);
 		return passwordEncriptado;
 	}
+	
 	public void onClick$btnGuardarreU(){
 		Usuariodb us2=new Usuariodb();
 		us2.setApellidos(txtApellidos.getValue());
@@ -327,26 +330,61 @@ public class editarPersona extends GenericForwardComposer<Component>{
 		us2.setId_tipousuario(dbu2.ObtenerIdTipoUs(us2.getDescripcionTU()));
 		us2.setIdTipoDepartamento(dbu2.ObtenerIdTipodept(us2.getDescripciondep()));
 		us2.setAlias(textbox_Usuario.getValue());
-//		String password = textbox_password.getValue();
-//		
-//		MessageDigest md=null;
-//		String encriptado=null; 
-//		try {				
-//			md=MessageDigest.getInstance("SHA-1");
-//			md.update(password.getBytes());
-//			byte[] mb = md.digest();
-//			mb = md.digest();
-//			encriptado=String.valueOf(Hex.encodeHex(mb));
-//		} 
-//		catch (NoSuchAlgorithmException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 		us2.setDpasssword(EncriptarPassword(textbox_password.getValue()));
-		//us2.setDpasssword(textbox_password.getValue());
-		
-		if(usuario_seleccionado.getId_tipousuario()==14){
-			if(usuario_seleccionado.getId_tipousuario()==us2.getId_tipousuario()){
+		if(txtNombres.getText().equals("")==false && txtApellidos.getText().equals("")==false && 
+			txtced.getText().equals("")==false && txtEmail.getText().equals("")==false && 
+			txtDireccion.getText().equals("")==false && textbox_Usuario.getText().equals("")==false && 
+			textbox_password.getText().equals("")==false && Combobox_TipoDept.getText().equals("")==false &&
+			cbbTipoUsuario.getText().equals("")==false){
+			if(usuario_seleccionado.getId_tipousuario()==1){
+				if(usuario_seleccionado.getId_tipousuario()==us2.getId_tipousuario()){
+					if(du2.validarEdicion(us2)){
+						alert("No se puede Modificar! Usuario ya existe!");
+					}
+					else{
+						if(Messagebox.show("Esta seguro de Modificar datos del usuario ?","Modificación", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.CANCEL){				
+							return;
+						}			
+						EditarEliminarUsuario(us2, 1,"Modificado","Modificar");
+						toolOpciones.setVisible(false);
+						gpb_buscar.setVisible(true);
+						gpb_lista.setVisible(true);
+						grilla.setVisible(false);
+							buscarUsuarios("");
+					}
+				}
+				else{
+					DBUsuarios dbu=new DBUsuarios();
+					if(dbu.validarEliminacion()){
+						if(du2.validarEdicion(us2)){
+							alert("No se puede Modificar! Usuario ya existe!");
+						}
+						else{
+							if(Messagebox.show("Esta seguro de Modificar datos del usuario ?","Modificación", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.CANCEL){				
+								return;
+							}			
+							EditarEliminarUsuario(us2, 1,"Modificado","Modificar");
+							toolOpciones.setVisible(false);
+							gpb_buscar.setVisible(true);
+							gpb_lista.setVisible(true);
+							grilla.setVisible(false);
+							buscarUsuarios("");
+						}
+					}
+					else{
+						
+						alert("No se puede Modificar Usuario de Tipo Administrador");
+						buscarUsuarios("");
+						toolOpciones.setVisible(false);
+						gpb_buscar.setVisible(true);
+						gpb_lista.setVisible(true);
+						grilla.setVisible(false);
+							buscarUsuarios("");
+					}
+				}
+				
+			}
+			else{
 				if(du2.validarEdicion(us2)){
 					alert("No se puede Modificar! Usuario ya existe!");
 				}
@@ -361,55 +399,75 @@ public class editarPersona extends GenericForwardComposer<Component>{
 					grilla.setVisible(false);
 						buscarUsuarios("");
 				}
+				
 			}
-			else{
-				DBUsuarios dbu=new DBUsuarios();
-				if(dbu.validarEliminacion()){
-					if(du2.validarEdicion(us2)){
-						alert("No se puede Modificar! Usuario ya existe!");
-					}
-					else{
-						if(Messagebox.show("Esta seguro de Modificar datos del usuario ?","Modificación", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.CANCEL){				
-							return;
-						}			
-						EditarEliminarUsuario(us2, 1,"Modificado","Modificar");
-						toolOpciones.setVisible(false);
-						gpb_buscar.setVisible(true);
-						gpb_lista.setVisible(true);
-						grilla.setVisible(false);
-						buscarUsuarios("");
-					}
-				}
-				else{
-					
-					alert("No se puede Modificar Usuario de Tipo Administrador");
-					buscarUsuarios("");
-					toolOpciones.setVisible(false);
-					gpb_buscar.setVisible(true);
-					gpb_lista.setVisible(true);
-					grilla.setVisible(false);
-						buscarUsuarios("");
-				}
-			}
-			
+		}else{
+			alert("LLene todos los campos");
 		}
-		else{
-			if(du2.validarEdicion(us2)){
-				alert("No se puede Modificar! Usuario ya existe!");
-			}
-			else{
-				if(Messagebox.show("Esta seguro de Modificar datos del usuario ?","Modificación", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION) == Messagebox.CANCEL){				
-					return;
-				}			
-				EditarEliminarUsuario(us2, 1,"Modificado","Modificar");
-				toolOpciones.setVisible(false);
-				gpb_buscar.setVisible(true);
-				gpb_lista.setVisible(true);
-				grilla.setVisible(false);
-					buscarUsuarios("");
-			}
-			
-		}
+	}
+	
+	public static String validacedula(String x){
+	    int suma=0;
+	    if(x.length()==9){
+	      //System.out.println("Ingrese su cedula de 10 digitos");
+	      return "cédula incorrecta";
+	    }else{
+	      int a[]=new int [x.length()/2];
+	      int b[]=new int [(x.length()/2)];
+	      int c=0;
+	      int d=1;
+	      for (int i = 0; i < x.length()/2; i++) {
+	        a[i]=Integer.parseInt(String.valueOf(x.charAt(c)));
+	        c=c+2;
+	        if (i < (x.length()/2)-1) {
+	          b[i]=Integer.parseInt(String.valueOf(x.charAt(d)));
+	          d=d+2;
+	        }
+	      }
+	      for (int i = 0; i < a.length; i++) {
+	        a[i]=a[i]*2;
+	        if (a[i] >9){
+	          a[i]=a[i]-9;
+	        }
+	        suma=suma+a[i]+b[i];
+	      } 
+	      int aux=suma/10;
+	      int dec=(aux+1)*10;
+	      if ((dec - suma) == Integer.parseInt(String.valueOf(x.charAt(x.length()-1))))
+	        return "cédula correcta";
+	      else
+	        if(suma%10==0 && x.charAt(x.length()-1)=='0'){
+	          return "cédula correcta";
+	        }else{
+	          return "cédula incorrecta";
+	        }
+	    }
+	}
+	  
+	public static String validateEmail(String email) {
+		boolean respuesta;  
+		Pattern pattern = Pattern.compile(PATTERN_EMAIL);
+	    Matcher matcher = pattern.matcher(email);
+	    respuesta = matcher.matches();
+	    if(respuesta==true){
+	    	return "correo correcto";
+	    }else{
+	    	return "correo incorrecto";
+	    }
+	}
+	
+	public void onChange$txtced(){
+		String resultado;
+		resultado = validacedula(txtced.getValue());
+		label_validar_cedula.setValue(resultado);
 		
 	}
+	
+	public void onChange$txtEmail(){
+		String resultado;
+		resultado = validateEmail(txtEmail.getValue());
+		label_validar_correo.setValue(resultado);
+		
+	}
+	
 }

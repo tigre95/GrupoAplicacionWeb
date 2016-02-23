@@ -3,6 +3,8 @@ package com.cambio.contraseña;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.codec.binary.Hex;
 import org.zkoss.zk.ui.Component;
@@ -39,6 +41,10 @@ import com.tareas.modelos.DBTiposUsuarios;
 import com.tareas.modelos.DBUsuarios;
 
 public class CambioContraseña extends GenericForwardComposer<Component>{
+	
+	private static final String PATTERN_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	
 	@Wire
 	Textbox textboxBuscar,txtNombres,txtApellidos,txtced,txtEmail,txtDireccion,textbox_Usuario,textbox_password,txtUsuarioedit;
 	Textbox txtNuevoPassword,txtConfPassword;
@@ -52,6 +58,7 @@ public class CambioContraseña extends GenericForwardComposer<Component>{
 	Window win_editarUsuario;
 	usuarios usuarios=null;
 	Usuariodb usuario;
+	Label label_validar_correo, label_validar_cedula;
 	
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
@@ -68,11 +75,13 @@ public class CambioContraseña extends GenericForwardComposer<Component>{
 		grilla.setVisible(false);
 		buscarUsuarios("");
 	}
+	
 	public String EncriptarPassword(String dpassword){
 		Encriptacion e=new Encriptacion("Encriptar");
 		String passwordEncriptado=e.encrypt(dpassword);
 		return passwordEncriptado;
 	}
+	
 	public void onClick$btnGuardarre(){
 		if(txtNuevoPassword.getValue().equals(txtConfPassword.getValue())){
 			DBUsuarios dbu=new DBUsuarios();
@@ -121,7 +130,6 @@ public class CambioContraseña extends GenericForwardComposer<Component>{
 			alert("Usuario y/o Clave Incorrecta! Intente Nuevamente!");
 		}
 	}
-	
 	
 	public void onClick$toolbarbuttonContrasena(){
 		if(listboxUsuarios.getSelectedItem() != null){
@@ -182,7 +190,6 @@ public class CambioContraseña extends GenericForwardComposer<Component>{
 	}
 	}
 	
-	
 	public void buscarUsuarios(String criterio){
 		tiposusuarios tipousuario = null;
 		DBTiposUsuarios dbtiposusuarios = new DBTiposUsuarios();
@@ -196,7 +203,7 @@ public class CambioContraseña extends GenericForwardComposer<Component>{
 				
 				String nombrec=  persona.getNombres();
 				DBUsuarios dbu= new DBUsuarios();
-				ArrayList<Usuariodb> lista = dbu.buscarUsuarios(nombrec);
+				ArrayList<Usuariodb> lista = dbu.buscarUsuarios(nombrec,usuarios.getId_usuario());
 				ListModelList<Usuariodb> modeloDeDatos= new ListModelList<Usuariodb>(lista);
 				listboxUsuarios.setModel(modeloDeDatos);
 				buttonListar.setDisabled(true);
@@ -318,9 +325,6 @@ public class CambioContraseña extends GenericForwardComposer<Component>{
 		us2.setAlias(textbox_Usuario.getValue());
 		us2.setDpasssword(EncriptarPassword(textbox_password.getValue()));
 		
-		
-		
-		
 		DBUsuarios du2=new DBUsuarios();
 		DBTiposUsuarios dbu2=new DBTiposUsuarios();
 		us2.setId_persona(usuario.getId_persona());
@@ -363,7 +367,6 @@ public class CambioContraseña extends GenericForwardComposer<Component>{
 					}
 				}
 				else{
-					
 					alert("No se puede Modificar Usuario de Tipo Administrador");
 					buscarUsuarios("");
 					toolOpciones.setVisible(false);
@@ -390,8 +393,70 @@ public class CambioContraseña extends GenericForwardComposer<Component>{
 				grilla.setVisible(false);
 					buscarUsuarios("");
 			}
-			
 		}
+	}
+	
+	public static String validacedula(String x){
+	    int suma=0;
+	    if(x.length()==9){
+	      //System.out.println("Ingrese su cedula de 10 digitos");
+	      return "cédula incorrecta";
+	    }else{
+	      int a[]=new int [x.length()/2];
+	      int b[]=new int [(x.length()/2)];
+	      int c=0;
+	      int d=1;
+	      for (int i = 0; i < x.length()/2; i++) {
+	        a[i]=Integer.parseInt(String.valueOf(x.charAt(c)));
+	        c=c+2;
+	        if (i < (x.length()/2)-1) {
+	          b[i]=Integer.parseInt(String.valueOf(x.charAt(d)));
+	          d=d+2;
+	        }
+	      }
+	      for (int i = 0; i < a.length; i++) {
+	        a[i]=a[i]*2;
+	        if (a[i] >9){
+	          a[i]=a[i]-9;
+	        }
+	        suma=suma+a[i]+b[i];
+	      } 
+	      int aux=suma/10;
+	      int dec=(aux+1)*10;
+	      if ((dec - suma) == Integer.parseInt(String.valueOf(x.charAt(x.length()-1))))
+	        return "cédula correcta";
+	      else
+	        if(suma%10==0 && x.charAt(x.length()-1)=='0'){
+	          return "cédula correcta";
+	        }else{
+	          return "cédula incorrecta";
+	        }
+	    }
+	}
+	  
+	public static String validateEmail(String email) {
+		boolean respuesta;  
+		Pattern pattern = Pattern.compile(PATTERN_EMAIL);
+	    Matcher matcher = pattern.matcher(email);
+	    respuesta = matcher.matches();
+	    if(respuesta==true){
+	    	return "correo correcto";
+	    }else{
+	    	return "correo incorrecto";
+	    }
+	}
+	
+	public void onChange$txtced(){
+		String resultado;
+		resultado = validacedula(txtced.getValue());
+		label_validar_cedula.setValue(resultado);
+		
+	}
+	
+	public void onChange$txtEmail(){
+		String resultado;
+		resultado = validateEmail(txtEmail.getValue());
+		label_validar_correo.setValue(resultado);
 		
 	}
 }

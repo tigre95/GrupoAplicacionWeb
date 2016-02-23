@@ -1,19 +1,19 @@
 <?page title="Seleccione una opcion" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="Seleccione una opcion" width="26%" height="29%" border="normal" closable="true" id="winconsultas" apply="com.tareas.submenu.submenuConsultas">
+	<window title="Seleccione una opcion" width="26%" height="40%" border="normal" closable="true" id="winconsultas" apply="com.tareas.submenu.submenuConsultas">
 
 <grid>
 			<rows>
-	
 				<row>
 					<button label="Consulta por estado de tareas" image="imagenes/buscar.png" width="320px" id="buttontareasR" />
 				</row>
-			
 				<row>					
 					<button label="Consultas por nivel de importancia de la tarea" image="imagenes/buscar.png" width="320px" id="buttontareasN" />
 				</row>
 				<row>					
-
+					<button label="Consultas Administrador" image="imagenes/buscar.png" width="320px" id="buttonAdministrador" />
+				</row>
+				<row>				
 					<button label="Volver" image="imagenes/Volver.png" width="320px" onClick="winconsultas.detach()"/>
 				</row>
 			</rows>

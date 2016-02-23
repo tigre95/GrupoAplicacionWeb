@@ -10,18 +10,14 @@ apply="com.tareas.controlador.ListaTareasControlador" closable="true">
 			<auxheader  rowspan="1" colspan="2">
 				<label>Estado: </label>
 				<combobox id="comboEstadoBusqueda" autodrop="true" value="" >
-					<comboitem label="A" value="1" />
-					<comboitem label="P" value="2" />
-					<comboitem label="R" value="3" />
-					<comboitem label="T" value="4" />
-				</combobox>
-				<combobox id="comboEstadoActualizar" autodrop="true" value="" >
-					<comboitem label="R" value="1" />
-					<comboitem label="T" value="2" />
+					<comboitem label="Activa" value="1" />
+					<comboitem label="Pendiente" value="2" />
+					<comboitem label="Realizada" value="3" />
+					<comboitem label="Atrasada" value="4" />
 				</combobox>
 				<combobox  id="comboEstadoGuardar" autodrop="true" >
-					<comboitem label="A" value="1" />
-					<comboitem label="P" value="2" />
+					<comboitem label="Activa" value="1" />
+					<comboitem label="Pendiente" value="2" />
 				</combobox>
 				<button id="buttonBuscar" label="Buscar"></button>
 			</auxheader>

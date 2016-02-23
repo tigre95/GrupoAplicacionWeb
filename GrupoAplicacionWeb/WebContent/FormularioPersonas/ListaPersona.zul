@@ -5,10 +5,10 @@
 		<caption label="Buscar"></caption>
 		<textbox id="textboxBuscar"></textbox>
 		<space/>
-		<button image="/Imagenes/searchs.png" id="buttonBuscar" label="Buscar">
+		<button image="/imagenes/buscar.png" id="buttonBuscar" label="Buscar">
 		</button>
 		<space/>
-		<button image="/Imagenes/icon_listat.png" id="buttonListar" label="Ver Todos"/>
+		<button image="/imagenes/buscar.png" id="buttonListar" label="Ver Todos"/>
 	</groupbox>
 	<listbox id="listboxUsuarios" mold="paging" pageSize="3" width="100%" emptyMessage="No existen datos" >
 		<listhead sizable="true" menupopup="auto">

@@ -1,5 +1,8 @@
 package com.tareas.controlador;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
@@ -58,7 +61,7 @@ public class ListaEmpleadosControlador extends GenericForwardComposer<Component>
 	public void CargarListaPersonas(){
 		
 		DBPersonas dbpersonas = new DBPersonas();
-		lista_personas = dbpersonas.cargarpersona(departamento.getId_tipodepartamento());
+		lista_personas = dbpersonas.cargarpersonafiltrado(departamento.getId_tipodepartamento(),"","","");
 		if(lista_personas != null){
 			ListModelList<personas> listmodel = new ListModelList<personas>(lista_personas);
 			ListaEmpleados.setModel(listmodel);

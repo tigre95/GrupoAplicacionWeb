@@ -1,5 +1,9 @@
 package com.tareas.controlador;
 
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
@@ -22,6 +26,7 @@ import com.controlador.entidades.usuarios;
 import com.tareas.modelos.DBPersonas;
 import com.tareas.modelos.DBTareas;
 import com.tareas.modelos.DBUsuarios;
+
 public class ListaTareasControlador extends GenericForwardComposer<Component>{
 
 	@Wire
@@ -30,7 +35,7 @@ public class ListaTareasControlador extends GenericForwardComposer<Component>{
 	Center centro= null;
 	East este = null;
 	Button buttonBuscar;
-	Combobox comboEstadoBusqueda, comboEstadoGuardar, comboEstadoActualizar; 
+	Combobox comboEstadoBusqueda, comboEstadoGuardar; 
 	
 	Label labelFechaInicio;
 	Label labelFechaFin;
@@ -40,14 +45,18 @@ public class ListaTareasControlador extends GenericForwardComposer<Component>{
 	tareas tarea = null;
 	DBPersonas dbpersonas = new DBPersonas();
 	DBUsuarios dbusuarios = new DBUsuarios();
+	DBTareas dbtareas = new DBTareas();
 	String opcion;
 	String estado = "";
+	String fecha_creacion;
 	ListModelList<tareas> lista_tareas;
 	
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
+		Calendar c1 = new GregorianCalendar();
+		fecha_creacion = ""+c1.get(Calendar.YEAR)+"-"+(c1.get(Calendar.MONTH)+1)+"-"+c1.get(Calendar.DATE);
 		centro = (Center)WinListaTareas.getAttribute("centro"); 
 		este = (East)WinListaTareas.getAttribute("este");
 		Session session = Sessions.getCurrent();
@@ -63,8 +72,6 @@ public class ListaTareasControlador extends GenericForwardComposer<Component>{
 			comboEstadoGuardar.setDisabled(false);
 			comboEstadoBusqueda.setVisible(false);
 			comboEstadoGuardar.setVisible(true);
-			comboEstadoActualizar.setDisabled(true);
-			comboEstadoActualizar.setVisible(false);
 			CargarListaTareasGuardar();
 		}else{
 			if(opcion.equals("Buscar")){
@@ -72,36 +79,49 @@ public class ListaTareasControlador extends GenericForwardComposer<Component>{
 				comboEstadoGuardar.setDisabled(true);
 				comboEstadoBusqueda.setVisible(true);
 				comboEstadoGuardar.setVisible(false);
-				comboEstadoActualizar.setDisabled(true);
-				comboEstadoActualizar.setVisible(false);
 				CargarListaTareasBusqueda();
 			}else{
 				comboEstadoBusqueda.setDisabled(true);
 				comboEstadoGuardar.setDisabled(true);
 				comboEstadoBusqueda.setVisible(false);
 				comboEstadoGuardar.setVisible(false);
-				comboEstadoActualizar.setDisabled(false);
-				comboEstadoActualizar.setVisible(true);
+				buttonBuscar.setVisible(false);
 				CargarListaTareasActualizar();
 			}
 		}
 	}
 	
 	public void onSelect$comboEstadoBusqueda(){
-		estado = comboEstadoBusqueda.getText();
+		if(comboEstadoBusqueda.getText().equals("Activa")){
+			estado = "A";
+		}else{
+			if(comboEstadoBusqueda.getText().equals("Pendiente")){
+				estado = "P";
+			}else{
+				if(comboEstadoBusqueda.getText().equals("Realizada")){
+					estado = "R";
+				}else{
+					if(comboEstadoBusqueda.getText().equals("Atrasada")){
+						estado = "T";
+					}
+				}
+			}
+		}
 	}
 	
 	public void onSelect$comboEstadoGuardar(){
-		estado = comboEstadoGuardar.getText();
+		if(comboEstadoGuardar.getText().equals("Activa")){
+			estado = "A";
+		}else{
+			if(comboEstadoGuardar.getText().equals("Pendiente")){
+				estado = "P";
+			}
+		}
 	}
 	
-	public void onSelect$comboEstadoActualizar(){
-		estado = comboEstadoActualizar.getText();
-	}
-
 	public void CargarListaTareasBusqueda(){
 		DBTareas dbtareas = new DBTareas();
-		lista_tareas = dbtareas.lista_tareas_busqueda(empleado.getId_persona(), comboEstadoBusqueda.getText());
+		lista_tareas = dbtareas.lista_tareas_busqueda(empleado.getId_persona(), estado);
 		if(lista_tareas != null){
 			ListModelList<tareas> listmodel = new ListModelList<tareas>(lista_tareas);
 			ListaTareas.setModel(listmodel);
@@ -118,7 +138,7 @@ public class ListaTareasControlador extends GenericForwardComposer<Component>{
 	
 	public void CargarListaTareasGuardar(){
 		DBTareas dbtareas = new DBTareas();
-		lista_tareas = dbtareas.lista_tareas_guardar(empleado.getId_persona(), comboEstadoGuardar.getText());
+		lista_tareas = dbtareas.lista_tareas_guardar(empleado.getId_persona(), estado);
 		if(lista_tareas != null){
 			ListModelList<tareas> listmodel = new ListModelList<tareas>(lista_tareas);
 			ListaTareas.setModel(listmodel);
@@ -135,7 +155,7 @@ public class ListaTareasControlador extends GenericForwardComposer<Component>{
 	
 	public void CargarListaTareasActualizar(){
 		DBTareas dbtareas = new DBTareas();
-		lista_tareas = dbtareas.lista_tareas_edicion(empleado.getId_persona(), comboEstadoActualizar.getText());
+		lista_tareas = dbtareas.lista_tareas_edicion_empleado(empleado.getId_persona(),fecha_creacion, estado);
 		if(lista_tareas != null){
 			ListModelList<tareas> listmodel = new ListModelList<tareas>(lista_tareas);
 			ListaTareas.setModel(listmodel);
@@ -163,7 +183,16 @@ public class ListaTareasControlador extends GenericForwardComposer<Component>{
 	}
 
 	public void onSelect$ListaTareas(){
+		String resultado ="";
 		tarea = (tareas)lista_tareas.get(ListaTareas.getSelectedIndex());
+		if(tarea.getEstado().equals("P")){
+			try {
+				resultado = dbtareas.actualizarestadotareas(tarea, "A");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		if(opcion.equals("Guardar")){
 			Session session = Sessions.getCurrent();
 			session.setAttribute("tarea_seleccionada", tarea);

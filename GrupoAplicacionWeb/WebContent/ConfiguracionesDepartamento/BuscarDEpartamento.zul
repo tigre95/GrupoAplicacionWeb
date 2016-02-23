@@ -11,10 +11,10 @@
 		<label>Departamento: </label><textbox id="textboxBuscar"></textbox>
 		
 		<space/>
-		<button image="" id="buttonBuscar" label="Buscar">
+		<button image="/imagenes/buscar.png" id="buttonBuscar" label="Buscar">
 		</button>
 		<space/>
-		<button  image="" id="buttonBusca" label="Listar Todo">
+		<button  image="/imagenes/buscar.png" id="buttonBusca" label="Listar Todo">
 		</button>
 		<space/>
 	</groupbox>

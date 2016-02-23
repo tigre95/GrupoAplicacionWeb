@@ -15,9 +15,13 @@ public class DBManager {
 	//Parametros de conexion
 	final String cadenaConexion="jdbc:mysql://localhost/bd_sistemacompleto";
 	final String User="root";
-
 	final String password="upse";
+//String cadenaConexion="jdbc:mysql://mysql170473-aplicacionweb.jelastic.servint.net/bd_sistemacompleto";
+	
+	//final String User="root";
+	//final String password="zFnUMNaX7d";
 
+	
 	//constructor para la clase
 	public DBManager(){
 		this.conection=null;

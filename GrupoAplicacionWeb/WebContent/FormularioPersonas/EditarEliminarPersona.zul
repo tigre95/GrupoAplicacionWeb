@@ -1,6 +1,7 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Editar Usuario" border="normal" id="win_editarUsuario" closable="true" apply="com.tareas.controlador.editarPersona">
+<window title="Edición de Usuarios" border="normal" id="win_editarUsuario" closable="true" 
+apply="com.tareas.controlador.editarPersona">
  <toolbar id="toolOpciones">
 		<toolbarbutton image="/imagenes/editar.png" id="toolbarbuttonEditar" label="Modificar"/>
 		<toolbarbutton image="/imagenes/eliminar.png" id="toolbarbuttonEliminar" label="Eliminar"/>
@@ -10,10 +11,10 @@
 		<caption label="Buscar"></caption>
 		<textbox id="textboxBuscar"></textbox>
 		<space/>
-		<button image="/Imagenes/searchs.png" id="buttonBuscar" label="Buscar">
+		<button image="/imagenes/buscar.png id="buttonBuscar" label="Buscar">
 		</button>
 		<space/>
-		<button image="/Imagenes/icon_listat.png" id="buttonListar" label="Listar Todo"/>
+		<button image="/imagenes/buscar.png" id="buttonListar" label="Listar Todo"/>
 	</groupbox>
 	<groupbox id="gpb_lista">
 		<listbox id="listboxUsuarios" mold="paging" pageSize="3" width="100%" emptyMessage="No existen datos" >
@@ -48,19 +49,19 @@
 		<rows>
 		    <row>	
 			<label value="Nombres:"></label>
-			<textbox id="txtNombres" constraint="no empty">
+			<textbox id="txtNombres">
 			</textbox>
 			</row>	
 			
 			<row>	
 			<label value="Apellidos:"></label>
-			<textbox id="txtApellidos" constraint="no empty">
+			<textbox id="txtApellidos">
 			</textbox>
 			</row>	
 			
 			<row>	
 			<label value="Tipo Usuario:"></label>
-			<combobox id="cbbTipoUsuario" constraint="no empty" >
+			<combobox id="cbbTipoUsuario">
 				<template name="model">
 							<comboitem label="${each.descripcion}" value="${each.id_tipousuario}"/>
 				</template>
@@ -80,30 +81,32 @@
 			
 				<row>	
 			<label value="cedula"></label>
-			<textbox id="txtced"  constraint="no empty"/>
+			<textbox id="txtced"/>
+			<label id="label_validar_cedula"></label>
 			</row>
 				
 			
 			<row>	
 			<label value="Email:"></label>
 			<textbox id="txtEmail" />
+			<label id="label_validar_correo"></label>
 			</row>
 	        
 			<row>	
 			<label value="Direccion:"></label>
-			<textbox id="txtDireccion" constraint="no empty"/>
+			<textbox id="txtDireccion"/>
 			</row>
 			
 			
 			<row>
 					<label value="Usuario:" />
-					<textbox id="textbox_Usuario" constraint="no empty">
+					<textbox id="textbox_Usuario">
 					</textbox>
 
 				</row>
 				<row>
 					<label value="Password" />
-					<textbox id="textbox_password" type="password" constraint="no empty">
+					<textbox id="textbox_password" type="password">
 					</textbox>
 				</row>
 			

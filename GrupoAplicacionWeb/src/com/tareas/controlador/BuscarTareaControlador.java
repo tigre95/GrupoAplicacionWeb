@@ -12,10 +12,12 @@ import org.zkoss.zul.Combobox;
 import org.zkoss.zul.East;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.controlador.entidades.personas;
 import com.controlador.entidades.tareas;
+import com.controlador.entidades.usuarios;
 import com.tareas.modelos.DBPersonas;
 import com.tareas.modelos.DBTareas;
 
@@ -64,16 +66,28 @@ public class BuscarTareaControlador extends GenericForwardComposer<Component>{
 	}
 	
 	public void onSelect$comboEstadoBusqueda(){
-		estado = comboEstadoBusqueda.getText();
+		if(comboEstadoBusqueda.getText().equals("Activa")){
+			estado = "A";
+		}else if(comboEstadoBusqueda.getText().equals("Pendiente")){
+			estado = "P";
+		}else if(comboEstadoBusqueda.getText().equals("Realizada")){
+			estado = "R";
+		}else if(comboEstadoBusqueda.getText().equals("Atrasada")){
+			estado = "T";
+		}
 	}
 	
 	public void onSelect$comboEstadoEdicion(){
-		estado = comboEstadoEdicion.getText();
+		if(comboEstadoEdicion.getText().equals("Activa")){
+			estado = "A";
+		}else if(comboEstadoEdicion.getText().equals("Pendiente")){
+			estado = "P";
+		}
 	}
 
 	public void CargarListaTareasBusqueda(){
 		DBTareas dbtareas = new DBTareas();
-		lista_tareas = dbtareas.lista_tareas_busqueda(empleado.getId_persona(), comboEstadoBusqueda.getText());
+		lista_tareas = dbtareas.lista_tareas_busqueda(empleado.getId_persona(), estado);
 		if(lista_tareas != null){
 			ListModelList<tareas> listmodel = new ListModelList<tareas>(lista_tareas);
 			ListaTareas.setModel(listmodel);
@@ -90,7 +104,7 @@ public class BuscarTareaControlador extends GenericForwardComposer<Component>{
 	
 	public void CargarListaTareasEdicion(){
 		DBTareas dbtareas = new DBTareas();
-		lista_tareas = dbtareas.lista_tareas_edicion(empleado.getId_persona(), comboEstadoEdicion.getText());
+		lista_tareas = dbtareas.lista_tareas_edicion(empleado.getId_persona(), estado);
 		if(lista_tareas != null){
 			ListModelList<tareas> listmodel = new ListModelList<tareas>(lista_tareas);
 			ListaTareas.setModel(listmodel);

@@ -85,7 +85,7 @@ public class submenuPersonas extends GenericForwardComposer<Component>{
 	  	 centro.removeChild(centro.getFirstChild());
 	  	 }
 	   		Window win=(Window) Executions.createComponents("FormularioPersonas/EditarEliminarPersona.zul", centro, null );  		
-	  		win.setTitle("Listar Usuarios");
+	  		win.setTitle("Edición de Usuarios");
 	  		winPersonas.detach();
 	   }
 	}

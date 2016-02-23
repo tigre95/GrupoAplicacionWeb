@@ -15,25 +15,20 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.controlador.entidades.Departamento;
-import com.controlador.entidades.NivelTareas;
 import com.controlador.entidades.TareasAsignadas;
-import com.controlador.entidades.TipoUsuarios;
-import com.controlador.entidades.Usuariodb;
 import com.controlador.entidades.personas;
 import com.controlador.entidades.usuarios;
 import com.tareas.modelos.DBConsultas;
 import com.tareas.modelos.DBPersonas;
-import com.tareas.modelos.DBUsuarios;
 import com.tareas.modelos.DBdepartamento;
-import com.tareas.modelos.DBnivelTarea;
 
-public class ConsultaEstadoTarea extends GenericForwardComposer<Component>{
+public class ConsultaAdministrador extends GenericForwardComposer<Component>{
 	@Wire
 	Textbox textboxBuscar;
 	Button buttonBuscar,buttonListar;
 	Listbox listboxtareas;
-	Window win_tareas_asig;
-	Combobox comboboxTipo, comboNivelTarea;
+	Window winConsultaAdministrador;
+	Combobox comboboxTipo, comboNivelTarea, cmb_departamento;
 	
 	usuarios usuario;
 	personas persona;
@@ -45,11 +40,13 @@ public class ConsultaEstadoTarea extends GenericForwardComposer<Component>{
 	String estado = "";
 	String criterio = "";
 	DBConsultas dbc= new DBConsultas();
+	ListModelList<Departamento> departamentos;
 	
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
+		cargarComboDepartamentos();
 		Session session = Sessions.getCurrent();
 		usuario = (usuarios) session.getAttribute("usuario");
 		persona = dbpersonas.mostrarpersona(usuario.getId_persona());
@@ -60,17 +57,27 @@ public class ConsultaEstadoTarea extends GenericForwardComposer<Component>{
 		buscartareasnorealizadas();
 	}
 	
-	public void onCreate$win_tareas_asig(){
+	public void cargarComboDepartamentos(){
+		departamentos = dbdepartamento.cargar_departamentos();
+		if(departamentos.isEmpty()==false){
+			cmb_departamento.setModel(departamentos);
+		}else{
+			alert("no existen temas");
+		}
+		cmb_departamento.setText("Todos");
+	}
+	
+	public void onCreate$winConsultaAdministrador(){
 		buscartareasnorealizadas();
 	}
 		
 	public void buscartareasnorealizadas(){
-		ArrayList<TareasAsignadas> lista = new ArrayList<TareasAsignadas>();
 		criterio = textboxBuscar.getText();
-		if(usuario.getId_tipousuario()==2){
-			lista = dbc.consultastareasestado_norealizadas_empleado(persona.getId_persona(),estado, nivel, criterio, id_departamento);
+		ArrayList<TareasAsignadas> lista;
+		if(cmb_departamento.getText().equals("Todos")==false){
+			lista = dbc.consultastareasestado_norealizadas(estado, nivel, criterio, (int)cmb_departamento.getSelectedItem().getValue());
 		}else{
-			lista = dbc.consultastareasestado_norealizadas(estado, nivel, criterio, id_departamento);
+			lista = dbc.consultastareasestado_norealizadasAdministrador(estado, nivel, criterio);
 		}
 		if(lista != null){
 			ListModelList<TareasAsignadas> modeloDeDatos= new ListModelList<TareasAsignadas>(lista);
@@ -83,12 +90,12 @@ public class ConsultaEstadoTarea extends GenericForwardComposer<Component>{
 	}
 	
 	public void buscartareasrealizadas(){
-		ArrayList<TareasAsignadas> lista = new ArrayList<TareasAsignadas>();
 		criterio = textboxBuscar.getText();
-		if(usuario.getId_tipousuario()==2){
-			lista = dbc.consultastareasestado_realizadas_empleado(persona.getId_persona(),estado, nivel, criterio, id_departamento);
+		ArrayList<TareasAsignadas> lista;
+		if(cmb_departamento.getText().equals("Todos")==false){
+			lista = dbc.consultastareasestado_realizadas(estado, nivel, criterio, (int)cmb_departamento.getSelectedItem().getValue());
 		}else{
-			lista = dbc.consultastareasestado_realizadas(estado, nivel, criterio, id_departamento);
+			lista = dbc.consultastareasestado_realizadasAdministrador(estado, nivel, criterio);
 		}
 		if(lista != null){
 			ListModelList<TareasAsignadas> modeloDeDatos= new ListModelList<TareasAsignadas>(lista);
@@ -152,4 +159,5 @@ public class ConsultaEstadoTarea extends GenericForwardComposer<Component>{
 			buscartareasnorealizadas();
 		}
 	}
+
 }
